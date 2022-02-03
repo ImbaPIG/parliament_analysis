@@ -46,20 +46,36 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    y: [{
-                        ticks: {
-                            beginAtZero: true
+                tooltips: {
+                    callbacks: {
+                          title: function(tooltipItems, data) {
+                            return '';
+                          },
+                          label: function(tooltipItem, data) {
+                           /* var img = new Image();   // Create new img element
+
+                            var canvasPosition = Chart.helpers.getRelativePosition(e, ChartSpeaker);
+
+                            // Substitute the appropriate scale IDs
+                            var dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
+                            var dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
+
+                            img.onload = function() {
+                                ctx.drawImage(img, dataX, dataY);
+                              };
+
+                            img.src = 'img/Deutscher_Bundestag_logo.svg';*/
+
+                            
+                            
+                            return data.labels[tooltipItem];
+                          }
                         }
-                    }]
                 },
-                onHover: (e)=>{
-                    console.log("HIII");
-                }
             }
         })
-
     },
+
     error: function(error) {
         console.log(error)
         
