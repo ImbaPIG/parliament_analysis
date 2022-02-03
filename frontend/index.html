@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
+<!--test because jannik is not that good with git lol-->
 <head>
 
     <meta charset="utf-8">
@@ -35,7 +38,7 @@
                 <div class="sidebar-brand-icon ">
                     <img src="scripts/img/Deutscher_Bundestag_logo.svg" alt="">
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3"></div>
             </a>
 
             <!-- Divider -->
@@ -152,6 +155,84 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-7">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary">POS</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-bar">
+                                            <canvas id="chart_pos" height="100"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-7">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary">Token</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="">
+                                            <canvas id="chart_token" height="300"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-7">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary">Sentiment</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="">
+                                            <canvas id="chart_sentiment" height="100"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-7">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary">Named Entities</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="">
+                                            <canvas id="chart_NE" height="100"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-7">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary">Speaker</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-bar">
+                                            <canvas id="chart_speaker" height="100"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -166,7 +247,7 @@
     <footer class="sticky-footer bg-white">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2022</span>
+                <span>Copyright &copy; Gruppe_1_3</span>
             </div>
         </div>
     </footer>
@@ -175,7 +256,6 @@
     </div>
     <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -201,6 +281,13 @@
 
     <!-- own scripts -->
     <script src="scripts/js/datepicker.js"></script>
+    
+
+    <script src="scripts/js/charts/pos_chart.js"></script>
+    <script src="scripts/js/charts/token_chart.js"></script>
+    <script src="scripts/js/charts/sentiment_chart.js"></script>
+    <script src="scripts/js/charts/NE_chart.js"></script>
+    <script src="scripts/js/charts/speaker_chart.js"></script>
 
 </body>
 
