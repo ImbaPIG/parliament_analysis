@@ -47,11 +47,11 @@ const createModalList = async () => {
     // handle "show all" button
     $(".showAll").on("click", e => {
         let button = $(e.target);
-        datatype = $("#datatype-selector option:selected").text()
+        datatype = $("#datatype-selector").val()
         console.log(datatype)
         wantedModal = button.attr("data-modal");
         // update according graph here ( using all data)
-        chartCreator(datatype, wantedModal, "all");
+        chartAdder(datatype, wantedModal, "all");
     })
     
     // select on list element click
@@ -60,7 +60,7 @@ const createModalList = async () => {
         let currField = $(e.target);
         // update graph here
         let wantedID = currField.data("id");
-        chartCreator(datatype, wantedModal, wantedID);
+        chartAdder(datatype, wantedModal, wantedID);
     })
 
     // search
