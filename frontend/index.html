@@ -22,6 +22,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="scripts/index.css">
 
 </head>
 
@@ -76,9 +77,10 @@
                             <div class="target-picker inline-flex mt-3 my-2">
                                 <!-- picking if you want to choose a speaker, party or fraction and which one (in best case implemented using a modal) -->
                                 <label class="col-form-label">Pick:</label>
-                                <button class="btn btn-primary">Speaker</button>                            
-                                <button class="btn btn-primary">Party</button>                            
-                                <button class="btn btn-primary">Fraction</button>                            
+                                <button class="btn btn-primary modalTrigger" id="speakerModal" data-modal="speaker">Speaker</button>                            
+                                <button class="btn btn-primary modalTrigger" id="partyModal" data-modal="party">Party</button>                            
+                                <button class="btn btn-primary modalTrigger" id="fractionModal" data-modal="fraction">Fraction</button>                            
+                                <button class="btn btn-primary showAll" >Alle</button>                            
                             </div>
                             <div class="date-picker d-flex mt-3 my-2">
                                 <!-- simple bootstrap date picker  -->
@@ -120,7 +122,7 @@
                             <div class="data-picker">
                                 <!-- picking what data you want to show (pos, named entity, simple count of something etc.) -->
                                 <label for="data-point-selector">Select Data</label>
-                                <select class="form-select" aria-label="Default select example" id="data-point-selector">
+                                <select class="form-select" aria-label="Default select example" id="datatype-selector">
                                     <option selected>Select Data Point</option>
                                     <option value="1">Part of Speech</option>
                                     <option value="2">named Entities</option>
@@ -288,7 +290,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Redner  Auswahl</h5>
+                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Partei  Auswahl</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -350,10 +352,12 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
 
-    <!-- own scripts -->
-    <script src="scripts/js/datepicker.js"></script>
+    <!-- scripts to run on siteload scripts -->
+    <!-- <script src="scripts/js/datePicker.js"></script> -->
+    <script src="scripts/js/dataFetcher.js"></script>
+    <script src="scripts/js/modalMaker.js"></script>
     
-
+    <!-- charts -->
     <script src="scripts/js/charts/pos_chart.js"></script>
     <script src="scripts/js/charts/token_chart.js"></script>
     <script src="scripts/js/charts/sentiment_chart.js"></script>
