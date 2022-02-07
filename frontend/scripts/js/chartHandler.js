@@ -99,7 +99,7 @@ const removeChart = e => {
 }
 
 
-const charHTML = (canvasID, chartName, ) => {
+function createchart(canvasID, chartName){
 let baseframe = `
 <div class="row">
     <div class="col-xl-12 col-lg-7">
@@ -115,4 +115,7 @@ let baseframe = `
         </div>
     </div>
 </div>
-`}
+`
+return baseframe;
+}
+
