@@ -22,14 +22,6 @@ function mainSpeaker(){
             date_speaker.push(speaker.count)
             label_speaker.push(speaker.id)
         });
-       /* $.ajax({
-            url: "http://api.prg2021.texttechnologylab.org/speakers?id="+maxSpeaker,
-            type: "GET",
-            dataType: "json",
-        })
-        .then(function(speaker) {
-            document.getElementById("oneA").innerHTML = ( speaker.result[0].firstname + " " + speaker.result[0].name);     
-        })*/
 
         var ctxSpeaker = document.getElementById('chart_speaker').getContext('2d');
         var ChartSpeaker = new Chart(ctxSpeaker, {
@@ -98,14 +90,7 @@ function addSpeakerChart(SpeakercanvasID){
                 date_speaker.push(speaker.count)
                 label_speaker.push(speaker.id)
             });
-           /* $.ajax({
-                url: "http://api.prg2021.texttechnologylab.org/speakers?id="+maxSpeaker,
-                type: "GET",
-                dataType: "json",
-            })
-            .then(function(speaker) {
-                document.getElementById("oneA").innerHTML = ( speaker.result[0].firstname + " " + speaker.result[0].name);     
-            })*/
+
     
             var ctxSpeaker = document.getElementById(SpeakercanvasID).getContext('2d');
             var ChartSpeaker = new Chart(ctxSpeaker, {

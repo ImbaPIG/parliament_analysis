@@ -70,7 +70,7 @@ function FilterFractionPOS() {
 //main function which is called below to run the hole thing
 function mainPOS() {
  $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS+speakerFilterPOS+fractionFilterPOS+partyFilterPOS,
+    url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS,
     type: "GET",
     dataType: "json",
     success: async function(pos) {
@@ -140,7 +140,7 @@ function mainPOS() {
 
 function addPOSchart(POScanvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS+speakerFilterPOS+fractionFilterPOS+partyFilterPOS,
+        url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS+speakerFilterPOS+fractionFilterPOS+global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(pos) {

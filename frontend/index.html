@@ -82,6 +82,9 @@
                                 <button class="btn btn-primary modalTrigger" id="fractionModal" data-modal="fraction">Fraction</button>                            
                                 <button class="btn btn-primary showAll" >Alle</button>                            
                             </div>
+
+                            <select id="selectParty" class="form-select" onchange="set_global_party_filter()" aria-label="Default select example">
+                            </select>
                             
                             <div class="date-picker d-flex mt-3 my-2">
                                 <!-- simple bootstrap date picker  -->
@@ -120,6 +123,8 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <!-- id dont think we need this haha-->
                             <div class="data-picker">
                                 <!-- picking what data you want to show (pos, named entity, simple count of something etc.) -->
                                 <label for="data-point-selector">Select Data</label>
@@ -133,7 +138,8 @@
                             
                             <!--Search Button (3d), for creting Dashboard with input as title and same functions as above -->
                             <form class="form-inline mr-auto">
-                                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                                <input id="filterinput" list="allOptions" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
+                                <datalist id="allOptions"></datalist>
                                 <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
                               </form>
 
@@ -375,6 +381,8 @@
     <script src="scripts/js/dataFetcher.js"></script>
     <script src="scripts/js/modalMaker.js"></script>
     <script src="scripts/js/dashboardHandler.js"></script>
+
+    <script src="scripts/js/filter.js"></script>
     
     
     <!-- charts -->
