@@ -136,4 +136,56 @@ function mainPOS() {
 
 }//end mainfunction
 
+
+
+function addPOSchart(POScanvasID){
+    $.ajax({
+        url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS+speakerFilterPOS+fractionFilterPOS+partyFilterPOS,
+        type: "GET",
+        dataType: "json",
+        success: async function(pos) {
+            var posresult = pos.result
+            var labels = []
+            var counts = []
+    
+            //push the result data onto other array of data used in the cahrt
+            posresult.forEach(e => {
+                labels.push(e.pos);
+                counts.push(e.count)
+                
+            });
+    
+            //if the chart is made for the first time
+            ctxPOS = document.getElementById(POScanvasID).getContext('2d');
+            ChartPOS = new Chart(ctxPOS, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# POS',
+                        data: counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+        error: function(pos) {
+            //if something happens we get an error message
+            console.log("Fehler")
+        }
+    })
+
+}
 mainPOS()

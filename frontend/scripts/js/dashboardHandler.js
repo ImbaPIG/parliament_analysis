@@ -114,28 +114,26 @@ function dashboardHTML(){
     chartBaseFrame = createchart("newSentiment", "Sentiment")
     $("#newDashboardCharts").html(chartBaseFrame);
     addSentiment("newSentiment")
-    
 
     //add POS
-    //chartBaseFrame = createchart("newSentiment", "Sentiment")
-    //$("#newDashboardCharts").html(chartBaseFrame);
-    //addSentiment("newSentiment")
-
+    chartBaseFrame = chartBaseFrame + create_bar_chart("newPOS", "POS")
+    $("#newDashboardCharts").html(chartBaseFrame);
+    addPOSchart("newPOS")
 
     //addToken
-    //chartBaseFrame = createchart("newSentiment", "Sentiment")
-    //$("#newDashboardCharts").html(chartBaseFrame);
-    //addSentiment("newSentiment")
+    chartBaseFrame = chartBaseFrame + create_line_chart("newToken", "Token")
+    $("#newDashboardCharts").html(chartBaseFrame);
+    addTokenChart("newToken")
 
     //add NE
-    chartBaseFrame = chartBaseFrame + createchart("newNE", "Named entities")
+    chartBaseFrame = chartBaseFrame + createchart("newNE", "Named Entities")
     $("#newDashboardCharts").html(chartBaseFrame);
     addNamedEntities("newNE")
 
     //add Speaker
-   // chartBaseFrame = createchart("newSentiment", "Sentiment")
-    //$("#newDashboardCharts").html(chartBaseFrame);
-    //addSentiment("newSentiment")
+    chartBaseFrame = chartBaseFrame + create_bar_chart("newSpeaker", "Speaker")
+    $("#newDashboardCharts").html(chartBaseFrame);
+    addSpeakerChart("newSpeaker")
 
 }
 
@@ -157,16 +155,56 @@ function createchart(canvasID, chartName){
             </div>
         </div>
     </div>
+    `
+    return baseframe;
+}
+
+
+function create_bar_chart(canvasID, chartName){
+        let baseframe = `
+        <div class="row">
+            <div class="col-xl-12 col-lg-7">
+                <div class="card shadow mb-4" >
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold text-primary">${chartName}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-bar">
+                            <canvas id="${canvasID}" height="100"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        `
+        return baseframe;
+}
+
+function create_line_chart(canvasID, chartName){
+    let baseframe = `
+    <div class="row">
+        <div class="col-xl-12 col-lg-7">
+            <div class="card shadow mb-4" >
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">${chartName}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="">
+                        <canvas id="${canvasID}" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     `
     return baseframe;
-    }
+}
 
 //dashboardHTML()
 function removeDashboard(){
     //console.log("Jo sgeht")
     $("#newdashboard").html( '' )
-
-
 }
 

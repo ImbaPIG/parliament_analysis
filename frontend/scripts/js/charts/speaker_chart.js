@@ -8,7 +8,7 @@
  * Prints the speaker with the most Speeches onto the Website
  * 
  */
-
+function mainSpeaker(){
  $.ajax({
     url: "http://api.prg2021.texttechnologylab.org/statistic",
     type: "GET",
@@ -81,3 +81,67 @@
         
     }
 })
+
+}
+
+function addSpeakerChart(SpeakercanvasID){
+    $.ajax({
+        url: "http://api.prg2021.texttechnologylab.org/statistic",
+        type: "GET",
+        dataType: "json",
+        success: function(statistic){
+            var speakers = statistic.result.speakers
+            var label_speaker  = []
+            var date_speaker = []
+    
+            speakers.forEach(speaker => {
+                date_speaker.push(speaker.count)
+                label_speaker.push(speaker.id)
+            });
+           /* $.ajax({
+                url: "http://api.prg2021.texttechnologylab.org/speakers?id="+maxSpeaker,
+                type: "GET",
+                dataType: "json",
+            })
+            .then(function(speaker) {
+                document.getElementById("oneA").innerHTML = ( speaker.result[0].firstname + " " + speaker.result[0].name);     
+            })*/
+    
+            var ctxSpeaker = document.getElementById(SpeakercanvasID).getContext('2d');
+            var ChartSpeaker = new Chart(ctxSpeaker, {
+                type: 'bar',
+                data: {
+                    labels: [1,2,3,4,5,6,7,8,9,10],
+                    datasets: [{
+                        label: 'Speaker',
+                        data: date_speaker,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        callbacks: {
+                              title: function(tooltipItems, data) {
+                                return '';
+                              },
+                              label: function(tooltipItem, data) {
+                                return data.labels[tooltipItem];
+                              }
+                            }
+                    },
+                }
+            })
+        },
+    
+        error: function(error) {
+            console.log(error)
+            
+        }
+    })
+
+}
+
+mainSpeaker()
