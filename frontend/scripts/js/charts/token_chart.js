@@ -133,4 +133,57 @@ $.ajax({
 })
 }
 
+function addTokenChart(Token_canvasID){
+    $.ajax({
+        url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter + rednerFilterToken+ fractionfilter + partyfilter,
+        type: "GET",
+        dataType: "json",
+        success: async function(token) {
+            var tokenresult = token.result
+            
+            var labels = []
+            var counts = []
+    
+            //push reult data into dffrent lists for the chart
+            tokenresult.forEach(e => {
+                labels.push(e.token);
+                counts.push(e.count)
+                
+            });
+
+            ctx = document.getElementById(Token_canvasID).getContext('2d');
+            myChartToken = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# Token',
+                        data: counts.concat([0]),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            })
+    
+            firsttime=false;
+    },
+    
+    //error message
+        error: function(pos) {
+            console.log("Fehler")
+        }
+    })
+}
+
 mainToken();
