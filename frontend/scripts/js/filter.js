@@ -12,7 +12,7 @@ var list = document.getElementById("allOptions")
     
             speakerList.forEach(r => {
                 var option = document.createElement('option');
-                option.value = r.id
+                option.value = r.id + "#" + r.firstname + " " + r.name;
                 option.text=r.firstname + " " + r.name;
                 list.appendChild(option)
             });
@@ -74,19 +74,43 @@ var list = document.getElementById("allOptions")
 }
 
 function set_global_party_filter(){
+        
         var e = document.getElementById("filterinput");
         //if contains party do something
         //if contains fraction do something
         //if contains redner do something
+        //set_dashboardTitle(e.value)
         if(e.value.includes("[Partei]")){
             global_party_filter = "&party="+ e.value.split(" ")[0]
             console.log(e.value.split(" ")[0])
 
         }else if(e.value.includes("[Fraktion]")){
+            global_party_filter = "&fraction="+ e.value.split(" ")[0]
+            console.log(e.value.split(" ")[0])
 
         }else{
-            global_party_filter = "&user="+e.value;
+            //e.value.split("#")[0]
+            global_party_filter = "&user="+e.value.split("#")[0]
+            set_dashboardTitle(e.value.split("#")[1]);
         }
 }
 
+$(document).ready(function () {
+    // Listen to click event on the submit button
+    $('#submitFilter').click(function (e) {
+  
+      e.preventDefault();
+      set_global_party_filter();
+      dashboardHTML();
+
+    });
+  });
+
+document.querySelector('#filterinput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        set_global_party_filter();
+        dashboardHTML();
+    }
+});
 fill_select_party()

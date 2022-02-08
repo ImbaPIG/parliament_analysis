@@ -82,10 +82,6 @@
                                 <button class="btn btn-primary modalTrigger" id="fractionModal" data-modal="fraction">Fraction</button>                            
                                 <button class="btn btn-primary showAll" >Alle</button>                            
                             </div>
-
-                            <select id="selectParty" class="form-select" onchange="set_global_party_filter()" aria-label="Default select example">
-                            </select>
-                            
                             <div class="date-picker d-flex mt-3 my-2">
                                 <!-- simple bootstrap date picker  -->
                                 <div class="container m-0 mx-3 p-0 d-inline">
@@ -137,13 +133,13 @@
                             </div>
                             
                             <!--Search Button (3d), for creting Dashboard with input as title and same functions as above -->
-                            <form class="form-inline mr-auto">
+                            <form class="form-inline ">
                                 <input id="filterinput" list="allOptions" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
                                 <datalist id="allOptions"></datalist>
-                                <button class="btn blue-gradient btn-rounded btn-sm my-0" onclick="set_global_party_filter()">Search</button>
+                                <button id="submitFilter"class="btn btn-primary mt-4">Add Dashboard</button>
                               </form>
 
-                            <button class="btn btn-primary mt-4" onclick="dashboardHTML()">Add Dashboard</button>
+                            <!--<button class="btn btn-primary mt-4" onclick="dashboardHTML()">Add Dashboard</button>-->
                         </div>
                     </div>
                     <div class="px-3">
