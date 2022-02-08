@@ -27,12 +27,11 @@ public class Protokoll_File_Impl implements Protokoll {
     private ArrayList<String> Sitzungsleiter = null;
 
 
-    public Protokoll_File_Impl(File file, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler, String protocollID) throws IOException, SAXException {
+    public Protokoll_File_Impl(Document doc, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler, String protocollID) throws IOException, SAXException {
         /**
          * creates a Protokoll object and all the theobjects a Protokoll contains (i.e. TagesOrdnungsPunkt, Rede, Redner etc)
          */
         this.Tagesordnungspunkte = new ArrayList<Tagesordnungspunkt_File_Impl>();
-        Document doc = builder.parse(file);
 
         // navigate to head
         NodeList headList = doc.getElementsByTagName("kopfdaten");
@@ -71,6 +70,8 @@ public class Protokoll_File_Impl implements Protokoll {
     public String get_id() {
         return _id;
     }
+
+    public void setID(String newID){ this._id = newID;}
 
     public String getDate() {
         return date;

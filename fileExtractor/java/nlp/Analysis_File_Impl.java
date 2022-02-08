@@ -88,18 +88,18 @@ public class Analysis_File_Impl implements Analysis {
         createTXTFile("Antworten/Uebung2_Frage5");
     }
 
-    public void parseDocs(){
+    public void parseDocs(Hashtable<String, String> protocolLinks){
         /**
          * go through all protkolle/tagesorsdnungspunkte/reden and add them to the analysing methods that are collecting data from all the reden
          */
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
         Creds_File_Impl cred = new Creds_File_Impl();
         ObjectMapper mapper = new ObjectMapper();
-        for(Integer i = 1; i < handler.countProtokolle(); i++){
+        for(String protocollID : protocolLinks.keySet()){
 //        for(Integer i = 1; i < 2; i++){
-            System.out.println("Currently handeling document number ---> " + i);
+            System.out.println("Currently handeling document number ---> " + protocollID);
             try {
-                String document = handler.db.getCollection(cred.getProtocollCollection()).find(eq("_id", i.toString())).first().toJson();
+                String document = handler.db.getCollection(cred.getProtocollCollection()).find(eq("_id", protocollID)).first().toJson();
                 Protokoll_File_Impl protokoll = mapper.readValue(document, Protokoll_File_Impl.class);
                 for(Tagesordnungspunkt_File_Impl top : protokoll.getTagesordnungspunkte()){
                     if (top.getReden().size() > 0) {
@@ -119,7 +119,7 @@ public class Analysis_File_Impl implements Analysis {
                     }
                 }
             } catch (NullPointerException | IOException | UIMAException e) {
-                System.out.println("couldnt find protokoll nr " + i);
+                System.out.println("couldnt find protokoll nr " + protocollID);
                 e.printStackTrace();
             }
         }
