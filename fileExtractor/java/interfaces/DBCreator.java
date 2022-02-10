@@ -6,5 +6,5 @@ import java.util.Hashtable;
 
 public interface DBCreator {
     public File[] fileGetter(String dir);
-    public void insert(Hashtable<String, String> protocolLinks) throws IOException;
+    public void insertProtocolls(Hashtable<String, String> protocolLinks) throws IOException;
 }

@@ -16,7 +16,7 @@ import static webscraper.webscraper.fetchDocument;
 
 public class DBCreator_File_Impl implements DBCreator {
 
-    public void insert(Hashtable<String, String> protocolLinks) throws IOException {
+    public void insertProtocolls(Hashtable<String, String> protocolLinks) throws IOException {
         /**
          * used to insert all protkolle and jcas into the mongodb
          */

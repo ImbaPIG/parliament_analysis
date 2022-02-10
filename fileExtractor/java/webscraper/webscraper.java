@@ -14,20 +14,12 @@ import org.jsoup.select.Elements;
 
 public class webscraper {
 
-    public static void main(String[] args) throws IOException {
 
+    public static Hashtable<String, String> getprotocollLinks() throws IOException {
         Hashtable<String, String> protocolLinks = new Hashtable<String, String>();
         iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", protocolLinks);
         iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", protocolLinks);
-        System.out.println("finished finding all xml files");
-
-
-        String vorname = "Angela";
-        String nachname = "Merkel";
-        String dlLink = getImageLink(vorname,nachname);
-
-        System.out.println("lul");
-
+        return protocolLinks;
     }
 
     public static String getImageLink(String vorname, String nachname) throws IOException {
