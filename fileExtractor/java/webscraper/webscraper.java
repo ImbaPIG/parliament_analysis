@@ -15,12 +15,6 @@ import org.jsoup.select.Elements;
 public class webscraper {
 
 
-    public static Hashtable<String, String> getprotocollLinks() throws IOException {
-        Hashtable<String, String> protocolLinks = new Hashtable<String, String>();
-        iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", protocolLinks);
-        iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", protocolLinks);
-        return protocolLinks;
-    }
 
     public static String getImageLink(String vorname, String nachname) throws IOException {
         String prefix ="https://bilddatenbank.bundestag.de";
@@ -61,6 +55,7 @@ public class webscraper {
     }
 
     public static Document fetchDocument(String documentLink) throws IOException {
+
         Document doc = Jsoup.connect(documentLink).get();
         return doc;
     }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Rede_File_Impl implements Rede {
     private MongoDBConnectionHandler_File_Impl handler = null;
     private Redner_File_Impl redner = null;
+    private String rednerID = null;
     private String content = null;
     private String comments = "";
     private String redeID = null;
@@ -31,7 +32,14 @@ public class Rede_File_Impl implements Rede {
         NodeList rednerList = e.getElementsByTagName("redner");
         Element rednerElement = (Element) rednerList.item(0);
         this.redner = new Redner_File_Impl(rednerElement);
+        this.rednerID = this.redner.getRednerID();
+        //this.redner = new Redner_File_Impl(rednerElement);
 
+        try{
+            handler.uploadDoc(redner.getDocument(), "speakers");
+        }catch (Exception exception){
+
+        }
         // get redeID
         this.redeID = e.getAttribute("id");
 
@@ -80,6 +88,9 @@ public class Rede_File_Impl implements Rede {
     public Redner_File_Impl getRedner() {
         return redner;
     }
+    public String getRednerID(){
+        return rednerID;
+    }
 
     public String getContent() {
         return content;
@@ -98,7 +109,7 @@ public class Rede_File_Impl implements Rede {
         mongoDoc.put("content", this.getContent());
         mongoDoc.put("comments", this.getComments());
         mongoDoc.put("redeID", this.getRedeID());
-        mongoDoc.put("redner", this.getRedner().getDocument());
+        mongoDoc.put("rednerID", this.getRednerID());
         return mongoDoc;
     }
 }

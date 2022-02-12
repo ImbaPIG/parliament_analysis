@@ -2,6 +2,7 @@ package database;
 
 import bundestag.Protokoll_File_Impl;
 import interfaces.DBCreator;
+import org.jsoup.helper.W3CDom;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,7 +17,7 @@ import static webscraper.webscraper.fetchDocument;
 
 public class DBCreator_File_Impl implements DBCreator {
 
-    public void insertProtocolls(Hashtable<String, String> protocolLinks) throws IOException {
+    public void insertProtocolls(String protocolLink, String protocollID) throws IOException {
         /**
          * used to insert all protkolle and jcas into the mongodb
          */
@@ -33,32 +34,35 @@ public class DBCreator_File_Impl implements DBCreator {
 
         // parse through all xml files
         //File[] fs = fileGetter(this.dir);
-        for(String protocollID : protocolLinks.keySet()) {
-            Document doc = getDocFromLink(protocolLinks.get(protocollID));
-            // get sitzungsnr from filename
-            String sitzungsnr = protocollID;
+        Document doc = getDocFromLink(protocolLink);
+        // get sitzungsnr from filename
+        String sitzungsnr = protocollID;
 
-            // add protokoll if not already added
-            if(handler.protokollExists(sitzungsnr)){
-                System.out.println("the protkoll " + sitzungsnr + " already exists, therefore it is skipped");
-            } else {
-                handler.createPlaceholder(sitzungsnr);
-                try{
-                    assert builder != null;
-                    Protokoll_File_Impl protokoll = new Protokoll_File_Impl(doc, builder, handler, sitzungsnr);
-                    // String protokollBson = handler.ObjToBson(protokoll);
-                    handler.removePlaceholder(sitzungsnr);
-                    //handler.uploadBson(protokollBson, "protocol");
-                    handler.uploadDoc(protokoll.getDocument(), "protocol");
-                } catch (Exception e) {e.printStackTrace();}
-           }
-        }
+        // add protokoll if not already added
+        if(handler.protokollExists(sitzungsnr)){
+            System.out.println("the protkoll " + sitzungsnr + " already exists, therefore it is skipped");
+        } else {
+            handler.createPlaceholder(sitzungsnr);
+            try{
+                assert builder != null;
+                Protokoll_File_Impl protokoll = new Protokoll_File_Impl(doc, builder, handler, sitzungsnr);
+                System.out.println("created Protocoll");
+                // String protokollBson = handler.ObjToBson(protokoll);
+                handler.removePlaceholder(sitzungsnr);
+                //handler.uploadBson(protokollBson, "protocol");
+                handler.uploadDoc(protokoll.getDocument(), "protocol");
+
+            } catch (Exception e) {e.printStackTrace();}
+       }
     }
 
     public Document getDocFromLink(String link) throws IOException {
         // Still needs to be implemented
-        return (Document) fetchDocument(link);
+        W3CDom w3cDom = new W3CDom();
+        System.out.println("about to cast");
+        return w3cDom.fromJsoup(fetchDocument(link));
     }
+
     public File[] fileGetter(String dir){
         /**
          * gets all xml files from the given directory

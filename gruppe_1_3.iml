@@ -35,7 +35,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.2.16.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:3.2.16.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.uima:uimaj-json:2.10.4" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-segmentation-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-parameter-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: eu.openminted.share.annotations:omtd-share-annotations-api:3.0.2.7" level="project" />
@@ -45,8 +44,8 @@
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-anomaly-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-syntax-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-semantics-asl:1.12.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab:textimager-uima:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:Polyglot:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab:textimager-uima:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:Polyglot:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.opennlp-asl:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.opennlp:opennlp-tools:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.syntax-asl:1.8.0" level="project" />
@@ -106,7 +105,7 @@
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.io.penntree-asl:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.semantics-asl:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.coref-asl:1.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-base-annotators:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-base-annotators:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.github.jnr:jnr-ffi:2.2.3" level="project" />
     <orderEntry type="library" name="Maven: com.github.jnr:jffi:1.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.github.jnr:jffi:native:1.3.3" level="project" />
@@ -123,11 +122,9 @@
     <orderEntry type="library" name="Maven: com.github.jnr:jnr-posix:3.1.7" level="project" />
     <orderEntry type="library" name="Maven: black.ninia:jep:3.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.0.4" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-bert-sentiment:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-biofid-flair:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-biofid-gazetteer:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
-    <orderEntry type="library" name="Maven: log4j:apache-log4j-extras:1.2.17" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-bert-sentiment:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-biofid-flair:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-biofid-gazetteer:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.4" level="project" />
@@ -139,8 +136,8 @@
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.18" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-biofid-general-gazetteer:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-database:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-biofid-general-gazetteer:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-database:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-kernel:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-graphdb-api:3.2.0" level="project" />
@@ -156,8 +153,6 @@
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-configuration:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-index:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-lucene-index:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:5.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:5.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-codecs:5.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-graph-algo:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-udc:3.2.0" level="project" />
@@ -171,7 +166,6 @@
     <orderEntry type="library" name="Maven: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-cypher-compiler-3.1:3.1.4" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-cypher-frontend-3.1:3.1.4" level="project" />
-    <orderEntry type="library" name="Maven: com.github.ben-manes.caffeine:caffeine:2.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-cypher-compiler-3.2:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-cypher-frontend-3.2:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-cypher-ir-3.2:3.2.0" level="project" />
@@ -179,9 +173,6 @@
     <orderEntry type="library" name="Maven: org.parboiled:parboiled-core:1.1.7" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-jmx:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.neo4j:neo4j-consistency-check:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.neo4j:neo4j-command-line:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.neo4j:neo4j-dbms:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.neo4j:neo4j-import-tool:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.datastax.cassandra:cassandra-driver-core:3.1.3" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-handler:4.0.37.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.0.37.Final" level="project" />
@@ -192,7 +183,7 @@
     <orderEntry type="library" name="Maven: com.datastax.cassandra:cassandra-driver-mapping:3.1.3" level="project" />
     <orderEntry type="library" name="Maven: com.datastax.cassandra:cassandra-driver-extras:3.1.3" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.8-dmr" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-disambiguation:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-disambiguation:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.github.vinhkhuc:jfasttext:0.4" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacpp:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: de.tuebingen.uni.sfs.germanet:germanet-api:13.1.0" level="project" />
@@ -200,21 +191,24 @@
     <orderEntry type="library" name="Maven: org.jheaps:jheaps:0.11" level="project" />
     <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-io:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.7.2" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-docker:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-docker:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.amihaiemil.web:docker-java-api:0.0.13" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-fasttext:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-fasttext:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.opentest4j:opentest4j:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.3.2" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gazetteer:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-geonames-gazetteer:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-german-emotion-detection:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gnd-gazetteer:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-HUComputeNER:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gazetteer:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-geonames-gazetteer:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-german-emotion-detection:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gnd-gazetteer:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gnfinder:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-heideltime-biofid:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab:heideltime:a265ed523a" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-HUComputeNER:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-dictionaryannotator-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: commons-jxpath:commons-jxpath:1.3" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io-abbyy:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io-abbyy:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.8" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.segmentation-asl:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.metadata-asl:1.8.0" level="project" />
@@ -258,9 +252,9 @@
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.io-asl:1.10.0" level="project" />
     <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.11" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.21.0-GA" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io-embeddings:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io-embeddings:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-io-asl:1.12.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io-mediawiki:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io-mediawiki:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.deeplearning4j:deeplearning4j-core:1.0.0-beta7" level="project" />
     <orderEntry type="library" name="Maven: org.deeplearning4j:deeplearning4j-tsne:1.0.0-beta7" level="project" />
     <orderEntry type="library" name="Maven: org.deeplearning4j:nearestneighbor-core:1.0.0-beta7" level="project" />
@@ -400,11 +394,9 @@
     <orderEntry type="library" name="Maven: com.googlecode.mate-tools:srl:4.31" level="project" />
     <orderEntry type="library" name="Maven: org.riedelcastro:whatswrong:0.2.4" level="project" />
     <orderEntry type="library" name="Maven: net.sf.epsgraphics:epsgraphics:1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.opennlp:opennlp-maxent:3.0.2-incubating" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-julie:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.myyyvothrr.jcore-base:jcore-types:9df8678666856d87b815e79fe100da26f777fb91" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-marmot:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-local:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-marmot:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.github.hemati:cistern:-46500ff218-1" level="project" />
     <orderEntry type="library" name="Maven: com.github.hemati.cistern:marmot:-46500ff218-1" level="project" />
     <orderEntry type="library" name="Maven: org.javatuples:javatuples:1.2" level="project" />
@@ -412,10 +404,9 @@
     <orderEntry type="library" name="Maven: org.beanshell:bsh:2.0b4" level="project" />
     <orderEntry type="library" name="Maven: jgrapht:jgrapht:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: net.sf.jwordnet:jwnl:1.4_rc3" level="project" />
-    <orderEntry type="library" name="Maven: org.jdom:jdom:1.1" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-openie:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-sentiment-base:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-similarity:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-openie:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-sentiment-base:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-similarity:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.similarity:dkpro-similarity-uima-core-gpl:2.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.similarity:dkpro-similarity-algorithms-ml-gpl:2.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.similarity:dkpro-similarity-ml-core-gpl:2.3.0" level="project" />
@@ -448,14 +439,14 @@
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-i686:natives:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.mpkorstanje:simmetrics-core:4.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.wcohen:com.wcohen.secondstring:0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-spacy-ie:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-spacy-ie:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-languagetool-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-frequency-asl:1.12.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-splitter:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-stanza:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-steps:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-supar:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-tagme:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-splitter:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-stanza:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-steps:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-supar:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-tagme:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.martiansoftware:jsap:2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.4" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
@@ -479,11 +470,11 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat:annotations-api:6.0.37" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
     <orderEntry type="library" name="Maven: com.github.hemati:tagme:26260181b7" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-textblob:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-util:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-textblob:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-util:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.zeroturnaround:zt-exec:1.11" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-vader:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-wiki:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-vader:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-wiki:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.mapdb:mapdb:3.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.2.71" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.71" level="project" />
@@ -493,15 +484,14 @@
     <orderEntry type="library" name="Maven: org.eclipse.collections:eclipse-collections-forkjoin:11.0.0" level="project" />
     <orderEntry type="library" name="Maven: net.jpountz.lz4:lz4:1.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.mapdb:elsa:3.0.0-M5" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-types:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-types:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-lexmorph-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-resources-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.0.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ivy:ivy:2.4.0" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:2.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.tukaani:xz:1.8" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-io:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-io-tei-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
@@ -544,11 +534,11 @@
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-c3p0:4.1.3.Final" level="project" />
     <orderEntry type="library" name="Maven: c3p0:c3p0:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-jdk1.5:0.7.3" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.sweble.wikitext:swc-parser-lazy:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: de.fau.cs.osr.ptk:ptk-common:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: xtc:rats-runtime:1.15.0" level="project" />
     <orderEntry type="library" name="Maven: de.fau.cs.osr.utils:utils:0.3.0" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:4.3" level="project" />
     <orderEntry type="library" name="Maven: org.sweble.wikitext:swc-engine:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.wikipedia:de.tudarmstadt.ukp.wikipedia.parser:0.9.2" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180813" level="project" />
@@ -573,7 +563,22 @@
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.13.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sparkjava:spark-core:2.9.3" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-webapp:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-server:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-common:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-client:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-client:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-servlet:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.4.31.v20200723" level="project" />
     <orderEntry type="library" name="Maven: com.tinkerpop.blueprints:blueprints-core:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jettison:jettison:1.3.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.3" level="project" />
@@ -584,34 +589,161 @@
     <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-params:5.7.0-RC1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.0-RC1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.junit.platform:junit-platform-engine:1.7.0-RC1" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-spacy:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-spacy:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: junit:junit:4.10" level="project" />
-    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gervader:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
-    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-heideltime:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-gervader:48b8de425f" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-heideltime:48b8de425f" level="project" />
     <orderEntry type="library" name="Maven: com.github.heideltime:heideltime:2.2.1" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.lexmorph-asl:1.10.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:3.2.16.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.resources-asl:1.10.0" level="project" />
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.api.parameter-asl:1.10.0" level="project" />
-    <orderEntry type="library" name="Maven: com.sparkjava:spark-core:2.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.13" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-webapp:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-server:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-common:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-client:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-servlet:9.3.6.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.3.6.v20151106" level="project" />
+    <orderEntry type="library" name="Maven: com.github.texttechnologylab:UIMADatabaseInterface:3634ac3be3" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.client:elasticsearch-rest-high-level-client:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-core:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-secure-sm:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-x-content:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.8.11" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.8.11" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-geo:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial-extras:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial3d:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-cli:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:5.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:jna:4.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.client:elasticsearch-rest-client:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpasyncclient:4.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.11" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:mapper-extras:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:parent-join-client:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:aggs-matrix-stats-client:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:rank-eval-client:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:lang-mustache-client:7.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.spullara.mustache.java:compiler:0.9.3" level="project" />
+    <orderEntry type="library" name="Maven: com.couchbase.client:java-client:2.7.11" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-enterprise:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-query-logging:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-com:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-enterprise-kernel:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty:3.9.9.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-backup:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-command-line:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-dbms:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-import-tool:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-cluster:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-ha:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-causal-clustering:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.8.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-all:3.7.5" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-ssl:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.53" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.53" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-metrics:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-graphite:3.1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-management:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-security-enterprise:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-security:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-auth-plugin-api:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-core:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ben-manes.caffeine:caffeine:2.3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-nop:1.7.22" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-main:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-api:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-referencing:14.4" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:core:0.26" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-metadata:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-opengis:14.4" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jsr-275:jsr-275:1.0-beta-2" level="project" />
+    <orderEntry type="library" name="Maven: jgridshift:jgridshift:1.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.geographiclib:GeographicLib-Java:1.44" level="project" />
+    <orderEntry type="library" name="Maven: com.vividsolutions:jts:1.13" level="project" />
+    <orderEntry type="library" name="Maven: org.jdom:jdom:1.1.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.media:jai_core:1.1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.github.neo4j-contrib:spatial:0.26.1-neo4j-3.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-shapefile:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-data:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-process:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-coverage:14.4" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.imageio-ext:imageio-ext-tiff:1.1.13" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.imageio-ext:imageio-ext-utilities:1.1.13" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.imageio-ext:imageio-ext-geocore:1.1.13" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.imageio-ext:imageio-ext-streams:1.1.13" level="project" />
+    <orderEntry type="library" name="Maven: javax.media:jai_codec:1.1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jaitools:jt-zonalstats:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jaitools:jt-utils:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.affine:jt-affine:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.iterators:jt-iterators:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.utilities:jt-utilities:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.scale:jt-scale:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.translate:jt-translate:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.algebra:jt-algebra:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.bandmerge:jt-bandmerge:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.bandselect:jt-bandselect:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.bandcombine:jt-bandcombine:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.border:jt-border:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.buffer:jt-buffer:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.crop:jt-crop:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.lookup:jt-lookup:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.mosaic:jt-mosaic:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.nullop:jt-nullop:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.rescale:jt-rescale:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.stats:jt-stats:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.warp:jt-warp:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.zonal:jt-zonal:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.binarize:jt-binarize:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.format:jt-format:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.colorconvert:jt-colorconvert:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.errordiffusion:jt-errordiffusion:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.orderdither:jt-orderdither:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.colorindexer:jt-colorindexer:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.imagefunction:jt-imagefunction:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.piecewise:jt-piecewise:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.classifier:jt-classifier:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.rlookup:jt-rlookup:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: it.geosolutions.jaiext.vectorbin:jt-vectorbin:1.0.9" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-cql:14.4" level="project" />
+    <orderEntry type="library" name="Maven: javax.media:jai_imageio:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-render:14.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial:5.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.spatial4j:spatial4j:0.5" level="project" />
+    <orderEntry type="library" name="Maven: com.siemens.ct.exi:exificient-for-json:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.siemens.ct.exi:exificient:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.siemens.ct.exi:exificient-core:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.siemens.ct.exi:exificient-grammars:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: xmlpull:xmlpull:1.1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:uimaj-tools:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:uimaj-cpe:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:uimaj-adapter-vinci:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:jVinci:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:ruta-core:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:ruta-typesystem:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.uima:ruta-basic-type:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.htmlparser:htmlparser:1.6" level="project" />
+    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.4" level="project" />
+    <orderEntry type="library" name="Maven: com.couchbase.client:core-io:1.7.11" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex:rxjava:1.3.8" level="project" />
+    <orderEntry type="library" name="Maven: io.opentracing:opentracing-api:0.31.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.chemistry.opencmis:chemistry-opencmis-commons-api:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
   </component>
 </module>

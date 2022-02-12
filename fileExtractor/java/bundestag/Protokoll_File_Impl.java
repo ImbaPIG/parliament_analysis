@@ -85,6 +85,8 @@ public class Protokoll_File_Impl implements Protokoll {
         return title;
     }
 
+    public String getProtocollNr(){ return protocollNr;}
+
     public ArrayList<String> getSitzungsleiter() {
         return Sitzungsleiter;
     }
@@ -96,6 +98,7 @@ public class Protokoll_File_Impl implements Protokoll {
         mongoDoc.put("periode", this.getPeriode());
         mongoDoc.put("title", this.getTitle());
         mongoDoc.put("sitzungsleiter", this.getSitzungsleiter());
+        mongoDoc.put("protocollNr", this.getProtocollNr());
         List<org.bson.Document> tagesordnungspunkte = new LinkedList<>();
         this.getTagesordnungspunkte().forEach(tages -> {
             tagesordnungspunkte.add(tages.getDocument());
