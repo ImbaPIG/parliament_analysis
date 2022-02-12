@@ -31,3 +31,17 @@ ul {
     background: rgb(233, 233, 233);
     cursor: pointer;
 }
+
+
+/*text marking (3e)*/
+mark.blue{
+    background-color: lightskyblue;
+}
+
+mark.red{
+    background-color: crimson;
+}
+
+mark.yellow{
+    background-color: sandybrown;
+}
