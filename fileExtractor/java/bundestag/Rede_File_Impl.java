@@ -1,10 +1,13 @@
 package bundestag;
 
 
+import database.JCasTuple_FIle_Impl;
 import database.JcasDBObj;
 import database.MongoDBConnectionHandler_File_Impl;
 import interfaces.Rede;
+import nlp.Analysis_File_Impl;
 import nlp.Pipeline_File_Impl;
+import org.apache.uima.UIMAException;
 import org.apache.uima.jcas.JCas;
 import org.bson.Document;
 import org.w3c.dom.Element;
@@ -22,7 +25,7 @@ public class Rede_File_Impl implements Rede {
     private String comments = "";
     private String redeID = null;
 
-    public Rede_File_Impl(Element e, MongoDBConnectionHandler_File_Impl handler) throws IOException {
+    public Rede_File_Impl(Element e, MongoDBConnectionHandler_File_Impl handler) throws IOException, UIMAException {
         /**
          * creates a Rede object and all the theobjects a Protokoll contains (i.e. Redner etc)
          */
@@ -79,7 +82,12 @@ public class Rede_File_Impl implements Rede {
             // upload jcas obj\
             //String jCasBson = this.handler.ObjToBson(dbObj);
             //this.handler.uploadBson(jCasBson, "jcas");
-            this.handler.uploadDoc(dbObj.getDocument(), "jcas");
+            JCasTuple_FIle_Impl redeJcasTuple = new JCasTuple_FIle_Impl(handler.XMLToJcas(this.comments), handler.XMLToJcas(this.content));
+            Analysis_File_Impl anal = new Analysis_File_Impl();
+            Document analysedDoc = anal.createAnalysedDoc(redeJcasTuple, handler, this);
+            handler.uploadDoc(analysedDoc, "analyzedSpeeches");
+
+            // this.handler.uploadDoc(dbObj.getDocument(), "jcas");
         }
     }
     // dummy constructor for instanciating from mongodb

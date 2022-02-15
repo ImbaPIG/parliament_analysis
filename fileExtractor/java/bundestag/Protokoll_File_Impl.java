@@ -3,6 +3,7 @@ package bundestag;
 import com.mongodb.BasicDBObject;
 import database.MongoDBConnectionHandler_File_Impl;
 import interfaces.Protokoll;
+import org.apache.uima.UIMAException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -12,14 +13,17 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import static java.util.Arrays.asList;
 
 public class Protokoll_File_Impl implements Protokoll {
     private ArrayList<Tagesordnungspunkt_File_Impl> Tagesordnungspunkte;
-    private  String date = null;
+    private String date = null;
     private  String periode = null;
     private String protocollNr = null;
     private  String _id = null;
@@ -27,7 +31,7 @@ public class Protokoll_File_Impl implements Protokoll {
     private ArrayList<String> Sitzungsleiter = null;
 
 
-    public Protokoll_File_Impl(Document doc, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler, String protocollID) throws IOException, SAXException {
+    public Protokoll_File_Impl(Document doc, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler, String protocollID) throws IOException, SAXException, ParseException, UIMAException {
         /**
          * creates a Protokoll object and all the theobjects a Protokoll contains (i.e. TagesOrdnungsPunkt, Rede, Redner etc)
          */
@@ -39,7 +43,11 @@ public class Protokoll_File_Impl implements Protokoll {
         Element headElement = (Element) headNode;
 
         // add infos to object
-        this.date = headElement.getElementsByTagName("datum").item(0).getTextContent();
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String dateString = headElement.getElementsByTagName("datum").item(0).getAttributes().getNamedItem("date").getTextContent();
+        this.date  = dateString;
         this.periode = headElement.getElementsByTagName("wahlperiode").item(0).getTextContent();
         this.protocollNr = headElement.getElementsByTagName("sitzungsnr").item(0).getTextContent();
         this._id = protocollID;

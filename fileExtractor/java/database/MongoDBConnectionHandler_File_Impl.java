@@ -1,11 +1,11 @@
 package database;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import bundestag.Redner_File_Impl;
+import com.mongodb.*;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import interfaces.MongoDBConnectionHandler;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.CAS;
@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +51,48 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         this.db = client.getDatabase(cred.getDatabase());
     }
 
+    public boolean existsDocument(String identifier, String collection){
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("_id", identifier);
+
+        /*
+        System.out.println(identifier);
+        System.out.println(this.db.getCollection(collection).find(whereQuery).first());
+        System.out.println(this.db.getCollection(collection).find(whereQuery).first() != null);
+
+         */
+        return this.db.getCollection(collection).find(whereQuery).first() != null;
+    }
+    public Document getDocument(String identifier, String collection){
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("_id", identifier);
+        try {
+            Document document = this.db.getCollection(collection).find(whereQuery).first();
+            return document;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new Document();
+    }
+
+
+    public boolean updateDocument(Document doc, String collection) throws UIMAException {
+
+        // Create Where-Query
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("_id", doc.get("_id"));
+        UpdateResult uResult = null;
+        try {
+            uResult = this.db.getCollection(collection).replaceOne(whereQuery, doc);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return uResult != null;
+
+    }
     public void uploadBson(String bSon, String collection){
         /**
          * uploads a given bson string to a given collection
@@ -83,7 +126,8 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         } else if(collection == "jcas"){
             collection = this.cred.getJcasCollection();
         } else {
-            System.out.println("ERROR - " + collection + " is not a valid collection");}
+            //System.out.println("ERROR - " + collection + " is not a valid collection");
+        }
         // upload document
         assert dbDoc != null;
         this.db.getCollection(collection).insertOne(dbDoc);
@@ -201,6 +245,20 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
          */
         Document doc = new Document("placeholder", true);
         DeleteResult result = db.getCollection(cred.getProtocollCollection()).deleteMany(doc);
+    }
+
+    public List<String> getExistingPlaceholderIDs(){
+        /**
+         * checks if protkoll obj exists in database
+         */
+        LinkedList<String> pIDs = new LinkedList<>();
+        Document doc = new Document("placeholder", true);
+        FindIterable<Document> placeholders = this.db.getCollection(cred.getProtocollCollection()).find(doc);
+
+        for(Document placeholder : placeholders){
+            pIDs.push(placeholder.getString("_id"));
+        }
+        return pIDs;
     }
 
     public long countProtokolle(){

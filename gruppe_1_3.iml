@@ -381,7 +381,6 @@
     <orderEntry type="library" name="Maven: org.bytedeco:openblas:0.3.9-1-1.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:openblas:windows-x86_64:0.3.9-1-1.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.datavec:datavec-api:1.0.0-beta7" level="project" />
-    <orderEntry type="library" name="Maven: joda-time:joda-time:2.2" level="project" />
     <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.23" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-common:1.0.0-beta7" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:guava:1.0.0-beta7" level="project" />
@@ -745,5 +744,6 @@
     <orderEntry type="library" name="Maven: io.opentracing:opentracing-api:0.31.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.chemistry.opencmis:chemistry-opencmis-commons-api:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.2" level="project" />
   </component>
 </module>

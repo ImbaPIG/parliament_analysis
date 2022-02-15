@@ -4,6 +4,7 @@ import bundestag.Protokoll_File_Impl;
 import bundestag.Rede_File_Impl;
 import bundestag.Redner_File_Impl;
 import bundestag.Tagesordnungspunkt_File_Impl;
+import com.couchbase.client.deps.com.fasterxml.jackson.annotation.JsonFormat;
 import database.Creds_File_Impl;
 import database.JCasTuple_FIle_Impl;
 import database.MongoDBConnectionHandler_File_Impl;
@@ -24,6 +25,7 @@ import org.bson.Document;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -99,6 +101,7 @@ public class Analysis_File_Impl implements Analysis {
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
         Creds_File_Impl cred = new Creds_File_Impl();
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 //        for(Integer i = 1; i < 2; i++){
         System.out.println("Currently handeling document number ---> " + protocollID);
         try {
@@ -130,17 +133,9 @@ public class Analysis_File_Impl implements Analysis {
             System.out.println("couldnt find protokoll nr " + protocollID);
             e.printStackTrace();
         }
-        /*
-        this.getToken();
-        this.getEntity();
-        this.getPOS();
-        this.getOverallSentiment();
-        this.getFraktionSentiments();
-        this.getRednerSentiments();
-        this.getAbsolutes();
-
-         */
     }
+
+
 
     public void JCasTokenCounter(JCas rede){
         /**
@@ -161,6 +156,31 @@ public class Analysis_File_Impl implements Analysis {
     public Document createAnalysedDoc(Rede_File_Impl rede,MongoDBConnectionHandler_File_Impl handler) throws UIMAException {
 
         JCasTuple_FIle_Impl jCasTuple = handler.getRedeJcas(rede.getRedeID());
+        JCas redeJCas = jCasTuple.getRedeJCas();
+        org.bson.Document mongoDoc = new org.bson.Document();
+        mongoDoc.put("_id", rede.getRedeID());
+        mongoDoc.put("persons",getJCasEntityList(redeJCas, "PER"));
+        mongoDoc.put("organisations",getJCasEntityList(redeJCas, "ORG"));
+        mongoDoc.put("locations",getJCasEntityList(redeJCas, "LOC"));
+        mongoDoc.put("token", getTokenList(redeJCas));
+        mongoDoc.put("sentences", getSentenceList(redeJCas));
+        mongoDoc.put("pos", getPosList(redeJCas));
+        mongoDoc.put("lemma",getLemma(redeJCas));
+        mongoDoc.put("sentiment",getSentimentValue(redeJCas));
+
+        /*
+        List<Document> speeches = new LinkedList<>();
+        this.getReden().forEach(speach -> {
+            speeches.add(speach.getDocument());
+        });
+
+         */
+
+        return mongoDoc;
+    }
+
+    public Document createAnalysedDoc(JCasTuple_FIle_Impl jCasTuple,MongoDBConnectionHandler_File_Impl handler,Rede_File_Impl rede) throws UIMAException {
+
         JCas redeJCas = jCasTuple.getRedeJCas();
         org.bson.Document mongoDoc = new org.bson.Document();
         mongoDoc.put("_id", rede.getRedeID());
