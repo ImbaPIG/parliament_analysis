@@ -82,7 +82,7 @@ public class Rede_File_Impl implements Rede {
             // upload jcas obj\
             //String jCasBson = this.handler.ObjToBson(dbObj);
             //this.handler.uploadBson(jCasBson, "jcas");
-            JCasTuple_FIle_Impl redeJcasTuple = new JCasTuple_FIle_Impl(handler.XMLToJcas(this.comments), handler.XMLToJcas(this.content));
+            JCasTuple_FIle_Impl redeJcasTuple = new JCasTuple_FIle_Impl(contentJcas,commentJcas);
             Analysis_File_Impl anal = new Analysis_File_Impl();
             Document analysedDoc = anal.createAnalysedDoc(redeJcasTuple, handler, this);
             handler.uploadDoc(analysedDoc, "analyzedSpeeches");
