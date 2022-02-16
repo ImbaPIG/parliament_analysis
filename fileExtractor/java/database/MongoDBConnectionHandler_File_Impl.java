@@ -130,6 +130,7 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         }
         // upload document
         assert dbDoc != null;
+        if(existsDocument(dbDoc.get("_id").toString(), collection)){return;}
         this.db.getCollection(collection).insertOne(dbDoc);
     }
 
@@ -209,9 +210,15 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         /**
          * checks if protkoll obj exists in database
          */
-        Document doc = new Document("_id", sitzungsnr);
-        Document d = db.getCollection(cred.getProtocollCollection()).find(doc).first();
-        return d != null;
+        try{
+
+            Document doc = new Document("_id", sitzungsnr);
+            Document d = db.getCollection(cred.getProtocollCollection()).find(doc).first();
+            return d != null;
+        }catch (MongoSocketOpenException e){
+            System.out.println("couldnt reach mongo");
+        }
+        return true;
     }
 
     public void createPlaceholder(String sitzungsnr){

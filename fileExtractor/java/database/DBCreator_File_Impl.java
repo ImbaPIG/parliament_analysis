@@ -125,7 +125,7 @@ public class DBCreator_File_Impl implements DBCreator {
         else{
             if (node.hasChildNodes()) {
                 for(Node child : toIterable(node.getChildNodes())){
-                    rSet.addAll(getNodesFromXML(child, nodeName));
+                    rSet.add(getFirstNodeFromXML(child, nodeName));
                 }
             } else if (node.getNodeName().equals(nodeName)){
                 rSet.add(node);

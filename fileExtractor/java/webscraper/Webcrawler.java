@@ -132,7 +132,6 @@ public class Webcrawler {
     }
     public static org.w3c.dom.Document getDocFromLink(String link) throws IOException {
         W3CDom w3cDom = new W3CDom();
-        System.out.println("about to cast");
         return w3cDom.fromJsoup(fetchDocument(link));
     }
 

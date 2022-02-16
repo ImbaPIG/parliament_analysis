@@ -5,6 +5,7 @@ import bundestag.Rede_File_Impl;
 import bundestag.Redner_File_Impl;
 import bundestag.Tagesordnungspunkt_File_Impl;
 import com.couchbase.client.deps.com.fasterxml.jackson.annotation.JsonFormat;
+import com.mongodb.MongoSocketOpenException;
 import database.Creds_File_Impl;
 import database.JCasTuple_FIle_Impl;
 import database.MongoDBConnectionHandler_File_Impl;
@@ -25,6 +26,7 @@ import org.bson.Document;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -111,8 +113,8 @@ public class Analysis_File_Impl implements Analysis {
                 if (top.getReden().size() > 0) {
                     for (Rede_File_Impl rede : top.getReden()) {
                         System.out.println("Here it is --> " + rede.getRedeID());
-                        Document analysedDoc = createAnalysedDoc(rede, handler);
-                        handler.uploadDoc(analysedDoc, "analyzedSpeeches");
+                        //Document analysedDoc = createAnalysedDoc(rede, handler);
+                        //handler.uploadDoc(analysedDoc, "analyzedSpeeches");
                         /*
                         JCasTuple_FIle_Impl jCasTuple = handler.getRedeJcas(rede.getRedeID());
                         JCas redeJCas = jCasTuple.getRedeJCas();
@@ -129,9 +131,11 @@ public class Analysis_File_Impl implements Analysis {
                     }
                 }
             }
-        } catch (NullPointerException | IOException | UIMAException e) {
+        } catch (NullPointerException | IOException e) {
             System.out.println("couldnt find protokoll nr " + protocollID);
             e.printStackTrace();
+        } catch (MongoSocketOpenException e){
+            System.out.println("Mongo not reached");
         }
     }
 
@@ -153,31 +157,7 @@ public class Analysis_File_Impl implements Analysis {
             }
         }
     }
-    public Document createAnalysedDoc(Rede_File_Impl rede,MongoDBConnectionHandler_File_Impl handler) throws UIMAException {
 
-        JCasTuple_FIle_Impl jCasTuple = handler.getRedeJcas(rede.getRedeID());
-        JCas redeJCas = jCasTuple.getRedeJCas();
-        org.bson.Document mongoDoc = new org.bson.Document();
-        mongoDoc.put("_id", rede.getRedeID());
-        mongoDoc.put("persons",getJCasEntityList(redeJCas, "PER"));
-        mongoDoc.put("organisations",getJCasEntityList(redeJCas, "ORG"));
-        mongoDoc.put("locations",getJCasEntityList(redeJCas, "LOC"));
-        mongoDoc.put("token", getTokenList(redeJCas));
-        mongoDoc.put("sentences", getSentenceList(redeJCas));
-        mongoDoc.put("pos", getPosList(redeJCas));
-        mongoDoc.put("lemma",getLemma(redeJCas));
-        mongoDoc.put("sentiment",getSentimentValue(redeJCas));
-
-        /*
-        List<Document> speeches = new LinkedList<>();
-        this.getReden().forEach(speach -> {
-            speeches.add(speach.getDocument());
-        });
-
-         */
-
-        return mongoDoc;
-    }
 
     public Document createAnalysedDoc(JCasTuple_FIle_Impl jCasTuple,MongoDBConnectionHandler_File_Impl handler,Rede_File_Impl rede) throws UIMAException {
 
@@ -188,10 +168,15 @@ public class Analysis_File_Impl implements Analysis {
         mongoDoc.put("organisations",getJCasEntityList(redeJCas, "ORG"));
         mongoDoc.put("locations",getJCasEntityList(redeJCas, "LOC"));
         mongoDoc.put("token", getTokenList(redeJCas));
-        mongoDoc.put("sentences", getSentenceList(redeJCas));
+        //mongoDoc.put("sentences", getSentenceList(redeJCas));
+        //mongoDoc.put("sentencesSentiment",getSentenceSentimentValue(redeJCas));
         mongoDoc.put("pos", getPosList(redeJCas));
         mongoDoc.put("lemma",getLemma(redeJCas));
         mongoDoc.put("sentiment",getSentimentValue(redeJCas));
+        //org.bson.Document sentences = new org.bson.Document();
+        mongoDoc.put("sentences", getSentenceDocument(redeJCas));
+        //sentences.put("sentimentValue",getSentenceSentimentValue(redeJCas));
+        //mongoDoc.put("sentences", sentences);
 
         /*
         List<Document> speeches = new LinkedList<>();
@@ -243,10 +228,32 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     public List<String> getSentenceList(JCas rede){
+        //to be continued
         LinkedList<String> sentenceList = new LinkedList<>();
         Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
         for (Sentence sentence : sentences){
-            sentenceList.push(sentence.getCoveredText());
+            sentenceList.push((sentence.getCoveredText()));
+        }
+        return sentenceList;
+    }
+    public List<Double> getSentenceSentimentValue(JCas rede){
+        //to be continued
+        LinkedList<Double> sentenceList = new LinkedList<>();
+        Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
+        for (Sentence sentence : sentences){
+            sentenceList.push(getSentimentValue(sentence));
+        }
+        return sentenceList;
+    }
+    public List<Document> getSentenceDocument(JCas rede){
+        //to be continued
+        LinkedList<Document> sentenceList = new LinkedList<>();
+        Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
+        for (Sentence sentence : sentences){
+            org.bson.Document sentenceSentiment = new org.bson.Document();
+            sentenceSentiment.put("sentenceSentimentValue", getSentimentValue(sentence));
+            sentenceSentiment.put("sentenceText", sentence.getCoveredText());
+            sentenceList.push(sentenceSentiment);
         }
         return sentenceList;
     }
@@ -271,6 +278,19 @@ public class Analysis_File_Impl implements Analysis {
                 Double currentSentiment = sentiment.getSentiment();
                 overallSentiment = overallSentiment + currentSentiment;
             }
+        }
+        return overallSentiment / amountSentences;
+
+    }
+    public Double getSentimentValue(Sentence sentence){
+        /**
+         * Partei and Fraktion is the same thing
+         */
+        Double overallSentiment = 0.0;
+        int amountSentences = 1;
+        for(Sentiment sentiment : JCasUtil.selectCovered(Sentiment.class, sentence)) {
+            Double currentSentiment = sentiment.getSentiment();
+            overallSentiment = overallSentiment + currentSentiment;
         }
         return overallSentiment / amountSentences;
 
