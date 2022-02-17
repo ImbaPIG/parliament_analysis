@@ -2,6 +2,11 @@
 var dashboardTitle = "Übersicht"
 
 function dashboardHTML(){
+
+    var input = document.getElementById("filterinput")
+    set_dashboardTitle(input.value)
+
+
     let baseframe = `
     <div class=" align-items-center justify-content-between py-4 pl-4 m-0 mb-3 bg-white d-block">
                             <h1 class="h1 mb-0 text-gray-800 d-block">${dashboardTitle}</h1>
@@ -183,7 +188,6 @@ function removeDashboard(){
 }
 
 function set_dashboardTitle(title) {
-    dashboardTitle = title
-    
+    dashboardTitle = title    
 }
 
