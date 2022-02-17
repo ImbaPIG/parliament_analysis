@@ -85,7 +85,7 @@ $.ajax({
             counts.push(e.count)
             
         });
-        if(firsttime){ //is true for the first time the chart will be made
+    if(firsttime){ //is true for the first time the chart will be made
         ctx = document.getElementById('chart_token').getContext('2d');
         myChartToken = new Chart(ctx, {
             type: 'line',
