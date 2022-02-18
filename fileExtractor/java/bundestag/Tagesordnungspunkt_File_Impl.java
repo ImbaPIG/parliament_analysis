@@ -3,6 +3,7 @@ package bundestag;
 import com.mongodb.BasicDBObject;
 import database.MongoDBConnectionHandler_File_Impl;
 import interfaces.Tagesordnungspunkt;
+import org.apache.uima.UIMAException;
 import org.bson.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,7 +20,7 @@ public class Tagesordnungspunkt_File_Impl implements Tagesordnungspunkt {
     private String text = null;
     private String topID = null;
 
-    public Tagesordnungspunkt_File_Impl(Element e, MongoDBConnectionHandler_File_Impl handler) throws IOException {
+    public Tagesordnungspunkt_File_Impl(Element e, MongoDBConnectionHandler_File_Impl handler) throws IOException, UIMAException {
         /**
          * creates a Tagesordnungspunkt object and all the theobjects a Protokoll contains (i.e. Rede, Redner etc)
          */

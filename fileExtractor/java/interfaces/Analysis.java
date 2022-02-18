@@ -4,11 +4,12 @@ import bundestag.Rede_File_Impl;
 import bundestag.Redner_File_Impl;
 import org.apache.uima.jcas.JCas;
 
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 public interface Analysis {
-    public void parseDocs();
+    public void parseDocs(String protocolLinks, String protocollID);
 
     public void JCasTokenCounter(JCas rede);
 

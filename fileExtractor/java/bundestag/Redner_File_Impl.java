@@ -58,10 +58,10 @@ public class Redner_File_Impl {
 
     public Document getDocument(){
         org.bson.Document mongoDoc = new org.bson.Document();
+        mongoDoc.put("_id", this.getRednerID());
         mongoDoc.put("firstname", this.getFirstname());
         mongoDoc.put("lastname",this.getLastname());
         mongoDoc.put("fraktion",this.getFraktion());
-        mongoDoc.put("rednerID",this.getRednerID());
         return mongoDoc;
     }
 

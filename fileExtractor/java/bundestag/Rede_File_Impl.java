@@ -1,10 +1,13 @@
 package bundestag;
 
 
+import database.JCasTuple_FIle_Impl;
 import database.JcasDBObj;
 import database.MongoDBConnectionHandler_File_Impl;
 import interfaces.Rede;
+import nlp.Analysis_File_Impl;
 import nlp.Pipeline_File_Impl;
+import org.apache.uima.UIMAException;
 import org.apache.uima.jcas.JCas;
 import org.bson.Document;
 import org.w3c.dom.Element;
@@ -17,11 +20,12 @@ import java.util.ArrayList;
 public class Rede_File_Impl implements Rede {
     private MongoDBConnectionHandler_File_Impl handler = null;
     private Redner_File_Impl redner = null;
+    private String rednerID = null;
     private String content = null;
     private String comments = "";
     private String redeID = null;
 
-    public Rede_File_Impl(Element e, MongoDBConnectionHandler_File_Impl handler) throws IOException {
+    public Rede_File_Impl(Element e, MongoDBConnectionHandler_File_Impl handler) throws IOException, UIMAException {
         /**
          * creates a Rede object and all the theobjects a Protokoll contains (i.e. Redner etc)
          */
@@ -31,7 +35,14 @@ public class Rede_File_Impl implements Rede {
         NodeList rednerList = e.getElementsByTagName("redner");
         Element rednerElement = (Element) rednerList.item(0);
         this.redner = new Redner_File_Impl(rednerElement);
+        this.rednerID = this.redner.getRednerID();
+        //this.redner = new Redner_File_Impl(rednerElement);
 
+        try{
+            handler.uploadDoc(redner.getDocument(), "speakers");
+        }catch (Exception exception){
+
+        }
         // get redeID
         this.redeID = e.getAttribute("id");
 
@@ -71,7 +82,12 @@ public class Rede_File_Impl implements Rede {
             // upload jcas obj\
             //String jCasBson = this.handler.ObjToBson(dbObj);
             //this.handler.uploadBson(jCasBson, "jcas");
-            this.handler.uploadDoc(dbObj.getDocument(), "jcas");
+            JCasTuple_FIle_Impl redeJcasTuple = new JCasTuple_FIle_Impl(contentJcas,commentJcas);
+            Analysis_File_Impl anal = new Analysis_File_Impl();
+            Document analysedDoc = anal.createAnalysedDoc(redeJcasTuple, handler, this);
+            handler.uploadDoc(analysedDoc, "NotSoanalyzedSpeeches");
+
+            // this.handler.uploadDoc(dbObj.getDocument(), "jcas");
         }
     }
     // dummy constructor for instanciating from mongodb
@@ -79,6 +95,9 @@ public class Rede_File_Impl implements Rede {
 
     public Redner_File_Impl getRedner() {
         return redner;
+    }
+    public String getRednerID(){
+        return rednerID;
     }
 
     public String getContent() {
@@ -98,7 +117,7 @@ public class Rede_File_Impl implements Rede {
         mongoDoc.put("content", this.getContent());
         mongoDoc.put("comments", this.getComments());
         mongoDoc.put("redeID", this.getRedeID());
-        mongoDoc.put("redner", this.getRedner().getDocument());
+        mongoDoc.put("rednerID", this.getRednerID());
         return mongoDoc;
     }
 }

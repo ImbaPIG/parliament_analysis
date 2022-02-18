@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.neo4j-contrib:spatial:0.26.1-neo4j-3.5.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/neo4j-contrib/spatial/0.26.1-neo4j-3.5.2/spatial-0.26.1-neo4j-3.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/neo4j-contrib/spatial/0.26.1-neo4j-3.5.2/spatial-0.26.1-neo4j-3.5.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/neo4j-contrib/spatial/0.26.1-neo4j-3.5.2/spatial-0.26.1-neo4j-3.5.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
