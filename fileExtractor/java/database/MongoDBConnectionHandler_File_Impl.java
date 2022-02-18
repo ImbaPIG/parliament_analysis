@@ -2,8 +2,12 @@ package database;
 
 import bundestag.Redner_File_Impl;
 import com.mongodb.*;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import interfaces.MongoDBConnectionHandler;
@@ -14,15 +18,20 @@ import org.apache.uima.cas.impl.XCASSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.jcas.JCas;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.mongodb.client.model.Aggregates.*;
 
 public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHandler {
     public final MongoDatabase db;
@@ -42,9 +51,6 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         seeds.add(seed);
         MongoClientOptions options = MongoClientOptions.builder()
                 .connectionsPerHost(10)
-                .socketTimeout(5000)
-                .maxWaitTime(1000)
-                .connectTimeout(1000)
                 .sslEnabled(false)
                 .build();
         MongoClient client = new MongoClient(seeds, credential, options);
@@ -132,6 +138,16 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         assert dbDoc != null;
         if(existsDocument(dbDoc.get("_id").toString(), collection)){return;}
         this.db.getCollection(collection).insertOne(dbDoc);
+    }
+    public List<Document> aggregateMongo (String collection, List<Bson> aggregation){
+        try {
+            //mongoTemplate.aggregate(new Aggregation().withOptions(AggregationOptions.Builder.allowDiskUse(true)), "match", Document.class);
+
+            return this.db.getCollection(collection).aggregate(aggregation).allowDiskUse(true).into(new ArrayList<>());
+        }catch (MongoException e){
+            e.printStackTrace();
+            return this.db.getCollection(collection).aggregate(Arrays.asList()).into(new ArrayList<>());
+        }
     }
 
     /*
@@ -304,4 +320,19 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         String commentXML = result.getString("commentXML");
         return new JCasTuple_FIle_Impl(XMLToJcas(contentXMl), XMLToJcas(commentXML));
     }
+
+    public AggregateIterable<Document> test(String document){
+        AggregateIterable<Document> result = this.db.getCollection("speeches").aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.eq("periode", "19"))
+                ));
+        return result;}
+
+    public AggregateIterable<Document> test3(){
+        AggregateIterable<Document> result = this.db.getCollection("speeches").aggregate(Arrays.asList(
+                        Aggregates.unwind("$tagesordnungspunkte"),
+                        Aggregates.unwind("$tagesordnungspunkte")));
+        return result;
+    }
+
 }

@@ -18,7 +18,7 @@
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.7" level="project" />
+    <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.10" level="project" />
     <orderEntry type="library" name="Maven: com.github.texttechnologylab:UIMATypeSystem:1d23e466bcae2cf36fb06aa41ae85b319a7f2fe2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.uima:uimaj-core:2.10.4" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />

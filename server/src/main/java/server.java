@@ -1,50 +1,92 @@
 
+import BackendHelpers.AggregationBuilder;
+import com.mongodb.Block;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import database.MongoDBConnectionHandler_File_Impl;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static BackendHelpers.AggregationHelper.convertDocListToJsonList;
 import static spark.Spark.*;
+
 
 public class server {
 
     public static void main(String[] args){
+        //todo : list.add(new JSONObject(next.toJson()));
+        AggregationBuilder aggraBuilder = new AggregationBuilder();
+        MongoDBConnectionHandler_File_Impl mongo = new MongoDBConnectionHandler_File_Impl();
         System.out.println("Server listening on Port 4567");
+        /*
+
         get("/hello", (request, response) -> {
-                    System.out.println(request.queryParams().toString());
-                    return "lul" + request.queryParams("idk");
+                    List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
+                    List<Document> output2 = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
+                    return convertDocListToJsonList(output2);
                 }
         );
+
+         */
+
         path("/api", () -> {
             before((q, a) -> System.out.println("Received api call"));
             path("/tokens", () -> {
-                get("/",       (request, response) ->"lul tokens" + request.params());
+                get("/",       (request, response) ->{
+                    List<Bson> sampleAggregation= aggraBuilder.createTokenAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
+                    return convertDocListToJsonList(output);
+                });
             });
             path("/speech", () -> {
-                get("/",       (request, response) ->"lul speech" + request.params());
+                get("/",       (request, response) -> {
+                    List<Bson> sampleAggregation= aggraBuilder.createSpeechAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
+                    return convertDocListToJsonList(output);
+                });
             });
             path("/namedEntities", () -> {
-                get("/",       (request, response) ->"lul namedEntities" + request.params());
+                get("/",       (request, response) ->{
+                    List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
+                    return convertDocListToJsonList(output);
+                });
             });
             path("/speakers", () -> {
-                get("/",       (request, response) ->"lul speakers" + request.params());
+                get("/",       (request, response) ->{
+                    List<Bson> sampleAggregation= aggraBuilder.createSpeakersAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+                    return convertDocListToJsonList(output);
+                });
             });
             path("/sentiment", () -> {
-                get("/",       (request, response) ->"lul sentiment" + request.params());
+                get("/",       (request, response) ->{
+                    return "not yet implemented /sentiment";
+                });
             });
             path("/parties", () -> {
-                get("/",       (request, response) ->"lul parties" + request.params());
+                get("/",       (request, response) ->{
+                    return "not yet implemented /parties";
+                });
             });
             path("/fractions", () -> {
-                get("/",       (request, response) ->"lul fractions" + request.params());
+                get("/",       (request, response) ->{
+                    return "not yet implemented /fractions";
+                });
             });
             path("/statistic", () -> {
-                get("/",       (request, response) ->"lul statistic" + request.params());
+                get("/",       (request, response) ->{
+                    return "not yet implemented /statistic";
+                });
             });
             path("/pos", () -> {
-                get("/",       (request, response) ->"lul pos" + request.params());
+                get("/",       (request, response) ->{
+                    return "not yet implemented /pos";
+                });
             });
         });
         /*
@@ -58,91 +100,13 @@ public class server {
          */
     }
 
-    public Document matchHelper(String fieldname, String matchValue){
-        Document matchDoc = new Document();
-        if(matchValue == null){
-            matchDoc = new Document("$match",
-                    new Document(fieldname, new Document("$exists", true)));
-        }else{
-            matchDoc = new Document("$match",
-                    new Document(fieldname, matchValue));
-        }
-        return matchDoc;
-    }
-    public Document unwindHelper(String unwindPath){
-        return new Document("$unwind",
-                new Document("path", "unwindPath")
-                        .append("preserveNullAndEmptyArrays", true));
-    }
-    public Document lookupHelper(String fromCollectionName, String localField, String foreignField, String newName){
-        return new Document("$lookup",
-                new Document("from", fromCollectionName)
-                        .append("localField", localField)
-                        .append("foreignField", foreignField)
-                        .append("as", newName));
-    }
 
 
-    public Document stringToDate(String stringDate){
-        return new Document("$dateFromString",
-                new Document("dateString", stringDate)
-                .append("format","%d.%m.%Y"));
-    }
 
-    public Document createMatchByDate(String datePath,String startDate, String endDate){
-        //if dates are null
-        startDate = startDate == null ? "01.01.2000" : startDate;
-        endDate = endDate == null ? "01.01.3000" : endDate;
 
-        Document matchDoc = new Document("$match",
-                new Document("$expr",
-                        new Document("$and",Arrays.asList(
-                                new Document("$gte", Arrays.asList(datePath, stringToDate(startDate))),
-                                new Document("$lte", Arrays.asList(datePath, stringToDate(endDate)))
-                        )
 
-                )));
-        return matchDoc;
-    }
-    public Document replaceDateStringByDate(String datePath){
-        return new Document("$addFields",
-                new Document("$date", stringToDate("$date")));
-    }
 
-    public List<Document> createTokenAggregation(Map<String,String> queryParams){
-        Integer min = 0;
-        try {
-            min = queryParams.get("minimum") == null ? 0 : Integer.parseInt(queryParams.get("minimum"));
-        }catch (NumberFormatException e){
-        }
-        return Arrays.asList(
-                unwindHelper("$tagesordnungspunkte"),
-                unwindHelper("$tagesordnungspunkte.reden"),
-                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
-                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
-                matchHelper("redner._id",queryParams.get("rednerID")),
-                matchHelper("redner.fraktion",queryParams.get("fraktion")),
-                matchHelper("redner.party",queryParams.get("party")),
-                unwindHelper("$analyzed"),
-                new Document("$replaceRoot",
-                        new Document("newRoot", "$analyzed")),
-                unwindHelper("$token"),
-                new Document("$group",
-                        new Document("_id", "$token")
-                                .append("count",
-                                        new Document("$sum", 1L))),
-                new Document("$project",
-                        new Document("_id", 0L)
-                                .append("token", "$_id")
-                                .append("count",
-                                        new Document("$filter",
-                                                new Document("input", "$count")
-                                                .append("as", "count")
-                                                .append("cond",
-                                                        new Document("$gte", Arrays.asList("$$count",min)))))),
-                new Document("$sort",
-                        new Document("count", -1L)));
-    }
+
 
 
 }
