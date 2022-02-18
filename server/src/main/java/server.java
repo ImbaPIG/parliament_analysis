@@ -175,6 +175,7 @@ public class server {
     }
     public static List<Document> matchProtocollsRegex(List<Document> protocolls){
         for(int indexProtocolls = 0;indexProtocolls<protocolls.size();indexProtocolls++){
+            Object protocoll = protocolls.get(indexProtocolls);
             for(int indexTagespunkte = 0;indexTagespunkte<protocolls.get(indexProtocolls).size();indexTagespunkte++){
                 //Object
                 //for(int indexReden = 0;indexReden<pro)

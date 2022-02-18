@@ -94,11 +94,14 @@ public class AggregationHelper {
         }
         return true;
     }
-    public static List<JSONObject> convertDocListToJsonList(List<Document> docs){
+    public static JSONObject convertDocListToJsonList(List<Document> docs){
         List<JSONObject> list = new ArrayList<>();
         for(Document doc : docs){
             list.add(new JSONObject(doc.toJson()));
         }
-        return list;
+        JSONObject response = new JSONObject();
+        response.put("sucess",true);
+        response.put("result",list);
+        return response;
     }
 }
