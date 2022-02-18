@@ -5,8 +5,10 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.UnwindOptions;
+import org.bson.BsonNull;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import se.lth.cs.srl.languages.Language;
 import spark.QueryParamsMap;
 
 import static BackendHelpers.AggregationHelper.*;
@@ -117,9 +119,144 @@ public class AggregationBuilder {
                         new Document("sucess", true)));
     }
     public List<Bson> createSpeakersAggregation(QueryParamsMap queryParams){
-        return Arrays.asList(speakerMatchHelper("party",queryParams),
+        return Arrays.asList(partyMatchHelper("party",queryParams),
                 matchHelper("fraktion", queryParams.get("fraktion").value()),
                 matchHelper("_id", queryParams.get("speakerID").value()));
+    }
+    public List<Bson> createSentimentAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                new Document("$lookup",
+                        new Document("from", "analyzedSpeeches")
+                                .append("localField", "tagesordnungspunkte.reden.redeID")
+                                .append("foreignField", "_id")
+                                .append("as", "analyzed")),
+                new Document("$lookup",
+                        new Document("from", "speakers")
+                                .append("localField", "tagesordnungspunkte.reden.rednerID")
+                                .append("foreignField", "_id")
+                                .append("as", "redner")),
+                matchHelper("$tagesordnungspunkte.reden.rednerID", queryParams.get("rednerID").value()),
+                matchHelper("$redner.fraktion", queryParams.get("fraktion").value()),
+                partyMatchHelper("party",queryParams),
+                unwindHelper("$analyzed"),
+                new Document("$replaceRoot",
+                        new Document("newRoot", "$analyzed")),
+                new Document("$group",
+                        new Document("_id", "$sentiment")
+                                .append("count",
+                                        new Document("$sum", 1L))),
+                new Document("$project",
+                        new Document("_id", 0L)
+                                .append("sentiment", "$_id")
+                                .append("count", 1)),
+                new Document("$sort",
+                        new Document("count", -1)));
+    }
+    public List<Bson> createPartiesAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                new Document("$lookup",
+                        new Document("from", "speakers")
+                                .append("localField", "tagesordnungspunkte.reden.rednerID")
+                                .append("foreignField", "_id")
+                                .append("as", "redner")),
+                unwindHelper("$redner"),
+                matchHelper("redner.party", null),
+                new Document("$group",
+                        new Document("_id", "$redner.party")
+                                .append("count",
+                                        new Document("$sum", 1L))),
+                new Document("$sort",
+                        new Document("count", -1L)));
+    }
+    public List<Bson> createFractionsAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                new Document("$lookup",
+                        new Document("from", "speakers")
+                                .append("localField", "tagesordnungspunkte.reden.rednerID")
+                                .append("foreignField", "_id")
+                                .append("as", "redner")),
+                unwindHelper("$redner"),
+                matchHelper("redner.fraktion", null),
+                new Document("$group",
+                        new Document("_id", "$redner.fraktion")
+                                .append("count",
+                                        new Document("$sum", 1L))),
+                new Document("$sort",
+                        new Document("count", -1L)));
+    }
+    public List<Bson> createStatisticAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                new Document("$facet",
+                        new Document("persons", Arrays.asList(
+                                new Document("$project",
+                                        new Document("content",
+                                                new Document("$toString", "$tagesordnungspunkte.reden.content"))
+                                                .append("id", "$tagesordnungspunkte.reden.redeID")),
+                                new Document("$match",
+                                        new Document("content",
+                                                new Document("$not",
+                                                        new Document("$eq",
+                                                                new BsonNull())))),
+                                new Document("$project",
+                                        new Document("_id", 0L)
+                                                .append("id", "$id")
+                                                .append("length",
+                                                        new Document("$strLenCP", "$content"))),
+                                new Document("$sort",
+                                        new Document("length", -1L))))
+                                .append("speakers",Arrays.asList(
+                                        new Document("$project",
+                                                new Document("id", "$tagesordnungspunkte.reden.rednerID")),
+                                        new Document("$group",
+                                                new Document("_id", "$id")
+                                                        .append("count",
+                                                                new Document("$sum", 1L))),
+                                        new Document("$match",
+                                                new Document("_id",
+                                                        new Document("$not",
+                                                                new Document("$eq",
+                                                                        new BsonNull())))),
+                                        new Document("$sort",
+                                                new Document("count", -1L)))))
+        );
+
+    }
+    public List<Bson> createPOSAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
+                matchHelper("redner._id",queryParams.get("rednerID").value()),
+                matchHelper("redner.fraktion",queryParams.get("fraktion").value()),
+                matchHelper("redner.party",queryParams.get("party").value()),
+                unwindHelper("$analyzed"),
+                new Document("$replaceRoot",
+                        new Document("newRoot", "$analyzed")),
+                unwindHelper("$pos"),
+                new Document("$group",
+                        new Document("_id", "$pos")
+                                .append("count",
+                                        new Document("$sum", 1))),
+                new Document("$match",
+                        new Document("count",
+                                new Document("$gte", 2))),
+                new Document("$sort",
+                        new Document("count", -1L)));
     }
 
     public Document testAggregation(){

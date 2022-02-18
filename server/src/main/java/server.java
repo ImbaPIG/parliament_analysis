@@ -65,27 +65,37 @@ public class server {
             });
             path("/sentiment", () -> {
                 get("/",       (request, response) ->{
-                    return "not yet implemented /sentiment";
+                    List<Bson> sampleAggregation= aggraBuilder.createSentimentAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+                    return convertDocListToJsonList(output);
                 });
             });
             path("/parties", () -> {
                 get("/",       (request, response) ->{
-                    return "not yet implemented /parties";
+                    List<Bson> sampleAggregation= aggraBuilder.createPartiesAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+                    return convertDocListToJsonList(output);
                 });
             });
             path("/fractions", () -> {
                 get("/",       (request, response) ->{
-                    return "not yet implemented /fractions";
+                    List<Bson> sampleAggregation= aggraBuilder.createFractionsAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+                    return convertDocListToJsonList(output);
                 });
             });
             path("/statistic", () -> {
                 get("/",       (request, response) ->{
-                    return "not yet implemented /statistic";
+                    List<Bson> sampleAggregation= aggraBuilder.createStatisticAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
+                    return convertDocListToJsonList(output);
                 });
             });
             path("/pos", () -> {
                 get("/",       (request, response) ->{
-                    return "not yet implemented /pos";
+                    List<Bson> sampleAggregation= aggraBuilder.createPOSAggregation(request.queryMap());
+                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
+                    return convertDocListToJsonList(output);
                 });
             });
         });

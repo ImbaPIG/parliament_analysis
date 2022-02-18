@@ -30,7 +30,7 @@ public class AggregationHelper {
         }
         return matchDoc;
     }
-    public static Bson speakerMatchHelper(String fieldname,QueryParamsMap queryParams){
+    public static Bson partyMatchHelper(String fieldname,QueryParamsMap queryParams){
         return queryParams.get("party").value() == null ? new Document() : matchHelper(fieldname, queryParams.get("party").value());
     }
     public static Document unwindHelper(String unwindPath){
