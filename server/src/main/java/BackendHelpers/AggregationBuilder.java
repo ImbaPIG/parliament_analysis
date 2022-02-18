@@ -31,6 +31,8 @@ import org.bson.conversions.Bson;
 import java.util.concurrent.TimeUnit;
 import org.bson.Document;
 
+import javax.management.Query;
+
 
 public class AggregationBuilder {
 
@@ -257,6 +259,12 @@ public class AggregationBuilder {
                                 new Document("$gte", 2))),
                 new Document("$sort",
                         new Document("count", -1L)));
+    }
+    public List<Bson> createFullTextSearchAggregation(QueryParamsMap queryParamsMap){
+        return Arrays.asList(new Document("$match",
+                        new Document("tagesordnungspunkte.reden.content",
+                                new Document("$exists", true))),
+                new Document("$limit", 10L));
     }
 
     public Document testAggregation(){
