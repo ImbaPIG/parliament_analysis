@@ -29,7 +29,6 @@ public class ProtocollHandler {
 
         for(String protokollID : protocolLinks.keySet()) {
             mongoConnection.insertProtocolls(protocolLinks.get(protokollID), protokollID);
-            anal.parseDocs(protocolLinks.get(protokollID), protokollID);
         }
 
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
@@ -37,7 +36,6 @@ public class ProtocollHandler {
             for(String placeholder : handler.getExistingPlaceholderIDs()){
                 handler.removePlaceholder(placeholder);
                 mongoConnection.insertProtocolls(protocolLinks.get(placeholder), placeholder);
-                //anal.parseDocs(protocolLinks.get(placeholder), placeholder);
             }
         }
 

@@ -13,7 +13,6 @@ public interface MongoDBConnectionHandler {
 
     public JCas XMLToJcas(String xml) throws UIMAException;
 
-    public void resetDB();
 
     public boolean jCasExists(String redeID);
 
@@ -23,11 +22,8 @@ public interface MongoDBConnectionHandler {
 
     public void removePlaceholder(String sitzungsnr);
 
-    public void deleteAllPlaceholder();
-
     public long countProtokolle();
 
-    public void intelligentPlaceholderDeleter()throws InterruptedException;
 
     public JCasTuple_FIle_Impl getRedeJcas(String redeID) throws UIMAException;
 }

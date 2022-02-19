@@ -41,7 +41,6 @@ public class DBCreator_File_Impl implements DBCreator {
         } catch (Exception e) {e.printStackTrace();}
 
         // parse through all xml files
-        //File[] fs = fileGetter(this.dir);
         Document doc = Webcrawler.getDocFromLink(protocolLink);
         // get sitzungsnr from filename
         String sitzungsnr = protocollID;
@@ -88,17 +87,6 @@ public class DBCreator_File_Impl implements DBCreator {
     }
 
 
-    public File[] fileGetter(String dir){
-        /**
-         * gets all xml files from the given directory
-         */
-        File folder = new File(dir);
-        return folder.listFiles(new FilenameFilter() {
-            public boolean accept(File folder, String name) {
-                return name.toLowerCase().endsWith(".xml");
-            }
-        });
-    }
 
     public static Iterable<Node> toIterable(final NodeList nodeList) {
         return () -> new Iterator<Node>() {
@@ -135,32 +123,6 @@ public class DBCreator_File_Impl implements DBCreator {
         return rSet.size() > 0 ? rSet.get(0) : null;
 
     }
-
-    public static List<Node> getNodesFromXML(Node pNode, String sNodeName){
-
-        List<Node> rSet = new ArrayList<>(0);
-
-        if(pNode.getNodeName().equals(sNodeName)) {
-            rSet.add(pNode);
-
-        }
-        else{
-
-            if (pNode.hasChildNodes()) {
-                for (Node child : toIterable(pNode.getChildNodes())) {
-                    rSet.addAll(getNodesFromXML(child, sNodeName));
-                }
-            } else {
-                if (pNode.getNodeName().equals(sNodeName)) {
-                    rSet.add(pNode);
-                }
-            }
-        }
-
-        return rSet;
-
-    }
-
 
 
 

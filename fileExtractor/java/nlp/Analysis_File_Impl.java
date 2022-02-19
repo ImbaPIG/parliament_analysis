@@ -37,8 +37,6 @@ import static java.lang.Math.max;
 
 public class Analysis_File_Impl implements Analysis {
 
-    // JCasTokenCounter
-    private HashMap<String, Double> tokenCounter;
 
     // JCasEntityCounter
     private final HashMap<String, Double> perCounter;
@@ -72,17 +70,12 @@ public class Analysis_File_Impl implements Analysis {
 
 
     public Analysis_File_Impl() {
-        this.tokenCounter = new HashMap<String, Double>();
-        //createTXTFile("Antworten/Uebung2_Frage1");
         this.perCounter = new HashMap<String, Double>();
         this.locCounter = new HashMap<String, Double>();
         this.orgCounter = new HashMap<String, Double>();
-        //createTXTFile("Antworten/Uebung2_Frage2");
         this.posCounter = new HashMap<String, Double>();
-        //createTXTFile("Antworten/Uebung2_Frage3");
         this.sentenceRednerCounter = new HashMap<String, Double>();
         this.sentimentRednerSum = new HashMap<String, Double>();
-        //createTXTFile("Antworten/Uebung2_Frage4");
         this.sentimentFraktionCounter = new HashMap<String, Double>();
         this.sentenceFraktionCounter = new HashMap<String, Double>();
         this.sentimentSum = 0D;
@@ -94,68 +87,6 @@ public class Analysis_File_Impl implements Analysis {
         this.mostNeutralSent = Double.NEGATIVE_INFINITY;
         this.mostNeutralRede = null;
         //createTXTFile("Antworten/Uebung2_Frage5");
-    }
-
-    public void parseDocs(String protocolLink, String protocollID){
-        /**
-         * go through all protkolle/tagesorsdnungspunkte/reden and add them to the analysing methods that are collecting data from all the reden
-         */
-        MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
-        Creds_File_Impl cred = new Creds_File_Impl();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
-//        for(Integer i = 1; i < 2; i++){
-        System.out.println("Currently handeling document number ---> " + protocollID);
-        try {
-            String document = handler.db.getCollection(cred.getProtocollCollection()).find(eq("_id", protocollID)).first().toJson();
-            Protokoll_File_Impl protokoll = mapper.readValue(document, Protokoll_File_Impl.class);
-            for(Tagesordnungspunkt_File_Impl top : protokoll.getTagesordnungspunkte()){
-                if (top.getReden().size() > 0) {
-                    for (Rede_File_Impl rede : top.getReden()) {
-                        System.out.println("Here it is --> " + rede.getRedeID());
-                        //Document analysedDoc = createAnalysedDoc(rede, handler);
-                        //handler.uploadDoc(analysedDoc, "analyzedSpeeches");
-                        /*
-                        JCasTuple_FIle_Impl jCasTuple = handler.getRedeJcas(rede.getRedeID());
-                        JCas redeJCas = jCasTuple.getRedeJCas();
-                        this.JCasTokenCounter(redeJCas);
-                        this.JCasEntityCounter(redeJCas);
-                        this.JCasEntityCounter(jCasTuple.getCommentJCas());
-                        this.JCasPOSCounter(redeJCas);
-                        this.JCasSentimentAll(redeJCas);
-                        this.JCasSentimentRednerCounter(rede.getRedner(), redeJCas);
-                        this.JCasSentimentFraktionCounter(rede.getRedner(), redeJCas);
-                        this.JCasSentimentAbsolutes(rede, jCasTuple.getCommentJCas());
-
-                         */
-                    }
-                }
-            }
-        } catch (NullPointerException | IOException e) {
-            System.out.println("couldnt find protokoll nr " + protocollID);
-            e.printStackTrace();
-        } catch (MongoSocketOpenException e){
-            System.out.println("Mongo not reached");
-        }
-    }
-
-
-
-    public void JCasTokenCounter(JCas rede){
-        /**
-         * if token found inc token value by one in hashmap
-         * assumption: capitalization does not change a word from antoher, i.e. there is no difference between "TeSt" and "tEsT"
-         */
-        Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
-        for (Sentence sentence : sentences) {
-            Collection<Token> tokens = JCasUtil.selectCovered(Token.class, sentence);
-            for (Token token : tokens) {
-                String tokenText = token.getText().toLowerCase();
-                Double count = this.tokenCounter.containsKey(tokenText) ? this.tokenCounter.get(tokenText) : this.tokenCounter.put(tokenText, 0D);
-                if (count == null){count = 0D;}
-                this.tokenCounter.put(tokenText, count + 1);
-            }
-        }
     }
 
 
@@ -187,22 +118,6 @@ public class Analysis_File_Impl implements Analysis {
          */
 
         return mongoDoc;
-    }
-    public void getToken(){
-        /**
-         * sort tokens and add them to text file
-         */
-        List<Map.Entry<String, Double>> EntityList = new LinkedList<Map.Entry<String, Double>>(this.tokenCounter.entrySet());
-        Collections.sort(EntityList, new Comparator<Map.Entry<String, Double>>() {
-            @Override
-            public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-        System.out.println("getting Token");
-        for (Map.Entry<String, Double> entry : EntityList){
-            appendToTXT("Antworten/Uebung2_Frage1", entry.getKey() + " - " + entry.getValue());
-        }
     }
 
     public List<String> getPosList(JCas rede){
@@ -513,22 +428,6 @@ public class Analysis_File_Impl implements Analysis {
         appendToTXT("Antworten/Uebung2_Frage5", neutral);
     }
 
-    private void createTXTFile(String filename){
-        try {
-            /**
-             * creates a text file with a given name
-             */
-            File myFile = new File(filename + ".txt");
-            if (myFile.createNewFile()) {
-                System.out.println("File created: " + myFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred while creating the text file");
-            e.printStackTrace();
-        }
-    }
 
     private void appendToTXT(String filename, String context){
         /**

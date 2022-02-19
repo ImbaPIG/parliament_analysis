@@ -9,11 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface Analysis {
-    public void parseDocs(String protocolLinks, String protocollID);
 
-    public void JCasTokenCounter(JCas rede);
 
-    public void getToken();
 
     public void JCasEntityCounter(JCas rede);
 
