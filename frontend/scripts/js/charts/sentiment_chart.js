@@ -20,10 +20,11 @@ var firsTimeSentient = true;
 //Main Sentiment funtion
 function mainSentiment(){
 $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/sentiment",
+    url: "http://localhost:4567/api/sentiment",
     type: "GET",
     dataType: "json",
     success: async function (sentiments) {
+        console.log(sentiments)
 
         //put the data into a format which is used by the scatter chart
         var result = sentiments.result

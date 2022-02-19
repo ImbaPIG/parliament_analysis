@@ -26,7 +26,7 @@ function filterMinimumToken() {
 //Mian function to visualize the token distribution
 function mainToken(){
 $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter,
+    url: "http://localhost:4567/api/tokens"+minimumfilter,
     type: "GET",
     dataType: "json",
     success: async function(token) {
@@ -37,7 +37,7 @@ $.ajax({
 
         //push reult data into dffrent lists for the chart
         tokenresult.forEach(e => {
-            labels.push(e.token);
+            labels.push(e._id);
             counts.push(e.count)
             
         });
