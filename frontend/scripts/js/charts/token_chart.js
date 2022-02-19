@@ -91,7 +91,7 @@ $.ajax({
 
 function addTokenChart(Token_canvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter,
+        url: "http://api.prg2021.texttechnologylab.org/tokens",
         type: "GET",
         dataType: "json",
         success: async function(token) {
