@@ -36,7 +36,7 @@ public class AggregationHelper {
     public static Document unwindHelper(String unwindPath){
         return new Document("$unwind",
                 new Document("path", unwindPath)
-                        .append("preserveNullAndEmptyArrays", true));
+                        .append("preserveNullAndEmptyArrays", false));
 
     }
     public static Document lookupHelper(String fromCollectionName, String localField, String foreignField, String newName){
@@ -101,7 +101,7 @@ public class AggregationHelper {
         }
         JSONObject response = new JSONObject();
         response.put("sucess",true);
-        response.put("result",list);
+        response.put("result", list);
         return response;
     }
 }
