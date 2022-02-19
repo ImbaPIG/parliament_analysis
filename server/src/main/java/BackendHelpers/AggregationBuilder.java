@@ -89,7 +89,6 @@ public class AggregationBuilder {
                                         new Document("count", 1)
                                                 .append("element", "$_id")
                                                 .append("_id", 0)),
-                                matchHelper("_id", queryParams.get("rednerID").value()),
                                 new Document("$sort",
                                         new Document("count", -1)),
                                 new Document("$match",
