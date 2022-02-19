@@ -83,7 +83,7 @@ public class Webcrawler {
         return doc;
     }
 
-    public static org.w3c.dom.Document fetchDocFromZip(String zipLink) throws IOException, SAXException, ParserConfigurationException {
+    public static org.w3c.dom.Document fetchDocFromZip(String zipLink) throws IOException{
 
         //sadly DocumentBuilder wants the Bytestream to be stored on the Harddrive D: really sad to convert Byte Array to String
         //Just to convert it to a Document ;) but Jsoup works fine
@@ -92,30 +92,18 @@ public class Webcrawler {
         dbFactory.setValidating(false);
         dbFactory.setIgnoringComments(false);
         dbFactory.setIgnoringElementContentWhitespace(true);
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         W3CDom w3cDom = new W3CDom();
 
 
         InputStream is = new URL(zipLink).openConnection().getInputStream();
         File file = stream2file(is);
-        //org.w3c.dom.Document someDoc = dBuilder.parse(file.getAbsolutePath());
         ZipFile zipFile = new ZipFile(file);
         ZipEntry entry = zipFile.getEntry("MDB_STAMMDATEN.XML");
         InputStream zipIn = zipFile.getInputStream(entry);
 
         List<String> strings = IOUtils.readLines(zipIn);
         String xmlRawString = StringUtils.join(strings, ", ");
-        Integer xmlRawLen = xmlRawString.length();
-        // System.out.println(xmlRawString);
 
-        //Scanner s = new Scanner(zipIn).useDelimiter("\\A");
-        //String zipScan = s.hasNext() ? s.next() : "";
-
-        byte[] data = new byte[zipIn.available()*20];
-        zipIn.read(data);
-        String xmlString = new String(data);
-        int idk = xmlString.length();
-        //int tiplen = zipScan.length();
         Document document = Jsoup.parse(xmlRawString, "", Parser.xmlParser());
         return w3cDom.fromJsoup(document);
     }
@@ -127,7 +115,6 @@ public class Webcrawler {
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }
-        System.out.println(FileUtils.sizeOf(tempFile));
         return tempFile;
     }
     public static org.w3c.dom.Document getDocFromLink(String link) throws IOException {

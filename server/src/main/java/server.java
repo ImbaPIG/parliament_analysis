@@ -30,13 +30,14 @@ public class server {
         AggregationBuilder aggraBuilder = new AggregationBuilder();
         MongoDBConnectionHandler_File_Impl mongo = new MongoDBConnectionHandler_File_Impl();
         System.out.println("Server listening on Port 4567");
-        Service service = Service.ignite();
+        //Service service = Service.ignite();
         /*
 
         get("/hello", (request, response) -> {
                     List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
                     List<Document> output2 = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
                     return convertDocListToJsonList(output2);
+                    localhost/api/tokens?zz=2222
                 }
         );
 
@@ -55,7 +56,6 @@ public class server {
         get("/api/namedEntities",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
             List<Document> output = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
-            response.status(200);
             return convertDocListToJsonList(output);
         });
         get("/api/speakers",       (request, response) ->{
@@ -96,94 +96,12 @@ public class server {
         });
 
 
-        /*
-        service.path("/api", () -> {
-            before((q, a) -> System.out.println("Received api call"));
-            path("/tokens", () -> {
-                get("/api/tokens",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createTokenAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/speech", () -> {
-                get("/api/speech",       (request, response) -> {
-                    List<Bson> sampleAggregation= aggraBuilder.createSpeechAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/namedEntities", () -> {
-                get("/api/namedEntities",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/speakers", () -> {
-                get("/api/speakers",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createSpeakersAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/sentiment", () -> {
-                get("/api/sentiment",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createSentimentAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/parties", () -> {
-                get("/api/parties",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createPartiesAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/fractions", () -> {
-                get("/api/fractions",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createFractionsAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/statistic", () -> {
-                get("/api/statistic",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createStatisticAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/pos", () -> {
-                get("/api/pos",       (request, response) ->{
-                    List<Bson> sampleAggregation= aggraBuilder.createPOSAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            path("/api/fullTextSearch", () -> {
-                get("/api/fullTextSearch",       (request, response) ->{
-                    System.out.println("searching");
-                    List<Bson> sampleAggregation= aggraBuilder.createFullTextSearchAggregation(request.queryMap());
-                    List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
-                    return convertDocListToJsonList(output);
-                });
-            });
-            //createFullTextSearchAggregation
-        });
-        Hashtable<String, String> protocolLinks = webscraper.getprotocollLinks();
-        //insert
-        //get protocollLinks somehow
-        System.out.println("started");
-        Analysis_File_Impl anal = new Analysis_File_Impl();
-        anal.parseDocs(protocolLinks);
 
-         */
     }
     public static List<Document> protocollContentContains(List<Document> protocolls, String toFind) throws IOException {
-        List<JSONObject> convertedProtocolls = protocolls.stream().map(protocoll -> new JSONObject(protocoll)).collect(Collectors.toList());
+        List<JSONObject> convertedProtocolls = protocolls.stream().map(JSONObject::new).collect(Collectors.toList());
         List<JSONObject> matchedProtocolls = new LinkedList<JSONObject>();
+
         for(JSONObject protocoll : convertedProtocolls){
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
@@ -193,6 +111,7 @@ public class server {
             ObjectNode oNode = jNode.deepCopy();
 
             ArrayNode tagespunkte = (ArrayNode) mapper.createArrayNode();
+
             for (int itpunkte = 0; itpunkte < oNode.get("tagesordnungspunkte").size(); itpunkte++) {
                 JsonNode tpunkt = oNode.get("tagesordnungspunkte").get(itpunkte);
                 ArrayNode speeches = (ArrayNode) mapper.createArrayNode();
@@ -208,6 +127,7 @@ public class server {
                 }
 
             }
+
             if (tagespunkte.size() > 0) {
                 try {
                     matchedProtocolls.add(new JSONObject(tagespunkte.toString()));
@@ -215,6 +135,7 @@ public class server {
                     e.printStackTrace();
                 }
             }
+
         }
 
         return matchedProtocolls.stream().map(mprotocoll -> Document.parse(mprotocoll.toString()) ).collect(Collectors.toList());

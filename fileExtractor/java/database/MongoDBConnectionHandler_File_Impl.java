@@ -61,12 +61,6 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.put("_id", identifier);
 
-        /*
-        System.out.println(identifier);
-        System.out.println(this.db.getCollection(collection).find(whereQuery).first());
-        System.out.println(this.db.getCollection(collection).find(whereQuery).first() != null);
-
-         */
         return this.db.getCollection(collection).find(whereQuery).first() != null;
     }
     public Document getDocument(String identifier, String collection){
@@ -150,28 +144,6 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         }
     }
 
-    /*
-    kann weg i guess
-    public String ObjToBson(Object a){
-        /**
-         * creates from a Object (should be Protokoll or JCasDBObj) a Bson String
-        assert(a instanceof Protokoll_File_Impl | a instanceof JcasDBObj);
-        ObjectMapper mapper = new ObjectMapper();
-        String objectString = "";
-        try {
-            objectString = mapper.writeValueAsString(a);
-        }catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return objectString;
-
-    }
-    */
-
 
 
     public String JCasToXML(JCas jcas) throws IOException {
@@ -204,14 +176,6 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         return cas.getJCas();
     }
 
-    public void resetDB(){
-        /**
-         * resets all collections
-         */
-        db.getCollection(cred.getProtocollCollection()).deleteMany(new Document());
-        db.getCollection(cred.getJcasCollection()).deleteMany(new Document());
-        System.out.println("The database was cleaned");
-    }
 
     public boolean jCasExists(String redeID) {
         /**
@@ -262,13 +226,6 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         }
     }
 
-    public void deleteAllPlaceholder(){
-        /**
-         * deletes all placeholder to clean up failed uploads that didnt reach the removePlaceholder method
-         */
-        Document doc = new Document("placeholder", true);
-        DeleteResult result = db.getCollection(cred.getProtocollCollection()).deleteMany(doc);
-    }
 
     public List<String> getExistingPlaceholderIDs(){
         /**
@@ -291,23 +248,6 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         return db.getCollection(cred.getProtocollCollection()).countDocuments();
     }
 
-    public void intelligentPlaceholderDeleter() throws InterruptedException {
-        /**
-         * cleans all the placeholder smartly when the db gets clogged with placeholders
-         */
-        int i = 0;
-        while (i < 4){
-            if(this.countProtokolle() > 220){
-                if (i>0){i++;}
-                this.deleteAllPlaceholder();
-                System.out.println("deleted placeholder");
-            } else {
-                System.out.println("there is still work to do, nothing is clogged");
-                i = 0;
-            }
-            TimeUnit.MINUTES.sleep(2);
-        }
-    }
 
     public JCasTuple_FIle_Impl getRedeJcas(String redeID) throws UIMAException {
         /**
@@ -321,18 +261,5 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         return new JCasTuple_FIle_Impl(XMLToJcas(contentXMl), XMLToJcas(commentXML));
     }
 
-    public AggregateIterable<Document> test(String document){
-        AggregateIterable<Document> result = this.db.getCollection("speeches").aggregate(
-                Arrays.asList(
-                        Aggregates.match(Filters.eq("periode", "19"))
-                ));
-        return result;}
-
-    public AggregateIterable<Document> test3(){
-        AggregateIterable<Document> result = this.db.getCollection("speeches").aggregate(Arrays.asList(
-                        Aggregates.unwind("$tagesordnungspunkte"),
-                        Aggregates.unwind("$tagesordnungspunkte")));
-        return result;
-    }
 
 }

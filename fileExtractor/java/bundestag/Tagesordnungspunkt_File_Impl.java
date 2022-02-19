@@ -77,8 +77,8 @@ public class Tagesordnungspunkt_File_Impl implements Tagesordnungspunkt {
         mongoDoc.put("text",this.getText());
         mongoDoc.put("topID",this.getTopID());
         List<Document> speeches = new LinkedList<>();
-        this.getReden().forEach(speach -> {
-            speeches.add(speach.getDocument());
+        this.getReden().forEach(speech -> {
+            speeches.add(speech.getDocument());
         });
         mongoDoc.append("reden", speeches);
         return mongoDoc;
