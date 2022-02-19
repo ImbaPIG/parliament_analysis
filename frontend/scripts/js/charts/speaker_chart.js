@@ -10,17 +10,19 @@
  */
 function mainSpeaker(){
  $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/statistic",
+    url: "http://localhost:4567/api/statistic",
     type: "GET",
     dataType: "json",
     success: function(statistic){
-        var speakers = statistic.result.speakers
+        console.log(statistic)
+        var speakers = statistic.result[0].speakers
+        console.log(speakers)
         var label_speaker  = []
         var date_speaker = []
 
         speakers.forEach(speaker => {
             date_speaker.push(speaker.count)
-            label_speaker.push(speaker.id)
+            label_speaker.push(speaker._id)
         });
 
         var ctxSpeaker = document.getElementById('chart_speaker').getContext('2d');

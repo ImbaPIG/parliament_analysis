@@ -17,25 +17,25 @@ var custome_organisations = ["AfD","SPD"]
  * and display the text
  * 
  */
-function highlight_text() {
-    var paragraph = document.getElementById("named_text").textContent
+function highlight_text(paragraph,namedEntities,locations,organisations) {
+    //var paragraph = document.getElementById("named_text").textContent
     var words = paragraph.split(" ")
     var count = 0
 
 
     //color each word if it is in a named Entitie
     words.forEach(word => {
-        custome_named_Entities.forEach(n =>{
+        namedEntities.forEach(n =>{
             if(n === word){
                 words[count] = "<mark class='blue'>" + word + "</mark>"
             }
         })
-        custome_locations.forEach(l =>{
+        locations.forEach(l =>{
             if(l === word){
                 words[count] = "<mark class='red'>" + word + "</mark>"
             }
         })
-        custome_organisations.forEach(o =>{
+        organisations.forEach(o =>{
             if(o === word){
                 words[count] = "<mark class='yellow'>" + word + "</mark>"
             }
@@ -52,4 +52,36 @@ function highlight_text() {
 
 }
 
+
+
+function setTextContent(){
+
+    var input = document.getElementById("filterspeeches")
+    $.ajax({
+        url: "http://localhost:4567/api/speech?redeID="+input.value,
+        type: "GET",
+        dataType: "json",
+        success: async function(speech) {
+            console.log(speech)
+            var speechresult = speech.result[0]
+
+            highlight_text(speechresult.content, speechresult.analyzed.persons, speechresult.analyzed.locations, speechresult.analyzed.organisations)
+        },
+        error: function(pos) {
+            //if something happens we get an error message
+            console.log("Fehler")
+        }
+    })
+
+}
+
+
+
+
+
+
 highlight_text()
+
+
+
+

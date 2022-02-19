@@ -2,6 +2,7 @@ var global_party_filter = ""
 
 function fill_select_party(){
 var list = document.getElementById("allOptions")
+var speechOptions = document.getElementById("allSpeeches")
 
     $.ajax({
         url:"http://api.prg2021.texttechnologylab.org/speakers",
@@ -23,19 +24,34 @@ var list = document.getElementById("allOptions")
     })
 
 
+
+    $.ajax({
+        url:"http://localhost:4567/api/statistic",
+        type: "GET",
+        dataType: "json",
+        success: function(speeches) {
+            var speechesList = speeches.result[0].persons;
+    
+            speechesList.forEach(r => {
+                var option = document.createElement('option');
+                option.value = r.id;;
+                speechOptions.appendChild(option)
+            });
+        },
+        error: function(redner) {
+            console.log("Fehler")
+        }
+    })
+
+
+
+
+
     $.ajax({
         url:"http://api.prg2021.texttechnologylab.org/parties",
         type: "GET",
         dataType: "json",
         success: function(parties) {
-           /* //get select statement
-            var select = document.getElementById("selectParty");
-    
-            //The first option is all partys
-            select[0] = new Option("Alle Parteien");
-            select[0].value = "All"*/
-    
-    
             var parties1 = parties.result
             //Add other parties
             parties1.forEach(party => {
@@ -43,8 +59,6 @@ var list = document.getElementById("allOptions")
                 option.value = party.id+" [Partei]"
                 option.text = party.id +" [Partei]"
                 list.appendChild(option)
-                //select[select.length] = new Option ( party.id);
-                //select[select.length-1].value = party.id;
             });   
         },
         error: function(parties) {
@@ -76,10 +90,6 @@ var list = document.getElementById("allOptions")
 function set_global_party_filter(){
         
         var e = document.getElementById("filterinput");
-        //if contains party do something
-        //if contains fraction do something
-        //if contains redner do something
-        //set_dashboardTitle(e.value)
         if(e.value.includes("[Partei]")){
             global_party_filter = "&party="+ e.value.split(" ")[0]
             console.log(e.value.split(" ")[0])
@@ -113,4 +123,14 @@ document.querySelector('#filterinput').addEventListener('keypress', function (e)
         dashboardHTML();
     }
 });
+
+$(document).ready(function () {
+    // Listen to click event on the submit button
+    $('#submitSpeech').click(function (e) {
+  
+      e.preventDefault();
+      setTextContent();
+    });
+  });
+
 fill_select_party()

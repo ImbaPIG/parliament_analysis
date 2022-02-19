@@ -86,7 +86,7 @@ $.ajax({
 
 function addSentiment(canvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/sentiment"+speakerFilterSentiment+fractionFilterSentiment+partyFilterSentiment,
+        url: "http://api.prg2021.texttechnologylab.org/sentiment",
         type: "GET",
         dataType: "json",
         success: async function (sentiments) {
