@@ -72,17 +72,17 @@ public class server {
         });
         get("/api/sentiment",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createSentimentAggregation(request.queryMap());
-            List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+            List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
             return convertDocListToJsonList(output);
         });
         get("/api/parties",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createPartiesAggregation(request.queryMap());
-            List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+            List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
             return convertDocListToJsonList(output);
         });
         get("/api/fractions",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createFractionsAggregation(request.queryMap());
-            List<Document> output = mongo.aggregateMongo("speakers", sampleAggregation);
+            List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
             return convertDocListToJsonList(output);
         });
         get("/api/statistic",       (request, response) ->{

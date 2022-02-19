@@ -31,7 +31,7 @@ public class AggregationHelper {
         return matchDoc;
     }
     public static Bson partyMatchHelper(String fieldname,QueryParamsMap queryParams){
-        return queryParams.get("party").value() == null ? new Document() : matchHelper(fieldname, queryParams.get("party").value());
+        return queryParams.get("party").value() == null ? matchHelper("_id",null) : matchHelper(fieldname, queryParams.get("party").value());
     }
     public static Document unwindHelper(String unwindPath){
         return new Document("$unwind",
