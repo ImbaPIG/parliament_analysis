@@ -1,16 +1,23 @@
 
 import BackendHelpers.AggregationBuilder;
-import com.mongodb.Block;
-import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
+import com.couchbase.client.deps.com.fasterxml.jackson.core.JsonFactory;
+import com.couchbase.client.deps.com.fasterxml.jackson.core.JsonParser;
+import com.couchbase.client.deps.com.fasterxml.jackson.databind.DeserializationFeature;
+import com.couchbase.client.deps.com.fasterxml.jackson.databind.JsonNode;
+import com.couchbase.client.deps.com.fasterxml.jackson.databind.ObjectMapper;
+import com.couchbase.client.deps.com.fasterxml.jackson.databind.node.ObjectNode;
+import com.couchbase.client.deps.com.fasterxml.jackson.databind.node.ArrayNode;
 import database.MongoDBConnectionHandler_File_Impl;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.json.JSONObject;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import spark.Service;
 
+import javax.json.Json;
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static BackendHelpers.AggregationHelper.convertDocListToJsonList;
 import static spark.Spark.*;
@@ -48,6 +55,7 @@ public class server {
         get("/api/namedEntities",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
             List<Document> output = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
+            response.status(200);
             return convertDocListToJsonList(output);
         });
         get("/api/speakers",       (request, response) ->{
@@ -84,7 +92,7 @@ public class server {
             System.out.println("searching");
             List<Bson> sampleAggregation= aggraBuilder.createFullTextSearchAggregation(request.queryMap());
             List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
-            return convertDocListToJsonList(matchProtocollsRegex(output));
+            return convertDocListToJsonList(protocollContentContains(output, request.queryMap().get("contains").value()));
         });
 
 
@@ -173,20 +181,43 @@ public class server {
 
          */
     }
-    public static List<Document> matchProtocollsRegex(List<Document> protocolls){
-        for(int indexProtocolls = 0;indexProtocolls<protocolls.size();indexProtocolls++){
-            Object protocoll = protocolls.get(indexProtocolls);
-            for(int indexTagespunkte = 0;indexTagespunkte<protocolls.get(indexProtocolls).size();indexTagespunkte++){
-                //Object
-                //for(int indexReden = 0;indexReden<pro)
+    public static List<Document> protocollContentContains(List<Document> protocolls, String toFind) throws IOException {
+        List<JSONObject> convertedProtocolls = protocolls.stream().map(protocoll -> new JSONObject(protocoll)).collect(Collectors.toList());
+        List<JSONObject> matchedProtocolls = new LinkedList<JSONObject>();
+        for(JSONObject protocoll : convertedProtocolls){
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+            JsonFactory factory = mapper.getFactory();
+            JsonParser createParser = factory.createParser(String.valueOf(protocoll));
+            JsonNode jNode = mapper.readTree(createParser);
+            ObjectNode oNode = jNode.deepCopy();
+
+            ArrayNode tagespunkte = (ArrayNode) mapper.createArrayNode();
+            for (int itpunkte = 0; itpunkte < oNode.get("tagesordnungspunkte").size(); itpunkte++) {
+                JsonNode tpunkt = oNode.get("tagesordnungspunkte").get(itpunkte);
+                ArrayNode speeches = (ArrayNode) mapper.createArrayNode();
+                for (int irede = 0; irede < tpunkt.get("reden").size(); irede++) {
+                    ArrayNode rede = (ArrayNode) oNode.get("tagesordnungspunkte").get(itpunkte).get("reden");
+                    if (rede.get(irede).get("content").toString().contains(toFind)) {
+                        speeches.add(rede.get(irede));
+                    }
+                }
+
+                if (speeches.size() > 0) {
+                    tagespunkte.add(tpunkt);
+                }
+
+            }
+            if (tagespunkte.size() > 0) {
+                try {
+                    matchedProtocolls.add(new JSONObject(tagespunkte.toString()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        System.out.println("reached");
-        Object first = protocolls.get(0).get("tagesordnungspunkte");
-        System.out.println(protocolls.get(0).get("tagesordnungspunkte"));
-        System.out.println("lul");
-        return protocolls;
+        return matchedProtocolls.stream().map(mprotocoll -> Document.parse(mprotocoll.toString()) ).collect(Collectors.toList());
     }
 
 
