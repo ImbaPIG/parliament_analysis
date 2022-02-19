@@ -62,7 +62,7 @@ public class server {
         });
         get("/api/namedEntities",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
-            List<Document> output = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
+            List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
             return convertDocListToJsonList(output);
         });
         get("/api/speakers",       (request, response) ->{
