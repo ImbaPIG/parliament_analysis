@@ -60,12 +60,24 @@ public class AggregationBuilder {
                         new Document("count", -1)),
                 new Document("$match",
                         new Document("count",
-                                new Document("$gte", 99))));
+                                new Document("$gte", queryParams.get("minimum").integerValue()))));
 
 
     }
     public List<Bson> createNamedEntitiesAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
+                matchHelper("redner._id",queryParams.get("rednerID").value()),
+                matchHelper("redner.fraktion",queryParams.get("fraktion").value()),
+                matchHelper("redner.party",queryParams.get("party").value()),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                unwindHelper("$analyzed"),
+                new Document("$replaceRoot",
+                        new Document("newRoot", "$analyzed")),
                 new Document("$facet",
                         new Document("persons", Arrays.asList(
                                 unwindHelper("$persons"),
@@ -77,8 +89,12 @@ public class AggregationBuilder {
                                         new Document("count", 1)
                                                 .append("element", "$_id")
                                                 .append("_id", 0)),
+                                matchHelper("_id", queryParams.get("rednerID").value()),
                                 new Document("$sort",
-                                        new Document("count", -1))))
+                                        new Document("count", -1)),
+                                new Document("$match",
+                                        new Document("count",
+                                                new Document("$gte", minimumOfZero(queryParams,"minimum"))))))
                         .append("organisations",Arrays.asList(
                                 unwindHelper("$organisations"),
                                 new Document("$group",
@@ -89,6 +105,9 @@ public class AggregationBuilder {
                                         new Document("count", 1)
                                                 .append("element", "$_id")
                                                 .append("_id", 0)),
+                                new Document("$match",
+                                        new Document("count",
+                                                new Document("$gte", minimumOfZero(queryParams,"minimum")))),
                                 new Document("$sort",
                                         new Document("count", -1))))
                         .append("locations",Arrays.asList(
@@ -101,9 +120,13 @@ public class AggregationBuilder {
                                         new Document("count", 1)
                                                 .append("element", "$_id")
                                                 .append("_id", 0)),
+                                new Document("$match",
+                                        new Document("count",
+                                                new Document("$gte", minimumOfZero(queryParams,"minimum")))),
                                 new Document("$sort",
                                         new Document("count", -1)))))
         );
+
     }
     public List<Bson> createSpeechAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
@@ -125,9 +148,10 @@ public class AggregationBuilder {
                 unwindHelper("$analyzed"));
     }
     public List<Bson> createSpeakersAggregation(QueryParamsMap queryParams){
-        return Arrays.asList(partyMatchHelper("party",queryParams),
+        return Arrays.asList(
+                partyMatchHelper("party",queryParams),
                 matchHelper("fraktion", queryParams.get("fraktion").value()),
-                matchHelper("_id", queryParams.get("speakerID").value()));
+                matchHelper("_id", queryParams.get("rednerID").value()));
     }
     public List<Bson> createSentimentAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
@@ -135,16 +159,8 @@ public class AggregationBuilder {
                 unwindHelper("$tagesordnungspunkte.reden"),
                 replaceDateStringByDate("date"),
                 createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
-                new Document("$lookup",
-                        new Document("from", "analyzedSpeeches")
-                                .append("localField", "tagesordnungspunkte.reden.redeID")
-                                .append("foreignField", "_id")
-                                .append("as", "analyzed")),
-                new Document("$lookup",
-                        new Document("from", "speakers")
-                                .append("localField", "tagesordnungspunkte.reden.rednerID")
-                                .append("foreignField", "_id")
-                                .append("as", "redner")),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
                 matchHelper("tagesordnungspunkte.reden.rednerID", queryParams.get("rednerID").value()),
                 matchHelper("redner.fraktion", queryParams.get("fraktion").value()),
                 partyMatchHelper("party",queryParams),
@@ -154,9 +170,9 @@ public class AggregationBuilder {
                 new Document("$group",
                         new Document("_id", "$sentiment")
                                 .append("count",
-                                        new Document("$sum", 1L))),
+                                        new Document("$sum", 1))),
                 new Document("$project",
-                        new Document("_id", 0L)
+                        new Document("_id", 0)
                                 .append("sentiment", "$_id")
                                 .append("count", 1)),
                 new Document("$sort",
@@ -260,15 +276,14 @@ public class AggregationBuilder {
                                         new Document("$sum", 1))),
                 new Document("$match",
                         new Document("count",
-                                new Document("$gte", 2))),
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))),
                 new Document("$sort",
                         new Document("count", -1L)));
     }
     public List<Bson> createFullTextSearchAggregation(QueryParamsMap queryParamsMap){
         return Arrays.asList(new Document("$match",
                         new Document("tagesordnungspunkte.reden.content",
-                                new Document("$exists", true))),
-                new Document("$limit", 10L));
+                                new Document("$exists", true))));
     }
 
     public Document testAggregation(){

@@ -104,4 +104,10 @@ public class AggregationHelper {
         response.put("result", list);
         return response;
     }
+    public static int minimumOfZero(QueryParamsMap queryParams, String key){
+        if(queryParams.get(key).integerValue() == null){
+            return 0;
+        }
+        return queryParams.get(key).integerValue();
+    }
 }
