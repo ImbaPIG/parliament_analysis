@@ -9,9 +9,7 @@
  */
 
 //Some variables used in this script
-var partyFilterSentiment = "";
-var fractionFilterSentiment = "";
-var speakerFilterSentiment = "";
+
 
 var ctxSentiment;
 var ChartSentiment;
@@ -19,59 +17,10 @@ var ChartSentiment;
 var firsTimeSentient = true;
 
 
-//sets the Party Filter
-function FilterPartySentiment(){
-    var e = document.getElementById("selectPartySentiment")
-    if(e.value === "All"){
-        partyFilterSentiment=""
-        fractionFilterSentiment=""
-        speakerFilterSentiment=""
-    }else{
-        partyFilterSentiment = "?party="+e.value;
-        fractionFilterSentiment=""
-        speakerFilterSentiment=""
-    }
-    mainSentiment();
-}
-
-//sets the Fraction Filter
-function FilterFractionSentiment(){
-    var e = document.getElementById("selectFractionSentiment")
-    if(e.value === "All"){
-        partyFilterSentiment=""
-        fractionFilterSentiment=""
-        speakerFilterSentiment=""
-    }else{
-        partyFilterSentiment = "";
-        fractionFilterSentiment="?fraction="+e.value;
-        speakerFilterSentiment=""
-    }
-    mainSentiment();
-
-}
-
-//sets the Speaker Filter
-function FilterSpeakerSentiment(){
-    var e = document.getElementById("RednerValueSentiment")
-    if(e.value === ""){
-        partyFilterSentiment=""
-        fractionFilterSentiment=""
-        speakerFilterSentiment=""
-    }else{
-        partyFilterSentiment = "";
-        fractionFilterSentiment="";
-        speakerFilterSentiment="?user="+e.value;
-    }
-    mainSentiment();
-}
-
-
-
-
 //Main Sentiment funtion
 function mainSentiment(){
 $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/sentiment"+speakerFilterSentiment+fractionFilterSentiment+partyFilterSentiment,
+    url: "http://api.prg2021.texttechnologylab.org/sentiment",
     type: "GET",
     dataType: "json",
     success: async function (sentiments) {
@@ -84,8 +33,6 @@ $.ajax({
         var positive_count = 0;
         var negative_count = 0;
         result.forEach(e => {
-            // I take the log of the data for better visailisation
-           // data.push({x: e.sentiment, y: Math.log(e.count)})
 
            if(parseFloat(e.sentiment) > 0){
                 positive_count = positive_count + e.count;
@@ -150,10 +97,8 @@ function addSentiment(canvasID){
             var neutral_count = 0;
             var positive_count = 0;
             var negative_count = 0;
+            
             result.forEach(e => {
-                // I take the log of the data for better visailisation
-               // data.push({x: e.sentiment, y: Math.log(e.count)})
-    
                if(parseFloat(e.sentiment) > 0){
                     positive_count = positive_count + e.count;
                }else if(parseFloat(e.sentiment) < 0){

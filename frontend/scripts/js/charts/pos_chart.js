@@ -6,71 +6,16 @@
  * 
  */
 
-//Some varibales used in the skript
-var minimumFilterPOS = "?minimum=0"; //default minimum is set to 0
-var speakerFilterPOS = "";
-var partyFilterPOS = "";
-var fractionFilterPOS = "";
-
 var ctxPOS;
 var ChartPOS;
 
 var firstTimePOS = true;
 
-//function that sets the minimum value
-function FilterMinimumPOS() {
-    var e = document.getElementById("MinimumValuePOS")
-    if(parseInt(e.value) < 0 || e.value===""){
-        minimumFilterPOS = "?minimum=0"
-    }else{
-        minimumFilterPOS = "?minimum=" + e.value
-    }
-    mainPOS()
-}
-
-//function that filters a speaker
-function FilterSpeakerPOS() {
-    var e = document.getElementById("RednerValuePOS")
-    
-    if(e.value === ""){
-        speakerFilterPOS = "";
-    }else{
-        speakerFilterPOS = "&user=" + e.value;
-    }
-    mainPOS()
-}
-
-//function that filters a party
-function FilterPartyPOS() {
-    var e = document.getElementById("selectPartyPOS");
-    if(e.value === "All"){
-        partyFilterPOS=""
-        fractionFilterPOS=""
-    }else{
-        partyFilterPOS = "&party="+e.value;
-        fractionFilterPOS=""
-    }
-    mainPOS();
-}
-
-//function that filters a fraction
-function FilterFractionPOS() {
-    var e = document.getElementById("selectFractionPOS");
-    if(e.value === "All"){
-        fractionFilterPOS=""
-        partyFilterPOS=""
-    }else{
-        fractionFilterPOS = "&fraction="+e.value;
-        partyFilterPOS=""
-    }
-    mainPOS();
-}
-
 
 //main function which is called below to run the hole thing
 function mainPOS() {
  $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS,
+    url: "http://api.prg2021.texttechnologylab.org/pos",
     type: "GET",
     dataType: "json",
     success: async function(pos) {
@@ -136,11 +81,9 @@ function mainPOS() {
 
 }//end mainfunction
 
-
-
 function addPOSchart(POScanvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/pos"+minimumFilterPOS+speakerFilterPOS+fractionFilterPOS+global_party_filter,
+        url: "http://api.prg2021.texttechnologylab.org/pos"+global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(pos) {

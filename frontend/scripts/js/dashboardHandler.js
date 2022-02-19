@@ -1,6 +1,27 @@
 //import createchartHTML from "chartHandler.js";
+
+
+/**
+ * This module handles the dashbaord adding functions
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+//standard dashboard title
 var dashboardTitle = "Übersicht"
 
+
+
+/**
+ * dashboard HTML creates a new dashboard in the HTML file
+ * 
+ * 
+ * the daboard will be added at the end of the current dashboard
+ */
 function dashboardHTML(){
 
     var input = document.getElementById("filterinput")
@@ -85,11 +106,13 @@ function dashboardHTML(){
 
     `
 
+    //Here the new dashboard gets added to the maindashboard
     $("#newdashboard").html( baseframe );
-    //now trying to add charts
-    //create chart should return just the hole div with the canvas id and after that we create the actual chart content
+    
 
-    //chartBaseFrame = createChart(canvasID)
+    //now additional charts get created and added to the new dashboard
+
+    //add Sentiment chart
     chartBaseFrame = createchart("newSentiment", "Sentiment")
     $("#newDashboardCharts").html(chartBaseFrame);
     addSentiment("newSentiment")
@@ -117,7 +140,7 @@ function dashboardHTML(){
 }
 
 
-
+//this functions creates a baseframe for a chart
 function createchart(canvasID, chartName){
     let baseframe = `
     <div class="row">
@@ -139,6 +162,14 @@ function createchart(canvasID, chartName){
 }
 
 
+/**
+ * This function is used to create a bar chart
+ * 
+ * 
+ * @param {*} canvasID 
+ * @param {*} chartName 
+ * @returns 
+ */
 function create_bar_chart(canvasID, chartName){
         let baseframe = `
         <div class="row">
@@ -160,6 +191,14 @@ function create_bar_chart(canvasID, chartName){
         return baseframe;
 }
 
+
+/**
+ * This function is used to create a Linechart
+ * 
+ * @param {*} canvasID 
+ * @param {*} chartName 
+ * @returns 
+ */
 function create_line_chart(canvasID, chartName){
     let baseframe = `
     <div class="row">
@@ -181,12 +220,23 @@ function create_line_chart(canvasID, chartName){
     return baseframe;
 }
 
-//dashboardHTML()
+/**
+ * This function gets called if we want to remove a dasboard
+ * 
+ * the dasboard gets removed by changing the inside of the new dashbaord div
+ * 
+ * 
+ */
 function removeDashboard(){
-    //console.log("Jo sgeht")
     $("#newdashboard").html( '' )
 }
 
+
+/**
+ * This functions sets the title of a dashboard
+ * 
+ * @param {*} title 
+ */
 function set_dashboardTitle(title) {
     dashboardTitle = title    
 }

@@ -1,5 +1,3 @@
-//Pie chart
-
 /***
  * 3 b (4)
  * 
@@ -37,46 +35,6 @@ var ChartNE_organisations;
 
 var firstTimeNE = true;
 
-
-//filters Speakers
-  function FilterSpeakerNE() {
-    var e = document.getElementById("RednerValueNE")
-    
-    if(e.value === ""){
-        speakerFilterNE = "";
-    }else{
-        speakerFilterNE = "&user=" + e.value;
-    }
-    NE()
-  }
-
-  //sets PArty filter
-
-  function FilterPartyNE() {
-    var e = document.getElementById("selectPartyNE");
-    if(e.value === "All"){
-        partyFilterNE=""
-        fractionFilterNE=""
-    }else{
-        partyFilterNE = "&party="+e.value;
-        fractionFilterNE=""
-    }
-    NE();
-  }
-
-  //sets Fraction filter
-  function FilterFractionNE() {
-    var e = document.getElementById("selectFractionNE");
-    if(e.value === "All"){
-        fractionFilterNE=""
-        partyFilterNE=""
-    }else{
-        fractionFilterNE = "&fraction="+e.value;
-        partyFilterNE=""
-    }
-    NE();
-  }
-
   //sets minimum filter
   function FilterMinimumNE() {
     var e = document.getElementById("MinimumValueNE")
@@ -88,17 +46,7 @@ var firstTimeNE = true;
     NE()
   }
 
-  //sets TopKNE
-  function SetTopKNE(){
-    var e = document.getElementById("TopKNE")
 
-    if(parseInt(e.value) < 0 || e.value === ""){
-        topkNE = 10
-    }else{
-        topkNE=e.value
-    }
-    NE()
-  }
 
   //main function for named Entities
 function NE(){
@@ -122,40 +70,26 @@ $.ajax({
         var data_organisations = []
         var label_organisations = []
 
-        var top = 0
-        var top_location = 0
-        var top_organisations = 0
-
-        //get top k persons
         persons.forEach(person => {
             person_sum = person_sum + person.count;
-            //if (top < topkNE){
             data1.push(person.count);
             label1.push(person.element);
-            top = top+1
-            //}
         });
 
-        //top k organisations
+        //organisations
         var organisation_sum = 0
         organisations.forEach(organisation => {
             organisation_sum = organisation_sum + organisation.count;
-            //if(top_organisations < topkNE){
-                data_organisations.push(organisation.count);
-                label_organisations.push(organisation.element);
-                top_organisations = top_organisations+1;
-            //}
+            data_organisations.push(organisation.count);
+            label_organisations.push(organisation.element);
         });
 
-        //top k loations
+        //loations
         var location_sum = 0
         locations.forEach(location => {
             location_sum = location_sum + location.count;
-            //if(top_location<topkNE){
-                data_locations.push(location.count);
-                label_locations.push(location.element)
-                top_location = top_location + 1;
-            //}
+            data_locations.push(location.count);
+            label_locations.push(location.element)
         });
 
         var lablelol = []
@@ -169,8 +103,7 @@ $.ajax({
 
         //config for all things
         configNE = {
-            type: 'line',
-            
+            type: 'line', 
             data: {
                 labels: lablelol,
                 datasets: [
@@ -179,13 +112,9 @@ $.ajax({
                     data: data_locations,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
-                        //'rgba(54, 162, 235, 0.2)',
-                        //'rgba(255, 206, 86, 0.2)'
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
-                        //'rgba(54, 162, 235, 1)',
-                        //'rgba(255, 206, 86, 1)'
                     ],
                     borderWidth: 1,
                     fill: false
@@ -194,14 +123,10 @@ $.ajax({
                     label: 'orga',
                     data: data_organisations,
                     backgroundColor: [
-                        //'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
-                        //'rgba(255, 206, 86, 0.2)'
                     ],
                     borderColor: [
-                        //'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
-                        //'rgba(255, 206, 86, 1)'
                     ],
                     borderWidth: 1,
                     fill: false
@@ -210,13 +135,9 @@ $.ajax({
                     label: 'persons',
                     data: data1,
                     backgroundColor: [
-                        //'rgba(255, 99, 132, 0.2)',
-                        //'rgba(54, 162, 235, 0.2)',
                         'rgba(255, 206, 86, 0.2)'
                     ],
                     borderColor: [
-                        //'rgba(255, 99, 132, 1)',
-                        //'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)'
                     ],
                     borderWidth: 1,
@@ -321,13 +242,9 @@ function addNamedEntities(NEcanvasID){
                         data: data_locations,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
-                            //'rgba(54, 162, 235, 0.2)',
-                            //'rgba(255, 206, 86, 0.2)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
-                            //'rgba(54, 162, 235, 1)',
-                            //'rgba(255, 206, 86, 1)'
                         ],
                         borderWidth: 1,
                         fill: false
@@ -336,14 +253,10 @@ function addNamedEntities(NEcanvasID){
                         label: 'orga',
                         data: data_organisations,
                         backgroundColor: [
-                            //'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
-                            //'rgba(255, 206, 86, 0.2)'
                         ],
                         borderColor: [
-                            //'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
-                            //'rgba(255, 206, 86, 1)'
                         ],
                         borderWidth: 1,
                         fill: false
@@ -352,13 +265,9 @@ function addNamedEntities(NEcanvasID){
                         label: 'persons',
                         data: data1,
                         backgroundColor: [
-                            //'rgba(255, 99, 132, 0.2)',
-                            //'rgba(54, 162, 235, 0.2)',
                             'rgba(255, 206, 86, 0.2)'
                         ],
                         borderColor: [
-                            //'rgba(255, 99, 132, 1)',
-                            //'rgba(54, 162, 235, 1)',
                             'rgba(255, 206, 86, 1)'
                         ],
                         borderWidth: 1,
@@ -370,8 +279,6 @@ function addNamedEntities(NEcanvasID){
     
             //crate charts
             ChartNE = new Chart(ctxNE, configNE);
-    
-            firstTimeNE = false;
             }else{//END FirstTime
             }
         },
