@@ -9,11 +9,8 @@
 //some variables used in the sript
 var minimumfilter = "?minimum=30000"
 var firsttime = true
-var partyfilter =""
-var fractionfilter =""
 var ctx;
 var myChartToken;
-var rednerFilterToken=""
 
 //sets the minimum to another value
 function filterMinimumToken() {
@@ -26,51 +23,10 @@ function filterMinimumToken() {
     mainToken()
 }
 
-//sets party Filter
-function filterParty(){
-    var e = document.getElementById("selectToken");
-    if(e.value === "All"){
-        partyfilter=""
-        fractionfilter=""
-    }else{
-    partyfilter = "&party="+e.value;
-    fractionfilter=""
-    }
-    mainToken();
-}
-
-//sets fraction Filter
-function filterFraction(){
-    var e = document.getElementById("selectFractionToken");
-    if(e.value === "All"){
-        fractionfilter=""
-        partyfilter=""
-    }else{
-    fractionfilter = "&fraction="+e.value;
-    partyfilter=""
-    }
-    mainToken();
-}
-
-//sets Speaker Filter
-function filterRednerToken(){
-    var e = document.getElementById("RednerTokenValue")
-    
-    if(e.value === ""){
-        rednerFilterToken = "";
-        minimumfilter="?minimum=30000"
-    }else{
-        rednerFilterToken = "&user=" + e.value;
-        minimumfilter = "?minimum=1000"
-    }
-    mainToken()
-}
-
-
 //Mian function to visualize the token distribution
 function mainToken(){
 $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter + rednerFilterToken+ fractionfilter + partyfilter,
+    url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter,
     type: "GET",
     dataType: "json",
     success: async function(token) {
@@ -135,12 +91,12 @@ $.ajax({
 
 function addTokenChart(Token_canvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter + rednerFilterToken+ fractionfilter + partyfilter,
+        url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter,
         type: "GET",
         dataType: "json",
         success: async function(token) {
+
             var tokenresult = token.result
-            
             var labels = []
             var counts = []
     
@@ -175,8 +131,6 @@ function addTokenChart(Token_canvasID){
                     }
                 }
             })
-    
-            firsttime=false;
     },
     
     //error message

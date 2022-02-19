@@ -1,38 +1,3 @@
-/* styling the search list in modal */
-.search-icon:hover{
-    cursor: default;
-}
-.modal-list {
-    height: 40vh;
-}
-
-.modal-body {
-    padding: 16px;
-}
-
-.modal-list {
-    display: block;
-    margin: 0;
-    padding: 0;
-    padding-top: 10px;
-    overflow-y: auto;
-}
-
-ul {
-    list-style-type: none;
-}
-
-.modal-list-item {
-    background: none;
-    transition: 100ms;
-}
-
-.modal-list-item:hover {
-    background: rgb(233, 233, 233);
-    cursor: pointer;
-}
-
-
 /*text marking (3e)*/
 mark.blue{
     background-color: lightskyblue;

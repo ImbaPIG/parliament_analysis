@@ -1,18 +1,29 @@
 
+
+
+
+// some custome list to simulate text highlighting
 var custome_named_Entities = ["ich","Ich","Kollegen","Kolleginnen"]
 var custome_locations = ["Bundestag","Bundestages"]
-var custome_organisations = ["AfD"]
+var custome_organisations = ["AfD","SPD"]
 
-/*Plan is to take the text and mark the words which appear in the Named Entitis list return the text conntent or better chnage the paragraph directly*/ 
+/**
+ * This function is used for highlighting the text
+ * 
+ * we get the text content (speech) and then we collect each word and than look up if the word is
+ * a Named Entitie and color it.
+ * 
+ * After that we put the words back together again
+ * and display the text
+ * 
+ */
 function highlight_text() {
     var paragraph = document.getElementById("named_text").textContent
-    //var paragraph = $('#named_text').text()
-    //console.log(typeof paragraph)
-    //paragraph.replace(/Ich/g, "<mark>ich</mark>")
-    //console.log(paragraph)
     var words = paragraph.split(" ")
-    console.log(words)
     var count = 0
+
+
+    //color each word if it is in a named Entitie
     words.forEach(word => {
         custome_named_Entities.forEach(n =>{
             if(n === word){
@@ -31,20 +42,14 @@ function highlight_text() {
         })
         count++
     });
+
+    //put the words together again
     marked_paragraph = ""
     words.forEach(word => {
         marked_paragraph =marked_paragraph + word + " "
     });
     $("#paragraph_body").html("<p>"+marked_paragraph+"<p>")
 
-    
-
-    //go through text and find the words mark them by inserting the mark things
-    //need 3 mark classes red blue yellow maybe 
-
-    //insert resulting text into paragraph again
-
-    //return highlighted_text
 }
 
 highlight_text()

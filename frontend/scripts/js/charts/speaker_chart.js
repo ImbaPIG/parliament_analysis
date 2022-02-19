@@ -1,5 +1,5 @@
 /**
- * 3a(1)
+ * 
  * 
  * Finds Speaker with the most Speeches
  * 
@@ -44,19 +44,8 @@ function mainSpeaker(){
                             return '';
                           },
                           label: function(tooltipItem, data) {
-                           /* var img = new Image();   // Create new img element
-
-                            var canvasPosition = Chart.helpers.getRelativePosition(e, ChartSpeaker);
-
-                            // Substitute the appropriate scale IDs
-                            var dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
-                            var dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
-
-                            img.onload = function() {
-                                ctx.drawImage(img, dataX, dataY);
-                              };
-
-                            img.src = 'img/Deutscher_Bundestag_logo.svg';*/
+                              //TODO
+                              //Hoiover Effek
 
                             
                             
