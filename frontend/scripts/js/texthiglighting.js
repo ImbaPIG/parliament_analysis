@@ -17,8 +17,8 @@ var custome_organisations = ["AfD","SPD"]
  * and display the text
  * 
  */
-function highlight_text() {
-    var paragraph = document.getElementById("named_text").textContent
+function highlight_text(paragraph,namedEntities,locations,organisations) {
+    //var paragraph = document.getElementById("named_text").textContent
     var words = paragraph.split(" ")
     var count = 0
 
@@ -53,4 +53,35 @@ function highlight_text() {
 
 }
 
+
+
+function setTextContent(){
+
+    var input = document.getElementById("filterspeeches")
+    $.ajax({
+        url: "http://localhost:4567/api/speech?redeID="+input.value,
+        type: "GET",
+        dataType: "json",
+        success: async function(speech) {
+            console.log(speech)
+            var speechresult = speech.result[0]
+
+            highlight_text(speechresult.content, speechresult.analyzed.persons, speechresult.analyzed.locations, speechresult.analyzed.organisations)
+        },
+        error: function(pos) {
+            //if something happens we get an error message
+            console.log("Fehler")
+        }
+    })
+
+}
+
+
+
+
+
+
 highlight_text()
+
+
+

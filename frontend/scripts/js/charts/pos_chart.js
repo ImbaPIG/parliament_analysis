@@ -15,7 +15,7 @@ var firstTimePOS = true;
 //main function which is called below to run the hole thing
 function mainPOS() {
  $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/pos",
+    url: "http://localhost:4567/api/pos",
     type: "GET",
     dataType: "json",
     success: async function(pos) {
@@ -25,7 +25,7 @@ function mainPOS() {
 
         //push the result data onto other array of data used in the cahrt
         posresult.forEach(e => {
-            labels.push(e.pos);
+            labels.push(e._id);
             counts.push(e.count)
             
         });

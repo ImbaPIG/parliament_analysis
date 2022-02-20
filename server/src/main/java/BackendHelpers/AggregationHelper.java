@@ -31,12 +31,12 @@ public class AggregationHelper {
         return matchDoc;
     }
     public static Bson partyMatchHelper(String fieldname,QueryParamsMap queryParams){
-        return queryParams.get("party").value() == null ? new Document() : matchHelper(fieldname, queryParams.get("party").value());
+        return queryParams.get("party").value() == null ? matchHelper("_id",null) : matchHelper(fieldname, queryParams.get("party").value());
     }
     public static Document unwindHelper(String unwindPath){
         return new Document("$unwind",
                 new Document("path", unwindPath)
-                        .append("preserveNullAndEmptyArrays", true));
+                        .append("preserveNullAndEmptyArrays", false));
 
     }
     public static Document lookupHelper(String fromCollectionName, String localField, String foreignField, String newName){
@@ -101,7 +101,13 @@ public class AggregationHelper {
         }
         JSONObject response = new JSONObject();
         response.put("sucess",true);
-        response.put("result",list);
+        response.put("result", list);
         return response;
+    }
+    public static int minimumOfZero(QueryParamsMap queryParams, String key){
+        if(queryParams.get(key).integerValue() == null){
+            return 0;
+        }
+        return queryParams.get(key).integerValue();
     }
 }

@@ -214,6 +214,11 @@
                                     <div class="card-header" id="speech_header">
 
                                         <h6 class="m-0 font-weight-bold text-primary">Speech Texthighlighting</h6>
+                                        <form class="form-inline ">
+                                            <input id="filterspeeches" list="allSpeeches" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
+                                            <datalist id="allSpeeches"></datalist>
+                                            <button id="submitSpeech"class="btn btn-primary mt-4">Analyze Text</button>
+                                          </form>
                                     </div>
                                     <div class="card-body">
                                         <div id="speaker_image">
@@ -290,77 +295,6 @@
     <!-- End of Content Wrapper -->
 
     <!-- End of Page Wrapper -->
-
-
-    <!-- Moadls -->
-    <!-- Speaker Modal -->
-    <div class="modal fade" id="speaker-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Redner  Auswahl</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-bar flexed justify-content-between input-group">
-                        <input class="form-control text-gray-800 modal-search" type="text" name="speaker-modal-input">
-                        <div class=" btn search-icon input-group-append" >
-                            <i class="fas fa-search"></i></button>  
-                        </div>
-                    </div>
-                    <ul class="modal-list" id="speakerList"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Party Modal -->
-    <div class="modal fade" id="party-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Partei  Auswahl</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-bar flexed justify-content-between input-group">
-                        <input class="form-control text-gray-800 modal-search" type="text" name="party-modal-input">
-                        <div class=" btn search-icon input-group-append" >
-                            <i class="fas fa-search"></i></button>  
-                        </div>
-                    </div>
-                    <ul class="modal-list" id="partyList"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Fraction Modal -->
-    <div class="modal fade" id="fraction-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Fraktions Auswahl</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-bar flexed justify-content-between input-group">
-                        <input class="form-control text-gray-800 modal-search" type="text" name="fraction-modal-input">
-                        <div class=" btn search-icon input-group-append" >
-                            <i class="fas fa-search"></i></button>
-                        </div>
-                    </div>
-                    <ul class="modal-list" id="fractionList"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

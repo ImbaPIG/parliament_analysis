@@ -51,14 +51,14 @@ var firstTimeNE = true;
   //main function for named Entities
 function NE(){
 $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/namedEntities" +minimumFilterNE+speakerFilterNE+fractionFilterNE+partyFilterNE,
+    url: "http://localhost:4567/api/namedEntities" +minimumFilterNE+speakerFilterNE+fractionFilterNE+partyFilterNE,
     type: "GET",
     dataType: "json",
     success: async function(namedEntities){
         //agaon get a lot of variables
         var persons = namedEntities.result[0].persons;
-        var organisations = namedEntities.result[1].organisations
-        var locations = namedEntities.result[2].locations
+        var organisations = namedEntities.result[0].organisations
+        var locations = namedEntities.result[0].locations
 
         var person_sum = 0
         var data1 = []
