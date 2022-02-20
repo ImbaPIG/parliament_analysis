@@ -121,8 +121,6 @@ function addTokenChart(Token_canvasID){
                 }
             })
     },
-    
-    //error message
         error: function(token) {
             console.log(token)
         }
@@ -131,4 +129,3 @@ function addTokenChart(Token_canvasID){
 
 
 addTokenChart("chart_token")
-//mainToken();

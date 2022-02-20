@@ -17,9 +17,12 @@ let custome_organisations = ["AfD","SPD"]
  * and display the text
  * 
  */
-function highlight_text(paragraph,namedEntities,locations,organisations) {
+function highlight_text(paragraph,namedEntities,locations,organisations, sentences) {
     //let paragraph = document.getElementById("named_text").textContent
-    let words = paragraph.split(" ")
+    let marked_paragraph = ""
+    let sentenceCount = 0
+    sentences.forEach(sentence =>{
+    let words = sentence.sentenceText.split(" ")
     let count = 0
 
 
@@ -44,10 +47,18 @@ function highlight_text(paragraph,namedEntities,locations,organisations) {
     });
 
     //put the words together again
-    marked_paragraph = ""
+    marked_sentence = ""
     words.forEach(word => {
-        marked_paragraph =marked_paragraph + word + " "
+        marked_sentence =marked_sentence + word + " "
     });
+
+    let IconID = 'IconID' + sentenceCount
+    marked_paragraph = marked_sentence +'<i id='+IconID+' class="fa fa-info-circle" onclick="showSentiment('+sentence.sentenceSentimentValue+','+sentenceCount+')"></i>' + marked_paragraph
+    sentenceCount++
+
+    })
+
+
     $("#paragraph_body").html("<p>"+marked_paragraph+"<p>")
 
 }
@@ -64,12 +75,20 @@ function setTextContent(){
         success: async function(speech) {
             let speechresult = speech.result[0]
 
-            highlight_text(speechresult.content, speechresult.analyzed.persons, speechresult.analyzed.locations, speechresult.analyzed.organisations)
+            highlight_text(speechresult.content, speechresult.analyzed.persons, speechresult.analyzed.locations, speechresult.analyzed.organisations,speechresult.analyzed.sentences)
         },
         error: function(e) {
             console.log(e)
         }
     })
+
+}
+
+function showSentiment(sentimentValue, sentenceCount){
+    let IconID = 'IconID' + sentenceCount
+    let icon = document.getElementById(IconID)
+    icon.innerHTML= sentimentValue    //$("#"+IconID).html(sentimentValue)
+    //console.log(sentimentValue)
 
 }
 
