@@ -3,8 +3,8 @@
 
 
 // some custome list to simulate text highlighting
-var custome_named_Entities = ["ich","Ich","Kollegen","Kolleginnen"]
-var custome_locations = ["Bundestag","Bundestages"]
+var custome_named_Entities = ["ich","Ich","Kollegen"]
+var custome_locations = ["Bundestag"]
 var custome_organisations = ["AfD","SPD"]
 
 /**
@@ -25,19 +25,20 @@ function highlight_text(paragraph,namedEntities,locations,organisations) {
 
     //color each word if it is in a named Entitie
     words.forEach(word => {
-        namedEntities.forEach(n =>{
-            if(n === word){
+        custome_named_Entities.forEach(n =>{
+            if(word.toLowerCase().includes(n.toLowerCase())){
                 words[count] = "<mark class='blue'>" + word + "</mark>"
             }
         })
-        locations.forEach(l =>{
-            if(l === word){
+        custome_locations.forEach(l =>{
+            if(word.toLowerCase().includes(l.toLowerCase())){
                 words[count] = "<mark class='red'>" + word + "</mark>"
             }
         })
-        organisations.forEach(o =>{
-            if(o === word){
+        custome_organisations.forEach(o =>{
+            if(word.toLowerCase().includes(o.toLowerCase())){
                 words[count] = "<mark class='yellow'>" + word + "</mark>"
+                console.log(o, count)
             }
         })
         count++
@@ -81,7 +82,6 @@ function setTextContent(){
 
 
 highlight_text()
-
 
 
 
