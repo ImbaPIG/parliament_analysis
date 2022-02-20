@@ -7,8 +7,8 @@
  */
 
 
-var ctx;
-var myChartToken;
+let ctx;
+let myChartToken;
 
 
 //Mian function to visualize the token distribution
@@ -18,10 +18,10 @@ $.ajax({
     type: "GET",
     dataType: "json",
     success: async function(token) {
-        var tokenresult = token.result
+        let tokenresult = token.result
         
-        var labels = []
-        var counts = []
+        let labels = []
+        let counts = []
 
         //push reult data into dffrent lists for the chart
         tokenresult.forEach(e => {
@@ -83,10 +83,11 @@ function addTokenChart(Token_canvasID){
         type: "GET",
         dataType: "json",
         success: async function(token) {
+            console.log(token)
 
-            var tokenresult = token.result
-            var labels = []
-            var counts = []
+            let tokenresult = token.result
+            let labels = []
+            let counts = []
     
             //push reult data into dffrent lists for the chart
             tokenresult.forEach(e => {

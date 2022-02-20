@@ -3,9 +3,9 @@
 
 
 // some custome list to simulate text highlighting
-var custome_named_Entities = ["ich","Ich","Kollegen"]
-var custome_locations = ["Bundestag"]
-var custome_organisations = ["AfD","SPD"]
+let custome_named_Entities = ["ich","Ich","Kollegen"]
+let custome_locations = ["Bundestag"]
+let custome_organisations = ["AfD","SPD"]
 
 /**
  * This function is used for highlighting the text
@@ -18,9 +18,9 @@ var custome_organisations = ["AfD","SPD"]
  * 
  */
 function highlight_text(paragraph,namedEntities,locations,organisations) {
-    //var paragraph = document.getElementById("named_text").textContent
-    var words = paragraph.split(" ")
-    var count = 0
+    //let paragraph = document.getElementById("named_text").textContent
+    let words = paragraph.split(" ")
+    let count = 0
 
 
     //color each word if it is in a named Entitie
@@ -38,7 +38,6 @@ function highlight_text(paragraph,namedEntities,locations,organisations) {
         organisations.forEach(o =>{
             if(word.toLowerCase().includes(o.toLowerCase())){
                 words[count] = "<mark class='yellow'>" + word + "</mark>"
-                console.log(o, count)
             }
         })
         count++
@@ -57,20 +56,18 @@ function highlight_text(paragraph,namedEntities,locations,organisations) {
 
 function setTextContent(){
 
-    var input = document.getElementById("filterspeeches")
+    let input = document.getElementById("filterspeeches")
     $.ajax({
         url: "http://localhost:4567/api/speech?redeID="+input.value,
         type: "GET",
         dataType: "json",
         success: async function(speech) {
-            console.log(speech)
-            var speechresult = speech.result[0]
+            let speechresult = speech.result[0]
 
             highlight_text(speechresult.content, speechresult.analyzed.persons, speechresult.analyzed.locations, speechresult.analyzed.organisations)
         },
-        error: function(pos) {
-            //if something happens we get an error message
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
