@@ -91,16 +91,16 @@ function set_global_party_filter(){
         
         var e = document.getElementById("filterinput");
         if(e.value.includes("[Partei]")){
-            global_party_filter = "&party="+ e.value.split(" ")[0]
+            global_party_filter = "?party="+ e.value.split(" ")[0]
             console.log(e.value.split(" ")[0])
 
         }else if(e.value.includes("[Fraktion]")){
-            global_party_filter = "&fraction="+ e.value.split(" ")[0]
+            global_party_filter = "?fraction="+ e.value.split(" ")[0]
             console.log(e.value.split(" ")[0])
 
         }else{
             //e.value.split("#")[0]
-            global_party_filter = "&user="+e.value.split("#")[0]
+            global_party_filter = "?user="+e.value.split("#")[0]
             set_dashboardTitle(e.value.split("#")[1]);
         }
 }

@@ -25,17 +25,17 @@ function highlight_text(paragraph,namedEntities,locations,organisations) {
 
     //color each word if it is in a named Entitie
     words.forEach(word => {
-        custome_named_Entities.forEach(n =>{
+        namedEntities.forEach(n =>{
             if(word.toLowerCase().includes(n.toLowerCase())){
                 words[count] = "<mark class='blue'>" + word + "</mark>"
             }
         })
-        custome_locations.forEach(l =>{
+        locations.forEach(l =>{
             if(word.toLowerCase().includes(l.toLowerCase())){
                 words[count] = "<mark class='red'>" + word + "</mark>"
             }
         })
-        custome_organisations.forEach(o =>{
+        organisations.forEach(o =>{
             if(word.toLowerCase().includes(o.toLowerCase())){
                 words[count] = "<mark class='yellow'>" + word + "</mark>"
                 console.log(o, count)
