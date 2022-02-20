@@ -6,34 +6,22 @@
  * 
  */
 
-//some variables used in the sript
-var minimumfilter = "?minimum=30000"
-var firsttime = true
-var ctx;
-var myChartToken;
 
-//sets the minimum to another value
-function filterMinimumToken() {
-    var e = document.getElementById("MinimumTokenValue")
-    if(parseInt(e.value) < 0 || e.value===""){
-        minimumfilter = "?minimum=30000"
-    }else{
-        minimumfilter = "?minimum=" + e.value
-    }
-    mainToken()
-}
+let ctx;
+let myChartToken;
+
 
 //Mian function to visualize the token distribution
-function mainToken(){
+/*function mainToken(){
 $.ajax({
     url: "http://localhost:4567/api/tokens"+minimumfilter,
     type: "GET",
     dataType: "json",
     success: async function(token) {
-        var tokenresult = token.result
+        let tokenresult = token.result
         
-        var labels = []
-        var counts = []
+        let labels = []
+        let counts = []
 
         //push reult data into dffrent lists for the chart
         tokenresult.forEach(e => {
@@ -83,26 +71,27 @@ $.ajax({
 },
 
 //error message
-    error: function(pos) {
-        console.log("Fehler")
+    error: function(e) {
+        console.error(e)
     }
 })
-}
+}*/
 
 function addTokenChart(Token_canvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/tokens",
+        url: "http://localhost:4567/api/tokens"+global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(token) {
+            console.log(token)
 
-            var tokenresult = token.result
-            var labels = []
-            var counts = []
+            let tokenresult = token.result
+            let labels = []
+            let counts = []
     
             //push reult data into dffrent lists for the chart
             tokenresult.forEach(e => {
-                labels.push(e.token);
+                labels.push(e._id);
                 counts.push(e.count)
                 
             });
@@ -132,12 +121,11 @@ function addTokenChart(Token_canvasID){
                 }
             })
     },
-    
-    //error message
-        error: function(pos) {
-            console.log("Fehler")
+        error: function(token) {
+            console.log(token)
         }
     })
 }
 
-mainToken();
+
+addTokenChart("chart_token")
