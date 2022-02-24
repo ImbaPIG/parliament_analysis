@@ -3,24 +3,18 @@ package database;
 import bundestag.Protokoll_File_Impl;
 import interfaces.DBCreator;
 import org.apache.uima.UIMAException;
-import org.bson.BsonDocument;
-import org.bson.BsonDocumentReader;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.DocumentCodec;
-import org.bson.conversions.Bson;
-import org.jsoup.helper.W3CDom;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import webscraper.Webcrawler;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 public class DBCreator_File_Impl implements DBCreator {
@@ -49,7 +43,7 @@ public class DBCreator_File_Impl implements DBCreator {
         if(handler.protokollExists(sitzungsnr)){
             System.out.println("the protkoll " + sitzungsnr + " already exists, therefore it is skipped");
         } else {
-            handler.createPlaceholder(sitzungsnr);
+            // handler.createPlaceholder(sitzungsnr);
             try{
                 assert builder != null;
                 Protokoll_File_Impl protokoll = new Protokoll_File_Impl(doc, builder, handler, sitzungsnr);
@@ -123,6 +117,31 @@ public class DBCreator_File_Impl implements DBCreator {
         return rSet.size() > 0 ? rSet.get(0) : null;
 
     }
+
+    public static void uploadCategoryEncoding(String path) {
+        MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
+
+        LinkedList<org.bson.Document> docsToBeInserted = new LinkedList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                org.bson.Document docToInsert = new org.bson.Document();
+                String[] values = line.split("\t");
+                if(values.length < 2){continue;}
+                docToInsert.put("_id", values[0]);
+                docToInsert.put("text",values[1]);
+                if(!handler.existsDocument(docToInsert.getString("_id"),"categoryEncodings" )){
+                    System.out.println("about to insert" + values[0]);
+                    docsToBeInserted.push(docToInsert);
+                    TimeUnit.MILLISECONDS.sleep(10);
+                }
+            }
+            handler.uploadDocs(docsToBeInserted, "categoryEncodings");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 
 

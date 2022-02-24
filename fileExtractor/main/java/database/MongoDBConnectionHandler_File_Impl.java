@@ -1,13 +1,8 @@
 package database;
 
-import bundestag.Redner_File_Impl;
 import com.mongodb.*;
-import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Accumulators;
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import interfaces.MongoDBConnectionHandler;
@@ -19,7 +14,6 @@ import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.jcas.JCas;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
@@ -29,9 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static com.mongodb.client.model.Aggregates.*;
 
 public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHandler {
     public final MongoDatabase db;
@@ -50,7 +41,7 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         List<ServerAddress> seeds = new ArrayList(0);
         seeds.add(seed);
         MongoClientOptions options = MongoClientOptions.builder()
-                .connectionsPerHost(10)
+                .connectionsPerHost(50)
                 .sslEnabled(false)
                 .build();
         MongoClient client = new MongoClient(seeds, credential, options);
@@ -132,6 +123,10 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         assert dbDoc != null;
         if(existsDocument(dbDoc.get("_id").toString(), collection)){return;}
         this.db.getCollection(collection).insertOne(dbDoc);
+    }
+    public void uploadDocs(List<Document> dbDocs, String collection){
+        assert dbDocs != null;
+        this.db.getCollection(collection).insertMany(dbDocs);
     }
     public List<Document> aggregateMongo (String collection, List<Bson> aggregation){
         try {

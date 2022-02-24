@@ -5,9 +5,9 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/fileExtractor/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/fileExtractor/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/fileExtractor/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -16,9 +16,9 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: xerces:xercesImpl:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.17.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.17.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.7" level="project" />
     <orderEntry type="library" name="Maven: com.github.texttechnologylab:UIMATypeSystem:1d23e466bcae2cf36fb06aa41ae85b319a7f2fe2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.uima:uimaj-core:2.10.4" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
@@ -562,6 +562,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: com.sparkjava:spark-core:2.9.3" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:9.4.31.v20200723" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />

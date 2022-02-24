@@ -18,6 +18,12 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class AggregationHelper {
 
+    /**
+     *
+     * @param fieldname
+     * @param matchValue
+     * @return
+     */
     public static Bson matchHelper(String fieldname, String matchValue){
         Bson matchDoc = new Document();
         if(matchValue == null){
@@ -30,15 +36,37 @@ public class AggregationHelper {
         }
         return matchDoc;
     }
+
+    /**
+     *
+     * @param fieldname
+     * @param queryParams
+     * @return
+     */
     public static Bson partyMatchHelper(String fieldname,QueryParamsMap queryParams){
         return queryParams.get("party").value() == null ? matchHelper("_id",null) : matchHelper(fieldname, queryParams.get("party").value());
     }
+
+    /**
+     *
+     * @param unwindPath
+     * @return
+     */
     public static Document unwindHelper(String unwindPath){
         return new Document("$unwind",
                 new Document("path", unwindPath)
                         .append("preserveNullAndEmptyArrays", false));
 
     }
+
+    /**
+     *
+     * @param fromCollectionName
+     * @param localField
+     * @param foreignField
+     * @param newName
+     * @return
+     */
     public static Document lookupHelper(String fromCollectionName, String localField, String foreignField, String newName){
         return new Document("$lookup",
                 new Document("from", fromCollectionName)
@@ -47,13 +75,24 @@ public class AggregationHelper {
                         .append("as", newName));
     }
 
-
+    /**
+     *
+     * @param stringDate
+     * @return
+     */
     public static Document stringToDate(String stringDate){
         return new Document("$dateFromString",
                 new Document("dateString", stringDate)
                         .append("format","%d.%m.%Y"));
     }
 
+    /**
+     *
+     * @param datePath
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public static Document createMatchByDate(String datePath,String startDate, String endDate){
         //if dates are null
         startDate = startDate == null ? "01.01.2000" : startDate;
@@ -69,6 +108,12 @@ public class AggregationHelper {
                         )));
         return matchDoc;
     }
+
+    /**
+     *
+     * @param datePath
+     * @return
+     */
     public static Document replaceDateStringByDate(String datePath){
         return new Document("$addFields",
                 new Document(datePath, stringToDate("$"+datePath)));
@@ -94,6 +139,12 @@ public class AggregationHelper {
         }
         return true;
     }
+
+    /**
+     *
+     * @param docs
+     * @return
+     */
     public static JSONObject convertDocListToJsonList(List<Document> docs){
         List<JSONObject> list = new ArrayList<>();
         for(Document doc : docs){
@@ -104,6 +155,13 @@ public class AggregationHelper {
         response.put("result", list);
         return response;
     }
+
+    /**
+     *
+     * @param queryParams
+     * @param key
+     * @return
+     */
     public static int minimumOfZero(QueryParamsMap queryParams, String key){
         if(queryParams.get(key).integerValue() == null){
             return 0;

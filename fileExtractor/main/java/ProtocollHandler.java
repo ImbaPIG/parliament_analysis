@@ -15,7 +15,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import static webscraper.Webcrawler.iterateOffset;
 
 public class ProtocollHandler {
+    /**
+     *
+     * @param args
+     * @throws IOException
+     * @throws ParseException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws UIMAException
+     */
     public static void main(String[] args) throws IOException, ParseException, ParserConfigurationException, SAXException, UIMAException {
+
+
         Hashtable<String, String> protocolLinks = new Hashtable<String, String>();
         iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", protocolLinks);
         iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", protocolLinks);
@@ -27,27 +38,31 @@ public class ProtocollHandler {
         DBCreator_File_Impl mongoConnection = new DBCreator_File_Impl();
         Analysis_File_Impl anal = new Analysis_File_Impl();
 
-        for(String protokollID : protocolLinks.keySet()) {
-            mongoConnection.insertProtocolls(protocolLinks.get(protokollID), protokollID);
-        }
-
-        MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
-        while (handler.getExistingPlaceholderIDs().size() > 0){
-            for(String placeholder : handler.getExistingPlaceholderIDs()){
-                handler.removePlaceholder(placeholder);
-                mongoConnection.insertProtocolls(protocolLinks.get(placeholder), placeholder);
+        try{
+            for(String protokollID : protocolLinks.keySet()) {
+                mongoConnection.insertProtocolls(protocolLinks.get(protokollID), protokollID);
             }
+
+            MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
+            while (handler.getExistingPlaceholderIDs().size() > 0){
+                for(String placeholder : handler.getExistingPlaceholderIDs()){
+                    handler.removePlaceholder(placeholder);
+                    mongoConnection.insertProtocolls(protocolLinks.get(placeholder), placeholder);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
 
+
+        /*
         Document PartyDoc = Webcrawler.fetchDocFromZip(zipLink);
         mongoConnection.updateSpeakerMeta(PartyDoc);
 
-        // mongoConnection.insertProtocolls(protocolLinks.k);
-        //insert
-        //get protocollLinks somehow
-        // Analysis_File_Impl anal = new Analysis_File_Impl();
-        // anal.parseDocs(protocolLinks);
+        DBCreator_File_Impl.uploadCategoryEncoding("./resources/ddc3-names-de.csv");
+
+         */
 
         System.out.println("finished g00d Job m8");
     }

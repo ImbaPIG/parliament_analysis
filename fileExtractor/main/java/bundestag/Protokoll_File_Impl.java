@@ -1,6 +1,5 @@
 package bundestag;
 
-import com.mongodb.BasicDBObject;
 import database.MongoDBConnectionHandler_File_Impl;
 import interfaces.Protokoll;
 import org.apache.uima.UIMAException;
@@ -11,15 +10,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import static java.util.Arrays.asList;
 
 public class Protokoll_File_Impl implements Protokoll {
     private ArrayList<Tagesordnungspunkt_File_Impl> Tagesordnungspunkte;
