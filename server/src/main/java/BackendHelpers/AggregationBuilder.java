@@ -36,6 +36,11 @@ import javax.management.Query;
 
 public class AggregationBuilder {
 
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createTokenAggregation(QueryParamsMap queryParams){
         //todo: check if input params are valid
         return Arrays.asList(
@@ -64,6 +69,12 @@ public class AggregationBuilder {
 
 
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createNamedEntitiesAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -127,6 +138,12 @@ public class AggregationBuilder {
         );
 
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createSpeechAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -146,12 +163,32 @@ public class AggregationBuilder {
                                 .append("as", "analyzed")),
                 unwindHelper("$analyzed"));
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createSpeakersAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 partyMatchHelper("party",queryParams),
                 matchHelper("fraktion", queryParams.get("fraktion").value()),
-                matchHelper("_id", queryParams.get("rednerID").value()));
+                matchHelper("_id", queryParams.get("rednerID").value()),
+                new Document("$project",
+                        new Document("firstname", "$firstname")
+                                .append("role", "rolle")
+                                .append("name", "$lastname")
+                                .append("fraction", "$fraktion")
+                                .append("party", "$party")
+                                .append("picture", "$picture")
+                                .append("_id", 0)));
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createSentimentAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -177,6 +214,12 @@ public class AggregationBuilder {
                 new Document("$sort",
                         new Document("count", -1)));
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createPartiesAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -197,6 +240,12 @@ public class AggregationBuilder {
                 new Document("$sort",
                         new Document("count", -1L)));
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createFractionsAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -217,6 +266,12 @@ public class AggregationBuilder {
                 new Document("$sort",
                         new Document("count", -1L)));
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createStatisticAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -256,6 +311,12 @@ public class AggregationBuilder {
         );
 
     }
+
+    /**
+     *
+     * @param queryParams
+     * @return
+     */
     public List<Bson> createPOSAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -279,145 +340,20 @@ public class AggregationBuilder {
                 new Document("$sort",
                         new Document("count", -1L)));
     }
+
+    /**
+     *
+     * @param queryParamsMap
+     * @return
+     */
     public List<Bson> createFullTextSearchAggregation(QueryParamsMap queryParamsMap){
         return Arrays.asList(new Document("$match",
                         new Document("tagesordnungspunkte.reden.content",
                                 new Document("$exists", true))));
     }
 
-    public Document testAggregation(){
-        /*
-         * Requires the MongoDB Java Driver.
-         * https://mongodb.github.io/mongo-java-driver
-         */
-
-        MongoClient mongoClient = new MongoClient(
-                new MongoClientURI(
-                        "mongodb://PRG_WiSe21_Gruppe_1_3:aNx8P12u@prg2021.texttechnologylab.org:27020/?authSource=PRG_WiSe21_Gruppe_1_3&readPreference=primary&appname=MongoDB+Compass&directConnection=true&ssl=false"
-                )
-        );
-        MongoDatabase database = mongoClient.getDatabase("PRG_WiSe21_Gruppe_1_3");
-        MongoCollection<Document> collection = database.getCollection("speeches");
-
-        List<Document> result = collection.aggregate(Arrays.asList(
-                unwindHelper("$tagesordnungspunkte"),
-                unwindHelper("$tagesordnungspunkte.reden"),
-                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
-                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
-                matchHelper("redner._id",null),
-                matchHelper("redner.fraktion",null),
-                matchHelper("redner.party",null),
-                replaceDateStringByDate("date"),
-                createMatchByDate("$date",null,null),
-                unwindHelper("$analyzed"),
-                new Document("$replaceRoot",
-                        new Document("newRoot", "$analyzed")),
-                unwindHelper("$token"),
-                new Document("$group",
-                        new Document("_id", "$token")
-                                .append("count",
-                                        new Document("$sum", 1))),
-                new Document("$sort",
-                        new Document("count", -1)),
-                new Document("$match",
-                        new Document("count",
-                                new Document("$gte", 99))))).into(new ArrayList<>());
-        //System.out.println(result.toString());
-        return result.get(0);
-    }
 
 
 
 }
 
-/*
-unwindHelper("$tagesordnungspunkte"),
-                unwindHelper("$tagesordnungspunkte.reden"),
-                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
-                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
-                matchHelper("redner._id",queryParams.get("rednerID").value()),
-                matchHelper("redner.fraktion",queryParams.get("fraktion").value()),
-                matchHelper("redner.party",queryParams.get("party").value()),
-                unwindHelper("$analyzed"),
-                new Document("$replaceRoot",
-                        new Document("newRoot", "$analyzed")),
-                unwindHelper("$token"),
-                new Document("$group",
-                        new Document("_id", "$token")
-                                .append("count",
-                                        new Document("$sum", 1L))),
-                new Document("$project",
-                        new Document("_id", 0L)
-                                .append("token", "$_id")
-                                .append("count",
-                                        new Document("$filter",
-                                                new Document("input", "$count")
-                                                        .append("as", "count")
-                                                        .append("cond",
-                                                                new Document("$gte", Arrays.asList("$$count",min)))))),
-                new Document("$sort",
-                        new Document("count", -1L)));
-
-                        public List<Bson> createTokenAggregation(QueryParamsMap queryParams){
-        Integer min = 0;
-        UnwindOptions unwindOptions = new UnwindOptions();
-        unwindOptions.preserveNullAndEmptyArrays(true);
-        try {
-            min = queryParams.get("minimum") == null ? 0 : Integer.parseInt(queryParams.get("minimum").value());
-        }catch (NumberFormatException e){
-        }
-        return Arrays.asList(
-                Aggregates.unwind("$tagesordnungspunkte", unwindOptions),
-                Aggregates.unwind("$tagesordnungspunkte.reden", unwindOptions),
-                Aggregates.lookup("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analysiert"),
-                Aggregates.lookup("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
-                Aggregates.match(matchHelper("$redner._id",queryParams.get("rednerID").value())),
-                Aggregates.match(matchHelper("$redner.fraktion",queryParams.get("fraktion").value())),
-                Aggregates.match(matchHelper("$redner.party",queryParams.get("party").value())),
-                Aggregates.unwind("$analysiert", unwindOptions),
-                Aggregates.replaceRoot("$analysiert"),
-                Aggregates.unwind("$token", unwindOptions),
-                Aggregates.limit(10000),
-                Aggregates.group("$token", sum("count",1)));
-
-
-    }
-    public List<Bson> createGroupAggregation(QueryParamsMap queryParams){
-        Integer min = 0;
-        UnwindOptions unwindOptions = new UnwindOptions();
-        unwindOptions.preserveNullAndEmptyArrays(true);
-        return Arrays.asList(
-                Aggregates.unwind("$tagesordnungspunkte", unwindOptions),
-                Aggregates.unwind("$tagesordnungspunkte.reden", unwindOptions),
-                Aggregates.lookup("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analysiert"),
-                Aggregates.lookup("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
-                Aggregates.group("$periode", sum("count",1L)));
-
-
-    }
-
-    public List<Bson> WAS TOO SLOW, DONT USe (QueryParamsMap queryParams){
-        Integer min = 0;
-        UnwindOptions unwindOptions = new UnwindOptions();
-        unwindOptions.preserveNullAndEmptyArrays(true);
-        try {
-            min = queryParams.get("minimum") == null ? 0 : Integer.parseInt(queryParams.get("minimum").value());
-        }catch (NumberFormatException e){
-        }
-        return Arrays.asList(
-                Aggregates.unwind("$tagesordnungspunkte", unwindOptions),
-                Aggregates.unwind("$tagesordnungspunkte.reden", unwindOptions),
-                Aggregates.lookup("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analysiert"),
-                Aggregates.lookup("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
-                Aggregates.match(matchHelper("$redner._id",queryParams.get("rednerID").value())),
-                Aggregates.match(matchHelper("$redner.fraktion",queryParams.get("fraktion").value())),
-                Aggregates.match(matchHelper("$redner.party",queryParams.get("party").value())),
-                Aggregates.unwind("$analysiert", unwindOptions),
-                Aggregates.replaceRoot("$analysiert"),
-                Aggregates.unwind("$token", unwindOptions),
-                Aggregates.limit(10000),
-                Aggregates.group("$token", sum("count",1)));
-
-
-    }
- */

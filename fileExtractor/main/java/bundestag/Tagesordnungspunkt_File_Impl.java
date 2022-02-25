@@ -1,6 +1,5 @@
 package bundestag;
 
-import com.mongodb.BasicDBObject;
 import database.MongoDBConnectionHandler_File_Impl;
 import interfaces.Tagesordnungspunkt;
 import org.apache.uima.UIMAException;

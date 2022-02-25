@@ -12,9 +12,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import spark.Service;
 
-import javax.json.Json;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,17 +31,6 @@ public class server {
         AggregationBuilder aggraBuilder = new AggregationBuilder();
         MongoDBConnectionHandler_File_Impl mongo = new MongoDBConnectionHandler_File_Impl();
         System.out.println("Server listening on Port 4567");
-        //Service service = Service.ignite();
-        /*
-
-        get("/hello", (request, response) -> {
-                    List<Bson> sampleAggregation= aggraBuilder.createNamedEntitiesAggregation(request.queryMap());
-                    List<Document> output2 = mongo.aggregateMongo("analyzedSpeeches", sampleAggregation);
-                    return convertDocListToJsonList(output2);
-                    localhost/api/tokens?zz=2222
-                }
-        );
-         */
 
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
@@ -105,6 +92,14 @@ public class server {
 
 
     }
+
+    /**
+     *
+     * @param protocolls
+     * @param toFind
+     * @return
+     * @throws IOException
+     */
     public static List<Document> protocollContentContains(List<Document> protocolls, String toFind) throws IOException {
         List<JSONObject> convertedProtocolls = protocolls.stream().map(JSONObject::new).collect(Collectors.toList());
         List<JSONObject> matchedProtocolls = new LinkedList<JSONObject>();
