@@ -16,7 +16,7 @@ import static webscraper.Webcrawler.iterateOffset;
 
 public class ProtocollHandler {
     /**
-     *
+     *Methode to handle processing and coordinating of protocolls
      * @param args
      * @throws IOException
      * @throws ParseException

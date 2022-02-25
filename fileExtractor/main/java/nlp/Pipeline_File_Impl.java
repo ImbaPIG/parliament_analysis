@@ -27,7 +27,7 @@ public class Pipeline_File_Impl implements Pipeline {
     }
 
     /**
-     *
+     *Methode to parse string to jcas with pipeline
      * @param s
      * @return
      */

@@ -26,8 +26,6 @@ public interface Analysis {
 
     public List<String> getSentenceList(JCas rede);
 
-    public List<Double> getSentenceSentimentValue(JCas rede);
-
     public List<Document> getSentenceDocument(JCas rede);
 
     public List<String> getJCasEntityList(JCas rede, String Entity);

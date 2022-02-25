@@ -37,7 +37,7 @@ import javax.management.Query;
 public class AggregationBuilder {
 
     /**
-     *
+     *Methode to create mongo aggregation of token route
      * @param queryParams
      * @return
      */
@@ -65,13 +65,13 @@ public class AggregationBuilder {
                         new Document("count", -1)),
                 new Document("$match",
                         new Document("count",
-                                new Document("$gte", queryParams.get("minimum").integerValue()))));
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))));
 
 
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of named entities route
      * @param queryParams
      * @return
      */
@@ -140,7 +140,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of speech route
      * @param queryParams
      * @return
      */
@@ -165,7 +165,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of speakers route
      * @param queryParams
      * @return
      */
@@ -185,7 +185,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of sentiment route
      * @param queryParams
      * @return
      */
@@ -216,7 +216,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of parties route
      * @param queryParams
      * @return
      */
@@ -242,7 +242,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of fractions route
      * @param queryParams
      * @return
      */
@@ -268,7 +268,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of statistic route
      * @param queryParams
      * @return
      */
@@ -313,7 +313,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of pos route
      * @param queryParams
      * @return
      */
@@ -342,7 +342,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of full text search route
      * @param queryParamsMap
      * @return
      */
