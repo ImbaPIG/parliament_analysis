@@ -13,6 +13,13 @@
 let ctxSentiment;
 let ChartSentiment;
 
+/**
+ * 
+ * @param {*} canvasID 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function addSentiment(canvasID){
     $.ajax({
         url: "http://localhost:4567/api/sentiment" + global_party_filter,

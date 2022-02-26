@@ -28,8 +28,8 @@ function fill_select_party(){
                 list.appendChild(option)
             });
         },
-        error: function(redner) {
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
@@ -49,8 +49,8 @@ function fill_select_party(){
                 list.appendChild(option)
             });   
         },
-        error: function(parties) {
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
@@ -68,8 +68,8 @@ function fill_select_party(){
                 list.appendChild(option)
             });    
         },
-        error: function(parties) {
-            console.log("Fehler")
+        error: function(e) {
+            console.error(e)
         }
     })
 
@@ -88,8 +88,8 @@ function fill_select_party(){
                 speechOptions.appendChild(option)
             });
         },
-        error: function(redner) {
-            console.log("Fehler")
+        error: function(e) {
+            console.error(e)
         }
     })
     
