@@ -1,12 +1,4 @@
 
-
-
-
-// some custome list to simulate text highlighting
-let custome_named_Entities = ["ich","Ich","Kollegen"]
-let custome_locations = ["Bundestag"]
-let custome_organisations = ["AfD","SPD"]
-
 /**
  * This function is used for highlighting the text
  * 
@@ -74,6 +66,9 @@ function setTextContent(){
         dataType: "json",
         success: async function(speech) {
             let speechresult = speech.result[0]
+            console.log(speechresult)
+            speaker = speechresult.speaker
+            get_image_link_from_speaker(speaker)
 
             highlight_text(speechresult.content, speechresult.analyzed.persons, speechresult.analyzed.locations, speechresult.analyzed.organisations,speechresult.analyzed.sentences)
         },
@@ -91,11 +86,6 @@ function showSentiment(sentimentValue, sentenceCount){
     //console.log(sentimentValue)
 
 }
-
-
-
-
-
 
 highlight_text()
 
