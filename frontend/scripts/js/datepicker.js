@@ -7,7 +7,7 @@ $(() => {
     });
 })
 
-const getDate = () => {
+/*const getDate = () => {
     const fromDate = new Date($('#datepicker1').val());
     const toDate = new Date($('#datepicker2').val());
     const fromDateString = `${fromDate.getDate()}.${fromDate.getMonth()+1}.${fromDate.getFullYear()}`;
@@ -16,7 +16,7 @@ const getDate = () => {
 
 $('#dateFilter').on("click", () => {
     getDate();
-}) 
+}) */
 
 // TODO:
 // change up all requests to also take date

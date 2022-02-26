@@ -21,9 +21,10 @@ let ChartSentiment;
  * This function was written by <Name>
  * This function was edited by <Name>
  */
-function addSentiment(canvasID){
-    $.ajax({
-        url: "http://localhost:4567/api/sentiment" + global_party_filter,
+ function addSentiment(canvasID, fromDateString, toDateString){
+    req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
+        $.ajax({
+        url: "http://localhost:4567/api/sentiment" + req,
         type: "GET",
         dataType: "json",
         success: async function (sentiments) {
@@ -70,5 +71,5 @@ function addSentiment(canvasID){
     })
 }
 
-addSentiment("chart_sentiment")
+addSentiment("chart_sentiment", "1.1.2000", "1.1.3000")
 
