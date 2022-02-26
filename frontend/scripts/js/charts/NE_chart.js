@@ -11,11 +11,19 @@
  * 
  */
 
-//A lot of letiables which are used in the script
+//Some variable used in the script
 let ctxNE;
 let configNE;
 let ChartNE;
 
+
+/**
+ * 
+ * @param {*} NEcanvasID 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function addNamedEntities(NEcanvasID){
     $.ajax({
         url: "http://localhost:4567/api/namedEntities" + global_party_filter,

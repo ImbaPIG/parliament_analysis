@@ -7,6 +7,10 @@
  * 
  * Prints the speaker with the most Speeches onto the Website
  * 
+ * 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
  */
 
 function addSpeakerChart(SpeakercanvasID){
@@ -63,4 +67,3 @@ function addSpeakerChart(SpeakercanvasID){
 }
 
 addSpeakerChart("chart_speaker")
-//mainSpeaker()

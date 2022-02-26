@@ -3,6 +3,9 @@
  * adds image to the speech analysis card
  * 
  * @param {image} imagelink 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
  */
 
  function get_image_link_from_speaker(id){
@@ -25,7 +28,13 @@
 
 }
 
-
+/**
+ * 
+ * @param {*} imagelink 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function add_image_to_header(imagelink){
 
     var div = document.getElementById("speaker_image");
@@ -38,6 +47,14 @@ function add_image_to_header(imagelink){
 
 }
 
+
+/**
+ * 
+ * @param {*} speaker 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function display_speaker_information(speaker){
     var div = document.getElementById("speaker_image");
 
