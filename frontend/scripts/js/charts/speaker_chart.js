@@ -25,7 +25,7 @@ function addSpeakerChart(SpeakercanvasID){
     
             speakers.forEach(speaker => {
                 date_speaker.push(speaker.count)
-                label_speaker.push(speaker.id)
+                label_speaker.push(speaker._id)
             });
 
     
@@ -35,7 +35,7 @@ function addSpeakerChart(SpeakercanvasID){
                 data: {
                     labels: [1,2,3,4,5,6,7,8,9,10],
                     datasets: [{
-                        label: 'Speaker',
+                        label: label_speaker[0-10],
                         data: date_speaker,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderWidth: 1
@@ -44,16 +44,6 @@ function addSpeakerChart(SpeakercanvasID){
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    tooltips: {
-                        callbacks: {
-                              title: function(tooltipItems, data) {
-                                return '';
-                              },
-                              label: function(tooltipItem, data) {
-                                return data.labels[tooltipItem];
-                              }
-                            }
-                    },
                 }
             })
         },

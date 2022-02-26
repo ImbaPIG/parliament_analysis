@@ -3,6 +3,7 @@ let global_party_filter = ""
 
 
 /**
+ * This function fills the input options in the adding dashboard settings
  * 
  * 
  * 
@@ -98,6 +99,7 @@ function fill_select_party(){
 
 
 /**
+ * sets the global filter
  * 
  * 
  * This function was written by <Name>
@@ -137,6 +139,7 @@ $(document).ready(function () {
   });
 
 document.querySelector('#filterinput').addEventListener('keypress', function (e) {
+    //Key Listener for pressing enter in the dasboard input
     if (e.key === 'Enter') {
         e.preventDefault();
         set_global_party_filter();

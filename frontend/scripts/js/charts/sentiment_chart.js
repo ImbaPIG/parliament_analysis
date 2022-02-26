@@ -2,7 +2,7 @@
  * 
  * 3 b (1)
  * 
- * Sentiment radar chart 
+ * Sentiment Radar chart 
  * 
  * 
  * 
@@ -14,8 +14,9 @@ let ctxSentiment;
 let ChartSentiment;
 
 /**
+ * This function is called when a Sentment Chart is created
  * 
- * @param {*} canvasID 
+ * @param {*} canvasID is the canvas ID of said chart
  * 
  * This function was written by <Name>
  * This function was edited by <Name>

@@ -20,15 +20,14 @@
             
             display_speaker_information(speaker.result[0])
             add_image_to_header(picture_url)
-
-
         }
-
     })
 
 }
 
 /**
+ * 
+ * adds the speaker image to the Texthighlighting method
  * 
  * @param {*} imagelink 
  * 
@@ -49,6 +48,8 @@ function add_image_to_header(imagelink){
 
 
 /**
+ * 
+ * function used to display the Speaker information of a speech
  * 
  * @param {*} speaker 
  * 

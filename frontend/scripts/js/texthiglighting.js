@@ -60,7 +60,7 @@ function highlight_text(paragraph,namedEntities,locations,organisations, sentenc
 
 /**
  * 
- * 
+ * This functions is called to set the Speech and call the highlighting function above
  * 
  * 
  * This function was written by <Name>
@@ -88,9 +88,10 @@ function setTextContent(){
 }
 
 /**
+ * this function is called when a information icon is clicked
  * 
  * @param {*} sentimentValue 
- * @param {*} sentenceCount 
+ * @param {*} sentenceCount //Id of sentence
  * 
  * 
  * 

@@ -9,12 +9,11 @@
 var ctxPOS;
 var ChartPOS;
 
-var firstTimePOS = true;
-
-
 /**
  * 
- * @param {*} POScanvasID 
+ * This functions ic alled when a POS chart is created
+ * 
+ * @param {*} POScanvasID is the ID of the canvas
  * 
  * This function was written by <Name>
  * This function was edited by <Name>
@@ -62,12 +61,11 @@ function addPOSchart(POScanvasID){
                 }
             });
         },
-        error: function(pos) {
-            //if something happens we get an error message
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
 }
-//mainPOS()
+
 addPOSchart("chart_pos")
