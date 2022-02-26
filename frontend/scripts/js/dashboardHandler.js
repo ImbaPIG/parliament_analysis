@@ -108,29 +108,46 @@ function dashboardHTML(){
 
     //Here the new dashboard gets added to the maindashboard
     $("#newdashboard").html( baseframe );
-    
 
+    const fromDate = new Date($('#datepicker1').val());
+    const toDate = new Date($('#datepicker2').val());
+    let fromDateString = `${fromDate.getDate()}.${fromDate.getMonth()+1}.${fromDate.getFullYear()}`;
+    let toDateString = `${toDate.getDate()}.${toDate.getMonth()+1}.${toDate.getFullYear()}`;
+    fromDateString = (fromDateString === "NaN.NaN.NaN" ||fromDateString === undefined ) ? "1.1.2000" : fromDateString;
+    toDateString = (toDateString === "NaN.NaN.NaN" ||toDateString === undefined) ? "1.1.3000" : toDateString;
+
+
+    fillCharts(fromDateString, toDateString);
+}
+
+
+/**
+ * function that is used to fill the new dashbaord charts
+ * @param {} fromDateString 
+ * @param {*} toDateString 
+ */
+const fillCharts = (fromDateString, toDateString) => {
     //now additional charts get created and added to the new dashboard
 
     //add Sentiment chart
     chartBaseFrame = createchart("newSentiment", "Sentiment")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addSentiment("newSentiment")
+    addSentiment("newSentiment", fromDateString, toDateString)
 
     //add POS
     chartBaseFrame = chartBaseFrame + create_bar_chart("newPOS", "POS")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addPOSchart("newPOS")
+    addPOSchart("newPOS", fromDateString, toDateString)
 
     //addToken
     chartBaseFrame = chartBaseFrame + create_line_chart("newToken", "Token")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addTokenChart("newToken")
+    addTokenChart("newToken", fromDateString, toDateString)
 
     //add NE
     chartBaseFrame = chartBaseFrame + createchart("newNE", "Named Entities")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addNamedEntities("newNE")
+    addNamedEntities("newNE", fromDateString, toDateString)
 
     //add Speaker
     chartBaseFrame = chartBaseFrame + create_bar_chart("newSpeaker", "Speaker")

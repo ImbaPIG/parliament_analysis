@@ -19,9 +19,10 @@ let myChartToken;
  * This function was written by <Name>
  * This function was edited by <Name>
  */
-function addTokenChart(Token_canvasID){
+ function addTokenChart(Token_canvasID, fromDateString, toDateString){
+    req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
     $.ajax({
-        url: "http://localhost:4567/api/tokens"+"?minimum=30000" + global_party_filter,
+        url: "http://localhost:4567/api/tokens"+"?=minimum=30000"+req,
         type: "GET",
         dataType: "json",
         success: async function(token) {
@@ -70,4 +71,4 @@ function addTokenChart(Token_canvasID){
 }
 
 
-addTokenChart("chart_token")
+addTokenChart("chart_token", "1.1.2000", "1.1.3000")

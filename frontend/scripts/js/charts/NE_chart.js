@@ -26,9 +26,11 @@ let ChartNE;
  * This function was written by <Name>
  * This function was edited by <Name>
  */
-function addNamedEntities(NEcanvasID){
+ function addNamedEntities(NEcanvasID, fromDateString, toDateString){
+    req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
+
     $.ajax({
-        url: "http://localhost:4567/api/namedEntities" + global_party_filter,
+        url: "http://localhost:4567/api/namedEntities" + req,
         type: "GET",
         dataType: "json",
         success: async function(namedEntities){
@@ -120,4 +122,4 @@ function addNamedEntities(NEcanvasID){
 }
 
 
-addNamedEntities("chart_NE")
+addNamedEntities("chart_NE", "1.1.2000", "1.1.3000")

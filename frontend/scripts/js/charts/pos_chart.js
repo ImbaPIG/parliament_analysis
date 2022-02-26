@@ -18,9 +18,11 @@ var ChartPOS;
  * This function was written by <Name>
  * This function was edited by <Name>
  */
-function addPOSchart(POScanvasID){
+ function addPOSchart(POScanvasID, fromDateString, toDateString){
+    req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
+
     $.ajax({
-        url: "http://localhost:4567/api/pos"+global_party_filter,
+        url: "http://localhost:4567/api/pos"+req,
         type: "GET",
         dataType: "json",
         success: async function(pos) {
@@ -68,4 +70,4 @@ function addPOSchart(POScanvasID){
 
 }
 
-addPOSchart("chart_pos")
+addPOSchart("chart_pos", "1.1.2000", "1.1.3000")
