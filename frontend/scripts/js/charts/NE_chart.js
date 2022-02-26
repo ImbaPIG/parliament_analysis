@@ -18,6 +18,8 @@ let ChartNE;
 
 
 /**
+ * This function is used to add the Named Entitie MultiLine chart to the dashbaord
+ * 
  * 
  * @param {*} NEcanvasID 
  * 
@@ -30,7 +32,6 @@ function addNamedEntities(NEcanvasID){
         type: "GET",
         dataType: "json",
         success: async function(namedEntities){
-
             let persons = namedEntities.result[0].persons;
             let organisations = namedEntities.result[0].organisations
             let locations = namedEntities.result[0].locations
@@ -66,7 +67,6 @@ function addNamedEntities(NEcanvasID){
             }
 
             ctxNE = document.getElementById(NEcanvasID).getContext('2d');
-            //config
             configNE = {
                 type: 'line',
                 data: {
@@ -111,7 +111,6 @@ function addNamedEntities(NEcanvasID){
                 ]
                 },
             }
-            //crate charts
             ChartNE = new Chart(ctxNE, configNE);
         },
         error:function(error) {

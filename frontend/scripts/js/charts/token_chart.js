@@ -11,6 +11,7 @@ let ctx;
 let myChartToken;
 
 /**
+ * This function is called when a Tokenchart is created
  * 
  * @param {} Token_canvasID 
  * 
