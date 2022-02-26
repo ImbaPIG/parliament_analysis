@@ -27,7 +27,7 @@ public class Protokoll_File_Impl implements Protokoll {
     private ArrayList<String> Sitzungsleiter = null;
 
 
-    public Protokoll_File_Impl(Document doc, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler, String protocollID) throws IOException, SAXException, ParseException, UIMAException {
+    public Protokoll_File_Impl(Document doc, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler) throws IOException, SAXException, ParseException, UIMAException {
         /**
          * creates a Protokoll object and all the theobjects a Protokoll contains (i.e. TagesOrdnungsPunkt, Rede, Redner etc)
          */
@@ -46,9 +46,10 @@ public class Protokoll_File_Impl implements Protokoll {
         this.date  = dateString;
         this.periode = headElement.getElementsByTagName("wahlperiode").item(0).getTextContent();
         this.protocollNr = headElement.getElementsByTagName("sitzungsnr").item(0).getTextContent();
-        this._id = protocollID;
+        this._id = this.periode + "-" + this.protocollNr;
         this.title = headElement.getElementsByTagName("sitzungstitel").item(0).getTextContent();
         this.Sitzungsleiter = null; // who is this ??
+
 
         // subparse TOPs in Protokoll
         NodeList tOPList = doc.getElementsByTagName("tagesordnungspunkt");

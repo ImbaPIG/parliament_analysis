@@ -19,7 +19,7 @@ import static com.mongodb.client.model.Filters.eq;
 public class AggregationHelper {
 
     /**
-     *
+     *helper methode to create match bson document
      * @param fieldname
      * @param matchValue
      * @return
@@ -38,7 +38,7 @@ public class AggregationHelper {
     }
 
     /**
-     *
+     *helper methode to create match bson document for party
      * @param fieldname
      * @param queryParams
      * @return
@@ -48,7 +48,7 @@ public class AggregationHelper {
     }
 
     /**
-     *
+     *helper methode to create unwind bson document
      * @param unwindPath
      * @return
      */
@@ -60,7 +60,7 @@ public class AggregationHelper {
     }
 
     /**
-     *
+     *helper methode to create lookup bson document
      * @param fromCollectionName
      * @param localField
      * @param foreignField
@@ -76,7 +76,7 @@ public class AggregationHelper {
     }
 
     /**
-     *
+     *helper methode to create date bson document from string
      * @param stringDate
      * @return
      */
@@ -87,14 +87,14 @@ public class AggregationHelper {
     }
 
     /**
-     *
+     *helper methode to create a match that date is inbetween dates
      * @param datePath
      * @param startDate
      * @param endDate
      * @return
      */
     public static Document createMatchByDate(String datePath,String startDate, String endDate){
-        //if dates are null
+        //null check on dates
         startDate = startDate == null ? "01.01.2000" : startDate;
         endDate = endDate == null ? "01.01.3000" : endDate;
 
@@ -110,7 +110,7 @@ public class AggregationHelper {
     }
 
     /**
-     *
+     *helper methode to turn string field into date field
      * @param datePath
      * @return
      */
@@ -119,9 +119,12 @@ public class AggregationHelper {
                 new Document(datePath, stringToDate("$"+datePath)));
     }
 
-    public boolean checkAreQueryParamsCorrectFormat(QueryParamsMap queryParams){
-        //todo vervollständigen Check Params
-        // rednerID startDate endDate fraktion party minAmount
+    /**
+     * helper function to determine if query params match the required values
+     * @param queryParams
+     * @return
+     */
+    public static boolean checkAreQueryParamsCorrectFormat(QueryParamsMap queryParams){
         Pattern dateFormat = Pattern.compile("^\\d{2}.\\d{2}.\\d{4}");
         if(queryParams.get("startDate").value() != null){
             Matcher matcher = dateFormat.matcher(queryParams.get("startDate").value());
@@ -131,17 +134,18 @@ public class AggregationHelper {
             Matcher matcher = dateFormat.matcher(queryParams.get("endDate").value());
             if(!matcher.find()){return false;}
         }
-        if(queryParams.get("party").value() != null){
-
-        }
-        if(queryParams.get("party").value() != null){
-
+        if(queryParams.get("minimum").value() != null){
+            try{
+                int min = Integer.parseInt(queryParams.get("minimum").value());
+            }catch( NumberFormatException e){
+                return false;
+            }
         }
         return true;
     }
 
     /**
-     *
+     *helper function to wrap list of bson documents to json and add sucess parameter
      * @param docs
      * @return
      */
@@ -151,13 +155,18 @@ public class AggregationHelper {
             list.add(new JSONObject(doc.toJson()));
         }
         JSONObject response = new JSONObject();
-        response.put("sucess",true);
-        response.put("result", list);
+        if(list.size() > 0) {
+            response.put("sucess", true);
+            response.put("result", list);
+        }else {
+            response.put("sucess", false);
+            response.put("result", "No data could be fetched with the provided query, check if QueryParams are set properly");
+        }
         return response;
     }
 
     /**
-     *
+     *helper function to makes sure that value of queryParams is at least zero
      * @param queryParams
      * @param key
      * @return

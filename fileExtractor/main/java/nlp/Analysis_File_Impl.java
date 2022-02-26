@@ -36,7 +36,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     * Methode to create Jcas analyzed Document for Mongo
      * @param jCasTuple
      * @param handler
      * @param rede
@@ -63,7 +63,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get all pos from jcas as a list
      * @param rede
      * @return
      */
@@ -73,7 +73,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get all lemmas from jcas as a list
      * @param rede
      * @return
      */
@@ -83,7 +83,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get category id from jcas as string
      * @param rede
      * @return
      */
@@ -93,7 +93,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get all tokens from jcas as list
      * @param rede
      * @return
      */
@@ -111,12 +111,11 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get all sentences from jcas as list
      * @param rede
      * @return
      */
     public List<String> getSentenceList(JCas rede){
-        //to be continued
         LinkedList<String> sentenceList = new LinkedList<>();
         Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
         for (Sentence sentence : sentences){
@@ -125,28 +124,13 @@ public class Analysis_File_Impl implements Analysis {
         return sentenceList;
     }
 
-    /**
-     *
-     * @param rede
-     * @return
-     */
-    public List<Double> getSentenceSentimentValue(JCas rede){
-        //to be continued
-        LinkedList<Double> sentenceList = new LinkedList<>();
-        Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
-        for (Sentence sentence : sentences){
-            sentenceList.push(getSentimentValue(sentence));
-        }
-        return sentenceList;
-    }
 
     /**
-     *
+     *Methode to get sentences as mongo document as list of documents
      * @param rede
      * @return
      */
     public List<Document> getSentenceDocument(JCas rede){
-        //to be continued
         LinkedList<Document> sentenceList = new LinkedList<>();
         Collection<Sentence> sentences = JCasUtil.select(rede, Sentence.class);
         for (Sentence sentence : sentences){
@@ -159,7 +143,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get entities as list of given entity of jcas
      * @param rede
      * @param Entity
      * @return
@@ -176,7 +160,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get sentimentvalue as double of given jcas
      * @param rede
      * @return
      */
@@ -194,7 +178,7 @@ public class Analysis_File_Impl implements Analysis {
     }
 
     /**
-     *
+     *Methode to get sentimentvalue as double of given sentence
      * @param sentence
      * @return
      */

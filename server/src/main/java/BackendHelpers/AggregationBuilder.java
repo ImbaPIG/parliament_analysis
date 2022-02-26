@@ -12,6 +12,7 @@ import se.lth.cs.srl.languages.Language;
 import spark.QueryParamsMap;
 
 import static BackendHelpers.AggregationHelper.*;
+
 import static com.mongodb.client.model.Accumulators.sum;
 import static com.mongodb.client.model.Aggregates.*;
 
@@ -37,12 +38,13 @@ import javax.management.Query;
 public class AggregationBuilder {
 
     /**
-     *
+     *Methode to create mongo aggregation of token route
      * @param queryParams
      * @return
      */
     public List<Bson> createTokenAggregation(QueryParamsMap queryParams){
         //todo: check if input params are valid
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -65,17 +67,18 @@ public class AggregationBuilder {
                         new Document("count", -1)),
                 new Document("$match",
                         new Document("count",
-                                new Document("$gte", queryParams.get("minimum").integerValue()))));
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))));
 
 
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of named entities route
      * @param queryParams
      * @return
      */
     public List<Bson> createNamedEntitiesAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -140,7 +143,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of speech route
      * @param queryParams
      * @return
      */
@@ -157,7 +160,7 @@ public class AggregationBuilder {
                                 .append("_id",0)
                                 .append("perodeID","$_id")),
                 new Document("$lookup",
-                        new Document("from", "NotSoanalyzedSpeeches")
+                        new Document("from", "analyzedSpeeches")
                                 .append("localField", "id")
                                 .append("foreignField", "_id")
                                 .append("as", "analyzed")),
@@ -165,7 +168,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of speakers route
      * @param queryParams
      * @return
      */
@@ -185,11 +188,12 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of sentiment route
      * @param queryParams
      * @return
      */
     public List<Bson> createSentimentAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -216,11 +220,12 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of parties route
      * @param queryParams
      * @return
      */
     public List<Bson> createPartiesAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -242,11 +247,12 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of fractions route
      * @param queryParams
      * @return
      */
     public List<Bson> createFractionsAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -268,7 +274,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of statistic route
      * @param queryParams
      * @return
      */
@@ -313,11 +319,12 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of pos route
      * @param queryParams
      * @return
      */
     public List<Bson> createPOSAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -342,7 +349,7 @@ public class AggregationBuilder {
     }
 
     /**
-     *
+     *Methode to create mongo aggregation of full text search route
      * @param queryParamsMap
      * @return
      */
@@ -350,6 +357,94 @@ public class AggregationBuilder {
         return Arrays.asList(new Document("$match",
                         new Document("tagesordnungspunkte.reden.content",
                                 new Document("$exists", true))));
+    }
+
+    /**
+     * Methode to create mongo aggregation to group catrgorys by speakers
+     * @param queryParams
+     * @return
+     */
+    public List<Bson> createSpeakersByCategoryAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
+        return Arrays.asList(unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
+                matchHelper("tagesordnungspunkte.reden.rednerID", queryParams.get("rednerID").value()),
+                matchHelper("redner.fraktion", queryParams.get("fraktion").value()),
+                partyMatchHelper("party",queryParams),
+                unwindHelper("$analyzed"),
+                unwindHelper("$redner"),
+                new Document("$project",
+                        new Document("category", "$analyzed.category")
+                                .append("speaker",
+                                        new Document("$concat", Arrays.asList("$redner.firstname", " ", "$redner.lastname")))),
+                new Document("$group",
+                        new Document("_id", "$category")
+                                .append("speakers",
+                                        new Document("$addToSet", "$speaker"))
+                                .append("amountSpeakers",
+                                        new Document("$sum", 1))),
+                new Document("$lookup",
+                        new Document("from", "categoryEncodings")
+                                .append("localField", "_id")
+                                .append("foreignField", "_id")
+                                .append("as", "categoryEncoding")),
+                unwindHelper("$categoryEncoding"),
+                new Document("$project",
+                        new Document("_id", 1)
+                                .append("speakers", 1)
+                                .append("categoryText", "$categoryEncoding.text")
+                                .append("amountSpeakers", 1)),
+                new Document("$match",
+                        new Document("amountSpeakers",
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))));
+    }
+
+    public List<Bson> createSpeechesByCategoryAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
+                matchHelper("tagesordnungspunkte.reden.rednerID", queryParams.get("rednerID").value()),
+                matchHelper("redner.fraktion", queryParams.get("fraktion").value()),
+                partyMatchHelper("party",queryParams),
+                unwindHelper("$analyzed"),
+                unwindHelper("$redner"),
+                new Document("$project",
+                        new Document("category", "$analyzed.category")
+                                .append("_id", "$tagesordnungspunkte.reden.redeID")
+                                .append("sentiment", "$analyzed.sentiment")
+                                .append("speechLength",
+                                        new Document("$strLenCP", "$tagesordnungspunkte.reden.content"))),
+                new Document("$group",
+                        new Document("_id", "$category")
+                                .append("speakers",
+                                        new Document("$addToSet",
+                                                new Document("speechID", "$_id")
+                                                        .append("sentiment", "$sentiment")
+                                                        .append("speechLength", "speechLength")))
+                                .append("amountSpeakers",
+                                        new Document("$sum", 1))),
+                new Document("$lookup",
+                        new Document("from", "categoryEncodings")
+                                .append("localField", "_id")
+                                .append("foreignField", "_id")
+                                .append("as", "categoryEncoding")),
+                unwindHelper("$categoryEncoding"),
+                new Document("$project",
+                        new Document("_id", 1)
+                                .append("speakers", 1)
+                                .append("categoryText", "$categoryEncoding.text")
+                                .append("amountSpeakers", 1)),
+                new Document("$match",
+                        new Document("amountSpeakers",
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))));
     }
 
 
