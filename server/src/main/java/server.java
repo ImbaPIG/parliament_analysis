@@ -42,7 +42,6 @@ public class server {
         System.out.println("Server listening on Port 4567");
 
 
-
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "GET");
@@ -128,7 +127,7 @@ public class server {
     }
 
     /**
-     *
+     * Methode to return List of Documents with speechText that contains substring
      * @param protocolls
      * @param toFind
      * @return

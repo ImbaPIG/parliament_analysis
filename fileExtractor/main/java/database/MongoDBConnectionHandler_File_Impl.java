@@ -68,6 +68,7 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
     }
 
 
+
     public boolean updateDocument(Document doc, String collection) throws UIMAException {
 
         // Create Where-Query

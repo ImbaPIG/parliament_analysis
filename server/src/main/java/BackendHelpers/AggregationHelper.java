@@ -124,9 +124,7 @@ public class AggregationHelper {
      * @param queryParams
      * @return
      */
-    public boolean checkAreQueryParamsCorrectFormat(QueryParamsMap queryParams){
-        //todo vervollständigen Check Params
-        // rednerID startDate endDate fraktion party minAmount
+    public static boolean checkAreQueryParamsCorrectFormat(QueryParamsMap queryParams){
         Pattern dateFormat = Pattern.compile("^\\d{2}.\\d{2}.\\d{4}");
         if(queryParams.get("startDate").value() != null){
             Matcher matcher = dateFormat.matcher(queryParams.get("startDate").value());
@@ -136,11 +134,12 @@ public class AggregationHelper {
             Matcher matcher = dateFormat.matcher(queryParams.get("endDate").value());
             if(!matcher.find()){return false;}
         }
-        if(queryParams.get("party").value() != null){
-
-        }
-        if(queryParams.get("party").value() != null){
-
+        if(queryParams.get("minimum").value() != null){
+            try{
+                int min = Integer.parseInt(queryParams.get("minimum").value());
+            }catch( NumberFormatException e){
+                return false;
+            }
         }
         return true;
     }
@@ -156,8 +155,13 @@ public class AggregationHelper {
             list.add(new JSONObject(doc.toJson()));
         }
         JSONObject response = new JSONObject();
-        response.put("sucess",true);
-        response.put("result", list);
+        if(list.size() > 0) {
+            response.put("sucess", true);
+            response.put("result", list);
+        }else {
+            response.put("sucess", false);
+            response.put("result", "No data could be fetched with the provided query, check if QueryParams are set properly");
+        }
         return response;
     }
 

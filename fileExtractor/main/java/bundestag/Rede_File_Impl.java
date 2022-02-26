@@ -85,7 +85,7 @@ public class Rede_File_Impl implements Rede {
             JCasTuple_FIle_Impl redeJcasTuple = new JCasTuple_FIle_Impl(contentJcas,commentJcas);
             Analysis_File_Impl anal = new Analysis_File_Impl();
             Document analysedDoc = anal.createAnalysedDoc(redeJcasTuple, handler, this);
-            handler.uploadDoc(analysedDoc, "testAnalysed");
+            handler.uploadDoc(analysedDoc, "analyzedSpeeches");
 
             // this.handler.uploadDoc(dbObj.getDocument(), "jcas");
         }

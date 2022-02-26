@@ -3,6 +3,7 @@ package database;
 import bundestag.Protokoll_File_Impl;
 import interfaces.DBCreator;
 import org.apache.uima.UIMAException;
+import org.bson.conversions.Bson;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -69,15 +70,29 @@ public class DBCreator_File_Impl implements DBCreator {
 
             if(handler.existsDocument(id,"speakers")){
                 boolean result = false;
-                System.out.println("updating" + id + "picture");
                 org.bson.Document speaker = handler.getDocument(id,"speakers");
                 speaker.append("party",party);
-                speaker.append("picture",Webcrawler.getImageLink(speaker.get("firstname").toString(), speaker.get("lastname").toString()));
                 while(!result) {
                     result = handler.updateDocument(speaker, "speakers");
                 }
             }
 
+        }
+    }
+
+    public void insertSpeakerPictures() {
+        try {
+            MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
+            List<org.bson.Document> speakers = handler.aggregateMongo("speakers", new ArrayList<Bson>());
+            for (org.bson.Document speaker : speakers) {
+                boolean result = false;
+                speaker.append("picture", Webcrawler.getImageLink(speaker.get("firstname").toString(), speaker.get("lastname").toString()));
+                while(!result) {
+                    result = handler.updateDocument(speaker, "speakers");
+                }
+            }
+        }catch (IOException | UIMAException e){
+            e.printStackTrace();
         }
     }
 

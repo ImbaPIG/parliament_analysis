@@ -12,6 +12,7 @@ import se.lth.cs.srl.languages.Language;
 import spark.QueryParamsMap;
 
 import static BackendHelpers.AggregationHelper.*;
+
 import static com.mongodb.client.model.Accumulators.sum;
 import static com.mongodb.client.model.Aggregates.*;
 
@@ -43,6 +44,7 @@ public class AggregationBuilder {
      */
     public List<Bson> createTokenAggregation(QueryParamsMap queryParams){
         //todo: check if input params are valid
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -76,6 +78,7 @@ public class AggregationBuilder {
      * @return
      */
     public List<Bson> createNamedEntitiesAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -157,7 +160,7 @@ public class AggregationBuilder {
                                 .append("_id",0)
                                 .append("perodeID","$_id")),
                 new Document("$lookup",
-                        new Document("from", "NotSoanalyzedSpeeches")
+                        new Document("from", "analyzedSpeeches")
                                 .append("localField", "id")
                                 .append("foreignField", "_id")
                                 .append("as", "analyzed")),
@@ -190,6 +193,7 @@ public class AggregationBuilder {
      * @return
      */
     public List<Bson> createSentimentAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -221,6 +225,7 @@ public class AggregationBuilder {
      * @return
      */
     public List<Bson> createPartiesAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -247,6 +252,7 @@ public class AggregationBuilder {
      * @return
      */
     public List<Bson> createFractionsAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -318,6 +324,7 @@ public class AggregationBuilder {
      * @return
      */
     public List<Bson> createPOSAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
@@ -358,6 +365,7 @@ public class AggregationBuilder {
      * @return
      */
     public List<Bson> createSpeakersByCategoryAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(unwindHelper("$tagesordnungspunkte"),
                 unwindHelper("$tagesordnungspunkte.reden"),
                 replaceDateStringByDate("date"),
@@ -391,11 +399,12 @@ public class AggregationBuilder {
                                 .append("categoryText", "$categoryEncoding.text")
                                 .append("amountSpeakers", 1)),
                 new Document("$match",
-                        new Document("count",
+                        new Document("amountSpeakers",
                                 new Document("$gte", minimumOfZero(queryParams,"minimum")))));
     }
 
     public List<Bson> createSpeechesByCategoryAggregation(QueryParamsMap queryParams){
+        if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte.reden"),
                 replaceDateStringByDate("date"),
@@ -435,7 +444,7 @@ public class AggregationBuilder {
                                 .append("amountSpeakers", 1)),
                 new Document("$match",
                         new Document("amountSpeakers",
-                                new Document("$gte", 2))));
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))));
     }
 
 

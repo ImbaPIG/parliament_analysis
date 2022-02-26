@@ -56,13 +56,11 @@ public class ProtocollHandler {
 
 
 
-        /*
         Document PartyDoc = Webcrawler.fetchDocFromZip(zipLink);
         mongoConnection.updateSpeakerMeta(PartyDoc);
+        mongoConnection.insertSpeakerPictures();
 
         DBCreator_File_Impl.uploadCategoryEncoding("./resources/ddc3-names-de.csv");
-
-         */
 
         System.out.println("finished inserting");
     }
