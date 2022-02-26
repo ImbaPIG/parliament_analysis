@@ -21,16 +21,27 @@ import spark.Filter;
 
 import static BackendHelpers.AggregationHelper.convertDocListToJsonList;
 import static spark.Spark.*;
-
+import static webscraper.Webcrawler.iterateOffset;
 
 
 public class server {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         //todo : list.add(new JSONObject(next.toJson()));
         AggregationBuilder aggraBuilder = new AggregationBuilder();
         MongoDBConnectionHandler_File_Impl mongo = new MongoDBConnectionHandler_File_Impl();
+
+
+
+        Hashtable<String, String> basicProtocollLinks = new Hashtable<String, String>();
+        iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", basicProtocollLinks);
+        iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", basicProtocollLinks);
+
+        ProtocollHandler protoHandler = new ProtocollHandler();
+
         System.out.println("Server listening on Port 4567");
+
+
 
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
@@ -89,6 +100,29 @@ public class server {
             return convertDocListToJsonList(protocollContentContains(output, request.queryMap().get("contains").value()));
         });
 
+        get("/api/fetchProtocolls",       (request, response) ->{
+            Hashtable<String, String> protocollLinksToFetch = new Hashtable<String, String>();
+            try {
+                protoHandler.resetProgress();
+                if (request.queryMap().get("link").value() != null) {
+                    protocollLinksToFetch.clear();
+                    protocollLinksToFetch.put("new", request.queryMap().get("link").value());
+                } else {
+                    protocollLinksToFetch = basicProtocollLinks;
+                }
+                System.out.println("fetchingProtocolls");
+                return protoHandler.getProgress();
+            } finally {
+                protoHandler.insertAndUpdateProtocolls(protocollLinksToFetch);
+            }
+        });
+
+        get("/api/fetchProtocollsProgress",       (request, response) ->{
+                return protoHandler.getProgress();
+        });
+
+
+
 
 
     }
@@ -142,6 +176,12 @@ public class server {
 
         return matchedProtocolls.stream().map(mprotocoll -> Document.parse(mprotocoll.toString()) ).collect(Collectors.toList());
     }
+
+    public Double update(Double progress){
+        return progress;
+    }
+
+
 
 
 }

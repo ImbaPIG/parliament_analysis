@@ -352,6 +352,92 @@ public class AggregationBuilder {
                                 new Document("$exists", true))));
     }
 
+    /**
+     * Methode to create mongo aggregation to group catrgorys by speakers
+     * @param queryParams
+     * @return
+     */
+    public List<Bson> createSpeakersByCategoryAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(unwindHelper("$tagesordnungspunkte"),
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
+                matchHelper("tagesordnungspunkte.reden.rednerID", queryParams.get("rednerID").value()),
+                matchHelper("redner.fraktion", queryParams.get("fraktion").value()),
+                partyMatchHelper("party",queryParams),
+                unwindHelper("$analyzed"),
+                unwindHelper("$redner"),
+                new Document("$project",
+                        new Document("category", "$analyzed.category")
+                                .append("speaker",
+                                        new Document("$concat", Arrays.asList("$redner.firstname", " ", "$redner.lastname")))),
+                new Document("$group",
+                        new Document("_id", "$category")
+                                .append("speakers",
+                                        new Document("$addToSet", "$speaker"))
+                                .append("amountSpeakers",
+                                        new Document("$sum", 1))),
+                new Document("$lookup",
+                        new Document("from", "categoryEncodings")
+                                .append("localField", "_id")
+                                .append("foreignField", "_id")
+                                .append("as", "categoryEncoding")),
+                unwindHelper("$categoryEncoding"),
+                new Document("$project",
+                        new Document("_id", 1)
+                                .append("speakers", 1)
+                                .append("categoryText", "$categoryEncoding.text")
+                                .append("amountSpeakers", 1)),
+                new Document("$match",
+                        new Document("count",
+                                new Document("$gte", minimumOfZero(queryParams,"minimum")))));
+    }
+
+    public List<Bson> createSpeechesByCategoryAggregation(QueryParamsMap queryParams){
+        return Arrays.asList(
+                unwindHelper("$tagesordnungspunkte.reden"),
+                replaceDateStringByDate("date"),
+                createMatchByDate("$date",queryParams.get("startDate").value(),queryParams.get("endDate").value()),
+                lookupHelper("analyzedSpeeches","tagesordnungspunkte.reden.redeID","_id","analyzed"),
+                lookupHelper("speakers","tagesordnungspunkte.reden.rednerID","_id","redner"),
+                matchHelper("tagesordnungspunkte.reden.rednerID", queryParams.get("rednerID").value()),
+                matchHelper("redner.fraktion", queryParams.get("fraktion").value()),
+                partyMatchHelper("party",queryParams),
+                unwindHelper("$analyzed"),
+                unwindHelper("$redner"),
+                new Document("$project",
+                        new Document("category", "$analyzed.category")
+                                .append("_id", "$tagesordnungspunkte.reden.redeID")
+                                .append("sentiment", "$analyzed.sentiment")
+                                .append("speechLength",
+                                        new Document("$strLenCP", "$tagesordnungspunkte.reden.content"))),
+                new Document("$group",
+                        new Document("_id", "$category")
+                                .append("speakers",
+                                        new Document("$addToSet",
+                                                new Document("speechID", "$_id")
+                                                        .append("sentiment", "$sentiment")
+                                                        .append("speechLength", "speechLength")))
+                                .append("amountSpeakers",
+                                        new Document("$sum", 1))),
+                new Document("$lookup",
+                        new Document("from", "categoryEncodings")
+                                .append("localField", "_id")
+                                .append("foreignField", "_id")
+                                .append("as", "categoryEncoding")),
+                unwindHelper("$categoryEncoding"),
+                new Document("$project",
+                        new Document("_id", 1)
+                                .append("speakers", 1)
+                                .append("categoryText", "$categoryEncoding.text")
+                                .append("amountSpeakers", 1)),
+                new Document("$match",
+                        new Document("amountSpeakers",
+                                new Document("$gte", 2))));
+    }
+
 
 
 

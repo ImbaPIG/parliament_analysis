@@ -6,6 +6,7 @@ import org.apache.uima.UIMAException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import webscraper.Webcrawler;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,19 +14,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 public class DBCreator_File_Impl implements DBCreator {
 
-    public void insertProtocolls(String protocolLink, String protocollID) throws IOException {
+    public void insertProtocolls(String protocolLink, String protocollID) throws IOException, ParseException, UIMAException, SAXException {
         /**
          * used to insert all protkolle and jcas into the mongodb
          */
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
-
-
 
         // make parser instance
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -39,14 +39,15 @@ public class DBCreator_File_Impl implements DBCreator {
         // get sitzungsnr from filename
         String sitzungsnr = protocollID;
 
+
         // add protokoll if not already added
-        if(handler.protokollExists(sitzungsnr)){
-            System.out.println("the protkoll " + sitzungsnr + " already exists, therefore it is skipped");
+        if(handler.protokollExists(protocollID)){
+            System.out.println("the protkoll " + protocollID + " already exists, therefore it is skipped");
         } else {
             // handler.createPlaceholder(sitzungsnr);
             try{
                 assert builder != null;
-                Protokoll_File_Impl protokoll = new Protokoll_File_Impl(doc, builder, handler, sitzungsnr);
+                Protokoll_File_Impl protokoll = new Protokoll_File_Impl(doc, builder, handler);
                 System.out.println("created Protocoll");
                 // String protokollBson = handler.ObjToBson(protokoll);
                 handler.removePlaceholder(sitzungsnr);
