@@ -12,6 +12,13 @@ var ChartPOS;
 var firstTimePOS = true;
 
 
+/**
+ * 
+ * @param {*} POScanvasID 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function addPOSchart(POScanvasID){
     $.ajax({
         url: "http://localhost:4567/api/pos"+global_party_filter,

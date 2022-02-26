@@ -1,6 +1,6 @@
 
 /**
- * This function is used for highlighting the text
+ * This functions is used to highlighting the text
  * 
  * we get the text content (speech) and then we collect each word and than look up if the word is
  * a Named Entitie and color it.
@@ -8,9 +8,11 @@
  * After that we put the words back together again
  * and display the text
  * 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
  */
 function highlight_text(paragraph,namedEntities,locations,organisations, sentences) {
-    //let paragraph = document.getElementById("named_text").textContent
     let marked_paragraph = ""
     let sentenceCount = 0
     sentences.forEach(sentence =>{
@@ -56,7 +58,14 @@ function highlight_text(paragraph,namedEntities,locations,organisations, sentenc
 }
 
 
-
+/**
+ * 
+ * 
+ * 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function setTextContent(){
 
     let input = document.getElementById("filterspeeches")
@@ -66,7 +75,6 @@ function setTextContent(){
         dataType: "json",
         success: async function(speech) {
             let speechresult = speech.result[0]
-            console.log(speechresult)
             speaker = speechresult.speaker
             get_image_link_from_speaker(speaker)
 
@@ -79,12 +87,20 @@ function setTextContent(){
 
 }
 
+/**
+ * 
+ * @param {*} sentimentValue 
+ * @param {*} sentenceCount 
+ * 
+ * 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function showSentiment(sentimentValue, sentenceCount){
     let IconID = 'IconID' + sentenceCount
     let icon = document.getElementById(IconID)
     icon.innerHTML= sentimentValue    //$("#"+IconID).html(sentimentValue)
-    //console.log(sentimentValue)
-
 }
 
 highlight_text()

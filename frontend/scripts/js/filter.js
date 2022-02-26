@@ -1,8 +1,17 @@
 let global_party_filter = ""
 
+
+
+/**
+ * 
+ * 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function fill_select_party(){
-let list = document.getElementById("allOptions")
-let speechOptions = document.getElementById("allSpeeches")
+    let list = document.getElementById("allOptions")
+    let speechOptions = document.getElementById("allSpeeches")
 
     //get all Speakers and add them to the list
     $.ajax({
@@ -19,8 +28,8 @@ let speechOptions = document.getElementById("allSpeeches")
                 list.appendChild(option)
             });
         },
-        error: function(redner) {
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
@@ -40,8 +49,8 @@ let speechOptions = document.getElementById("allSpeeches")
                 list.appendChild(option)
             });   
         },
-        error: function(parties) {
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
@@ -59,8 +68,8 @@ let speechOptions = document.getElementById("allSpeeches")
                 list.appendChild(option)
             });    
         },
-        error: function(parties) {
-            console.log("Fehler")
+        error: function(e) {
+            console.error(e)
         }
     })
 
@@ -79,14 +88,21 @@ let speechOptions = document.getElementById("allSpeeches")
                 speechOptions.appendChild(option)
             });
         },
-        error: function(redner) {
-            console.log("Fehler")
+        error: function(e) {
+            console.error(e)
         }
     })
     
 
 }
 
+
+/**
+ * 
+ * 
+ * This function was written by <Name>
+ * This function was edited by <Name>
+ */
 function set_global_party_filter(){
         
         let e = document.getElementById("filterinput");
@@ -104,6 +120,10 @@ function set_global_party_filter(){
             set_dashboardTitle(e.value.split("#")[1]);
         }
 }
+
+
+
+
 
 $(document).ready(function () {
     // Listen to click event on the submit button
@@ -131,6 +151,8 @@ $(document).ready(function () {
       e.preventDefault();
       setTextContent();
     });
-  });
+ });
+
+
 
 fill_select_party()
