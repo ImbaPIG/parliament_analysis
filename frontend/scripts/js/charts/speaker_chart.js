@@ -28,14 +28,26 @@ function addSpeakerChart(SpeakercanvasID){
                 label_speaker.push(speaker._id)
             });
 
+            labels = []
+            label_speaker.splice(0,10).forEach(s =>{
+                labels.push(get_top_speakers(s))
+                
+
+            })
+            /*labels.forEach(l =>{
+
+                console.log(1)
+
+            })*/
+            console.log(labels)
     
             let ctxSpeaker = document.getElementById(SpeakercanvasID).getContext('2d');
             let ChartSpeaker = new Chart(ctxSpeaker, {
                 type: 'bar',
                 data: {
-                    labels: [1,2,3,4,5,6,7,8,9,10],
+                    labels: labels,//[labels[0],labels[1],labels[2],labels[3],labels[4],labels[5],labels[6],labels[7],labels[8],labels[9]],
                     datasets: [{
-                        label: label_speaker[0-10],
+                        label: "Redner",
                         data: date_speaker,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderWidth: 1
@@ -54,6 +66,26 @@ function addSpeakerChart(SpeakercanvasID){
         }
     })
 
+}
+
+
+function get_top_speakers(id){
+
+    $.ajax({
+        url: "http://localhost:4567/api/speakers?rednerID="+id,
+        type: "GET",
+        dataType: "json",
+        success: function(statistic){
+            let speaker = statistic.result[0]
+            return speaker.firstname + " " + speaker.name
+
+        },
+    
+        error: function(error) {
+            console.log(error)
+            
+        }
+    })
 }
 
 addSpeakerChart("chart_speaker")

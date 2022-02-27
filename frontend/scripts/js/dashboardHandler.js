@@ -108,6 +108,7 @@ function dashboardHTML(){
 
     //Here the new dashboard gets added to the maindashboard
     $("#newdashboard").html( baseframe );
+    set_global_party_filter()
 
     const fromDate = new Date($('#datepicker1').val());
     const toDate = new Date($('#datepicker2').val());
@@ -255,6 +256,12 @@ function removeDashboard(){
  * @param {*} title 
  */
 function set_dashboardTitle(title) {
-    dashboardTitle = title    
+
+    if(title.includes("#")){
+        //title.split("#")
+        dashboardTitle = title.split("#")[1]
+    }else{
+        dashboardTitle = title  
+    }  
 }
 

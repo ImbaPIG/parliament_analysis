@@ -30,7 +30,8 @@ let ChartNE;
     req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
 
     $.ajax({
-        url: "http://localhost:4567/api/namedEntities" + req,
+        //url: "http://localhost:4567/api/namedEntities" + req,
+        url: "http://localhost:4567/api/namedEntities" + global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(namedEntities){
