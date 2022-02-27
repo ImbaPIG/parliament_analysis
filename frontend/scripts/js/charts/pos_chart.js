@@ -9,81 +9,22 @@
 var ctxPOS;
 var ChartPOS;
 
-var firstTimePOS = true;
+/**
+ * 
+ * This functions ic alled when a POS chart is created
+ * 
+ * @param {*} POScanvasID is the ID of the canvas
+ * 
+ * This function was written by Jannik
+ * This function was edited by Özlem
+ */
+ function addPOSchart(POScanvasID, fromDateString, toDateString){
+    req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;
 
 
-//main function which is called below to run the hole thing
-function mainPOS() {
- $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/pos",
-    type: "GET",
-    dataType: "json",
-    success: async function(pos) {
-        var posresult = pos.result
-        var labels = []
-        var counts = []
-
-        //push the result data onto other array of data used in the cahrt
-        posresult.forEach(e => {
-            labels.push(e.pos);
-            counts.push(e.count)
-            
-        });
-
-        //if the chart is made for the first time
-        if(firstTimePOS){
-        ctxPOS = document.getElementById('chart_pos').getContext('2d');
-        ChartPOS = new Chart(ctxPOS, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: '# POS',
-                    data: counts,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        })
-        firstTimePOS = false;
-
-    }else{
-
-        //The chart is already made and now a new filter is set
-        ChartPOS.data = {
-            labels: labels,
-            datasets: [{
-                label: '# POS',
-                data: counts,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 1
-            }]
-        }
-        ChartPOS.update();
-    };
-    },
-    error: function(pos) {
-        //if something happens we get an error message
-        console.log("Fehler")
-    }
-})
-
-}//end mainfunction
-
-function addPOSchart(POScanvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/pos"+global_party_filter,
+        url: "http://localhost:4567/api/pos"+req,
+        //url: "http://localhost:4567/api/pos"+global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(pos) {
@@ -93,7 +34,7 @@ function addPOSchart(POScanvasID){
     
             //push the result data onto other array of data used in the cahrt
             posresult.forEach(e => {
-                labels.push(e.pos);
+                labels.push(e._id);
                 counts.push(e.count)
                 
             });
@@ -124,11 +65,11 @@ function addPOSchart(POScanvasID){
                 }
             });
         },
-        error: function(pos) {
-            //if something happens we get an error message
-            console.log("Fehler")
+        error: function(e) {
+            console.log(e)
         }
     })
 
 }
-mainPOS()
+
+addPOSchart("chart_pos", "01.01.2000", "01.01.3000")

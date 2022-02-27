@@ -21,6 +21,9 @@ var dashboardTitle = "Übersicht"
  * 
  * 
  * the daboard will be added at the end of the current dashboard
+ * 
+ *  This function is written by Moritz, Erik
+ *  This function is modifeid by Jannik
  */
 function dashboardHTML(){
 
@@ -108,29 +111,50 @@ function dashboardHTML(){
 
     //Here the new dashboard gets added to the maindashboard
     $("#newdashboard").html( baseframe );
-    
+    set_global_party_filter()
 
+    const fromDate = new Date($('#datepicker1').val());
+    const toDate = new Date($('#datepicker2').val());
+    let fromDateString = `${fixDate(fromDate.getDate().toString())}.${fixDate(fromDate.getMonth()+1)}.${fromDate.getFullYear()}`;
+    let toDateString = `${fixDate(toDate.getDate().toString())}.${fixDate(toDate.getMonth()+1)}.${toDate.getFullYear()}`;
+    fromDateString = (fromDateString.includes("NaN") ||fromDateString === undefined ) ? "01.01.2000" : fromDateString;
+    toDateString = (toDateString.includes("NaN") ||toDateString === undefined) ? "01.01.3000" : toDateString;
+
+
+    fillCharts(fromDateString, toDateString);
+}
+
+
+/**
+ * function that is used to fill the new dashbaord charts
+ * @param {} fromDateString 
+ * @param {*} toDateString 
+ * 
+ *  This function is written by Moritz, Erik
+ *  This function is modifeid by Jannik
+ */
+const fillCharts = (fromDateString, toDateString) => {
     //now additional charts get created and added to the new dashboard
 
     //add Sentiment chart
     chartBaseFrame = createchart("newSentiment", "Sentiment")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addSentiment("newSentiment")
+    addSentiment("newSentiment", fromDateString, toDateString)
 
     //add POS
     chartBaseFrame = chartBaseFrame + create_bar_chart("newPOS", "POS")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addPOSchart("newPOS")
+    addPOSchart("newPOS", fromDateString, toDateString)
 
     //addToken
     chartBaseFrame = chartBaseFrame + create_line_chart("newToken", "Token")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addTokenChart("newToken")
+    addTokenChart("newToken", fromDateString, toDateString)
 
     //add NE
     chartBaseFrame = chartBaseFrame + createchart("newNE", "Named Entities")
     $("#newDashboardCharts").html(chartBaseFrame);
-    addNamedEntities("newNE")
+    addNamedEntities("newNE", fromDateString, toDateString)
 
     //add Speaker
     chartBaseFrame = chartBaseFrame + create_bar_chart("newSpeaker", "Speaker")
@@ -141,6 +165,14 @@ function dashboardHTML(){
 
 
 //this functions creates a baseframe for a chart
+/**
+ * 
+ * @param {*} canvasID 
+ * @param {*} chartName 
+ * @returns 
+ * 
+ * This functions is written by Jannik
+ */
 function createchart(canvasID, chartName){
     let baseframe = `
     <div class="row">
@@ -169,6 +201,8 @@ function createchart(canvasID, chartName){
  * @param {*} canvasID 
  * @param {*} chartName 
  * @returns 
+ * 
+ * This function is written by Jannik
  */
 function create_bar_chart(canvasID, chartName){
         let baseframe = `
@@ -198,6 +232,8 @@ function create_bar_chart(canvasID, chartName){
  * @param {*} canvasID 
  * @param {*} chartName 
  * @returns 
+ * 
+ * This function is written by Moritz
  */
 function create_line_chart(canvasID, chartName){
     let baseframe = `
@@ -225,6 +261,7 @@ function create_line_chart(canvasID, chartName){
  * 
  * the dasboard gets removed by changing the inside of the new dashbaord div
  * 
+ * This function is written by Erik
  * 
  */
 function removeDashboard(){
@@ -236,8 +273,16 @@ function removeDashboard(){
  * This functions sets the title of a dashboard
  * 
  * @param {*} title 
+ * 
+ * This function is written by Erik
  */
 function set_dashboardTitle(title) {
-    dashboardTitle = title    
+
+    if(title.includes("#")){
+        //title.split("#")
+        dashboardTitle = title.split("#")[1]
+    }else{
+        dashboardTitle = title  
+    }  
 }
 

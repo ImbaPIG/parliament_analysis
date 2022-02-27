@@ -7,87 +7,47 @@
  * 
  * Prints the speaker with the most Speeches onto the Website
  * 
+ * 
+ * 
+ * This function was written by Jannik
+ * This function was edited by Moritz
  */
-function mainSpeaker(){
- $.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/statistic",
-    type: "GET",
-    dataType: "json",
-    success: function(statistic){
-        var speakers = statistic.result.speakers
-        var label_speaker  = []
-        var date_speaker = []
-
-        speakers.forEach(speaker => {
-            date_speaker.push(speaker.count)
-            label_speaker.push(speaker.id)
-        });
-
-        var ctxSpeaker = document.getElementById('chart_speaker').getContext('2d');
-        var ChartSpeaker = new Chart(ctxSpeaker, {
-            type: 'bar',
-            data: {
-                labels: [1,2,3,4,5,6,7,8,9,10],
-                datasets: [{
-                    label: 'Speaker',
-                    data: date_speaker,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                tooltips: {
-                    callbacks: {
-                          title: function(tooltipItems, data) {
-                            return '';
-                          },
-                          label: function(tooltipItem, data) {
-                              //TODO
-                              //Hoiover Effek
-
-                            
-                            
-                            return data.labels[tooltipItem];
-                          }
-                        }
-                },
-            }
-        })
-    },
-
-    error: function(error) {
-        console.log(error)
-        
-    }
-})
-
-}
 
 function addSpeakerChart(SpeakercanvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/statistic",
+        url: "http://localhost:4567/api/statistic",
         type: "GET",
         dataType: "json",
         success: function(statistic){
-            var speakers = statistic.result.speakers
-            var label_speaker  = []
-            var date_speaker = []
+            let speakers = statistic.result[0].speakers
+            let label_speaker  = []
+            let date_speaker = []
     
             speakers.forEach(speaker => {
                 date_speaker.push(speaker.count)
-                label_speaker.push(speaker.id)
+                label_speaker.push(speaker._id)
             });
 
+            labels = []
+            label_speaker.splice(0,10).forEach(s =>{
+                labels.push(get_top_speakers(s))
+                
+
+            })
+            /*labels.forEach(l =>{
+
+                console.log(1)
+
+            })*/
+            console.log(labels)
     
-            var ctxSpeaker = document.getElementById(SpeakercanvasID).getContext('2d');
-            var ChartSpeaker = new Chart(ctxSpeaker, {
+            let ctxSpeaker = document.getElementById(SpeakercanvasID).getContext('2d');
+            let ChartSpeaker = new Chart(ctxSpeaker, {
                 type: 'bar',
                 data: {
-                    labels: [1,2,3,4,5,6,7,8,9,10],
+                    labels: label_speaker.slice(0,10),
                     datasets: [{
-                        label: 'Speaker',
+                        label: "Redner",
                         data: date_speaker,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderWidth: 1
@@ -96,16 +56,6 @@ function addSpeakerChart(SpeakercanvasID){
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    tooltips: {
-                        callbacks: {
-                              title: function(tooltipItems, data) {
-                                return '';
-                              },
-                              label: function(tooltipItem, data) {
-                                return data.labels[tooltipItem];
-                              }
-                            }
-                    },
                 }
             })
         },
@@ -118,4 +68,24 @@ function addSpeakerChart(SpeakercanvasID){
 
 }
 
-mainSpeaker()
+
+function get_top_speakers(id){
+
+    $.ajax({
+        url: "http://localhost:4567/api/speakers?rednerID="+id,
+        type: "GET",
+        dataType: "json",
+        success: function(statistic){
+            let speaker = statistic.result[0]
+            return speaker.firstname + " " + speaker.name
+
+        },
+    
+        error: function(error) {
+            console.log(error)
+            
+        }
+    })
+}
+
+addSpeakerChart("chart_speaker")

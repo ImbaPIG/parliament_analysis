@@ -6,103 +6,37 @@
  * 
  */
 
-//some variables used in the sript
-var minimumfilter = "?minimum=30000"
-var firsttime = true
-var ctx;
-var myChartToken;
 
-//sets the minimum to another value
-function filterMinimumToken() {
-    var e = document.getElementById("MinimumTokenValue")
-    if(parseInt(e.value) < 0 || e.value===""){
-        minimumfilter = "?minimum=30000"
-    }else{
-        minimumfilter = "?minimum=" + e.value
-    }
-    mainToken()
-}
+let ctx;
+let myChartToken;
 
-//Mian function to visualize the token distribution
-function mainToken(){
-$.ajax({
-    url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter,
-    type: "GET",
-    dataType: "json",
-    success: async function(token) {
-        var tokenresult = token.result
-        
-        var labels = []
-        var counts = []
+/**
+ * This function is called when a Tokenchart is created
+ * 
+ * @param {} Token_canvasID 
+ * 
+ * 
+ * This function was written by Özlem
+ * This function was edited by Jannik
+ */
+ function addTokenChart(Token_canvasID, fromDateString, toDateString){
+    req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;
 
-        //push reult data into dffrent lists for the chart
-        tokenresult.forEach(e => {
-            labels.push(e.token);
-            counts.push(e.count)
-            
-        });
-    if(firsttime){ //is true for the first time the chart will be made
-        ctx = document.getElementById('chart_token').getContext('2d');
-        myChartToken = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: '# Token',
-                    data: counts.concat([0]),
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        })
-
-        firsttime=false;
-    }else{
-        myChartToken.data = {
-            labels: labels,
-            datasets: [{
-                label: '# Token',
-                data: counts.concat([0]),
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 1
-            }]
-        }
-        myChartToken.update();
-    };
-},
-
-//error message
-    error: function(pos) {
-        console.log("Fehler")
-    }
-})
-}
-
-function addTokenChart(Token_canvasID){
     $.ajax({
-        url: "http://api.prg2021.texttechnologylab.org/tokens"+minimumfilter,
+        url: "http://localhost:4567/api/tokens"+req,
+        //url: "http://localhost:4567/api/tokens"+"?minimum=30000"+global_party_filter,
+        //url: "http://localhost:4567/api/tokens"+"?minimum=30000" +extra_toke_filter,
         type: "GET",
         dataType: "json",
         success: async function(token) {
 
-            var tokenresult = token.result
-            var labels = []
-            var counts = []
+            let tokenresult = token.result
+            let labels = []
+            let counts = []
     
             //push reult data into dffrent lists for the chart
             tokenresult.forEach(e => {
-                labels.push(e.token);
+                labels.push(e._id);
                 counts.push(e.count)
                 
             });
@@ -111,7 +45,7 @@ function addTokenChart(Token_canvasID){
             myChartToken = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: labels.slice(0,100),
                     datasets: [{
                         label: '# Token',
                         data: counts.concat([0]),
@@ -132,12 +66,11 @@ function addTokenChart(Token_canvasID){
                 }
             })
     },
-    
-    //error message
-        error: function(pos) {
-            console.log("Fehler")
+        error: function(token) {
+            console.log(token)
         }
     })
 }
 
-mainToken();
+
+addTokenChart("chart_token", "01.01.2000", "01.01.3000")

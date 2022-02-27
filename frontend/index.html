@@ -3,7 +3,7 @@
 
 
 
-<!--test because jannik is not that good with git lol-->
+<!--The Index HTML is written by Moritz, Erik, Jannik-->
 <head>
 
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Abschlussabgabe</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -83,8 +83,8 @@
                                         <div class="row form-group">
                                             <label for="date" class="col-form-label">From Date</label>
                                             <div class="col-sm-4 d-inline">
-                                                <div class="input-group date" id="datepicker1">
-                                                    <input type="date" class="form-control">
+                                                <div class="input-group date" >
+                                                    <input type="date" class="form-control" id="datepicker1">
                                                     <span class="input-group-append">
                                                         <span class="input-group-text bg-white">
                                                             <i class="fa fa-calendar"></i>
@@ -100,8 +100,8 @@
                                         <div class="row form-group">
                                             <label for="date" class="col-form-label">To Date</label>
                                             <div class="col-sm-4 d-inline">
-                                                <div class="input-group date" id="datepicker2">
-                                                    <input type="date" class="form-control">
+                                                <div class="input-group date" >
+                                                    <input type="date" class="form-control" id="datepicker2">
                                                     <span class="input-group-append">
                                                         <span class="input-group-text bg-white">
                                                             <i class="fa fa-calendar"></i>
@@ -112,22 +112,57 @@
                                         </div>
                                     </form>
                                 </div>
+                                <!--<button id="dateFilter"class="btn btn-primary p-2 mr-5">Confirm Date</button>-->
                             </div>
                             
                             <!--Search Button (3d), for creting Dashboard with input as title and same functions as above -->
-                            <form class="form-inline ">
-                                <input id="filterinput" list="allOptions" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
-                                <datalist id="allOptions"></datalist>
-                                <button id="submitFilter"class="btn btn-primary mt-4">Add Dashboard</button>
-                              </form>
-
-                            <!--<button class="btn btn-primary mt-4" onclick="dashboardHTML()">Add Dashboard</button>-->
+                            
                         </div>
+
+                        <div class="row justify-content-sm-start">
+                            <div class="col-2">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-body">
+                                        <form class="form-inline ">
+                                            <input id="filterinput" list="allOptions" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
+                                            <datalist id="allOptions"></datalist>
+                                            <button id="submitFilter"class="btn btn-primary mt-4">Add Dashboard</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-2">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-body">
+                                        <div id="progress_bar_div">
+                                            <form class="form-inline ">
+                                                <input id="protokollinput" class="form-control mr-sm-2" type="text" placeholder="Prtokoll URL" aria-label="Search" >
+                                                <button id="submitProtokoll"class="btn btn-primary mt-4">Add Protokoll</button>
+                                            </form>
+                                            <div class="spacing">
+                                                <span></span>
+                                            </div>
+                                            
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
                     </div>
                     <div class="px-3">
                         <!-- Content Row -->
 
                         <!--POS chart-->
+                        <!--Written by <Name> -->
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4" >
@@ -144,6 +179,7 @@
                         </div>
 
                         <!--Token Chart-->
+                        <!--Written by <Name> -->
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4" >
@@ -160,6 +196,7 @@
                         </div>
 
                         <!--Sentiment chart-->
+                        <!--Written by <Name> -->
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4" >
@@ -176,6 +213,7 @@
                         </div>
 
                         <!--Named Entities chart-->
+                        <!--Written by <Name> -->
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4" >
@@ -192,6 +230,7 @@
                         </div>
 
                         <!--Speaker chart-->
+                        <!--Written by <Name> -->
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4" >
@@ -208,22 +247,23 @@
                         </div>
 
                         <!--Text highlighting von reden-->
+                        <!--Written by <Name> -->
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4" >
                                     <div class="card-header" id="speech_header">
 
                                         <h6 class="m-0 font-weight-bold text-primary">Speech Texthighlighting</h6>
+                                        <form class="form-inline ">
+                                            <input id="filterspeeches" list="allSpeeches" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
+                                            <datalist id="allSpeeches"></datalist>
+                                            <button id="submitSpeech"class="btn btn-primary mt-4">Analyze Text</button>
+                                          </form>
                                     </div>
                                     <div class="card-body">
                                         <div id="speaker_image">
 
                                         </div>
-                                        <!--TODO-->
-                                        <!--Insert select to get a Speech-->
-                                        <!-- for now let a dummy text-->
-
-
 
                                         <!--Legend to now what is what-->
                                         <p>Legende: <mark class="blue">Persons</mark>    <mark class="red">Locations</mark> <mark class="yellow">Organisations</mark></p>
@@ -256,7 +296,19 @@
                             </div>
                         </div>
 
-
+                        
+                        <!--Networkgraph-->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-7">
+                                <div class="card shadow mb-4" >
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary">Network Graph (WIP)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -291,77 +343,6 @@
 
     <!-- End of Page Wrapper -->
 
-
-    <!-- Moadls -->
-    <!-- Speaker Modal -->
-    <div class="modal fade" id="speaker-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Redner  Auswahl</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-bar flexed justify-content-between input-group">
-                        <input class="form-control text-gray-800 modal-search" type="text" name="speaker-modal-input">
-                        <div class=" btn search-icon input-group-append" >
-                            <i class="fas fa-search"></i></button>  
-                        </div>
-                    </div>
-                    <ul class="modal-list" id="speakerList"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Party Modal -->
-    <div class="modal fade" id="party-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Partei  Auswahl</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-bar flexed justify-content-between input-group">
-                        <input class="form-control text-gray-800 modal-search" type="text" name="party-modal-input">
-                        <div class=" btn search-icon input-group-append" >
-                            <i class="fas fa-search"></i></button>  
-                        </div>
-                    </div>
-                    <ul class="modal-list" id="partyList"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Fraction Modal -->
-    <div class="modal fade" id="fraction-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title bg-toned" id="exampleModalLongTitle">Fraktions Auswahl</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-bar flexed justify-content-between input-group">
-                        <input class="form-control text-gray-800 modal-search" type="text" name="fraction-modal-input">
-                        <div class=" btn search-icon input-group-append" >
-                            <i class="fas fa-search"></i></button>
-                        </div>
-                    </div>
-                    <ul class="modal-list" id="fractionList"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -384,15 +365,13 @@
     <!--<script src="js/demo/chart-area-demo.js"></script>-->
 
     <!-- scripts to run on siteload scripts -->
-    <!-- <script src="scripts/js/datePicker.js"></script> -->
+    <script src="scripts/js/datepicker.js"></script>
     <script src="scripts/js/dataFetcher.js"></script>
-    <script src="scripts/js/modalMaker.js"></script>
     <script src="scripts/js/dashboardHandler.js"></script>
 
     <script src="scripts/js/filter.js"></script>
     <script src="scripts/js/texthiglighting.js"></script>
     <script src="scripts/js/header_image.js"></script>
-    <script src="scripts/js/testserve.js"></script>
 
     
     
