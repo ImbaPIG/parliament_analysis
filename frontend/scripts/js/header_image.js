@@ -53,8 +53,8 @@ function add_image_to_header(imagelink){
  * 
  * @param {*} speaker 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Jannik
+ * This function was edited by Erik
  */
 function display_speaker_information(speaker){
     var div = document.getElementById("speaker_image");
