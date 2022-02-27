@@ -7,6 +7,13 @@ $(() => {
     });
 })
 
+const fixDate = (str) => {
+    if (String(str).length == 1){
+        return "0"+String(str)
+    } else {
+        return str
+    }
+}
 /*const getDate = () => {
     const fromDate = new Date($('#datepicker1').val());
     const toDate = new Date($('#datepicker2').val());

@@ -16,15 +16,16 @@ let myChartToken;
  * @param {} Token_canvasID 
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Özlem
+ * This function was edited by Jannik
  */
  function addTokenChart(Token_canvasID, fromDateString, toDateString){
-    req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
+    req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;
+
     $.ajax({
-        //url: "http://localhost:4567/api/tokens"+"?=minimum=30000"+req,
+        url: "http://localhost:4567/api/tokens"+"?=minimum=30000"+req,
         //url: "http://localhost:4567/api/tokens"+"?minimum=30000"+global_party_filter,
-        url: "http://localhost:4567/api/tokens"+"?minimum=30000" +extra_toke_filter,
+        //url: "http://localhost:4567/api/tokens"+"?minimum=30000" +extra_toke_filter,
         type: "GET",
         dataType: "json",
         success: async function(token) {
@@ -44,7 +45,7 @@ let myChartToken;
             myChartToken = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: labels.slice(0,100),
                     datasets: [{
                         label: '# Token',
                         data: counts.concat([0]),
@@ -72,4 +73,4 @@ let myChartToken;
 }
 
 
-addTokenChart("chart_token", "1.1.2000", "1.1.3000")
+addTokenChart("chart_token", "01.01.2000", "01.01.3000")

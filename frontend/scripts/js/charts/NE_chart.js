@@ -31,8 +31,8 @@ let ChartNE;
 
 
     $.ajax({
-        //url: "http://localhost:4567/api/namedEntities" + req,
-        url: "http://localhost:4567/api/namedEntities" + global_party_filter,
+        url: "http://localhost:4567/api/namedEntities" + req,
+        //url: "http://localhost:4567/api/namedEntities" + global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(namedEntities){
@@ -124,4 +124,4 @@ let ChartNE;
 }
 
 
-addNamedEntities("chart_NE", "1.1.2000", "1.1.3000")
+addNamedEntities("chart_NE", "01.01.2000", "01.01.3000")
