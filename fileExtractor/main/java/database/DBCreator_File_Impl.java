@@ -59,10 +59,15 @@ public class DBCreator_File_Impl implements DBCreator {
        }
     }
 
+    /**
+     * updates Speaker Meta Data of all Speakers that can be found in the passed XML
+     * @param mdbXml
+     * @throws IOException
+     * @throws UIMAException
+     */
     public void updateSpeakerMeta(Document mdbXml) throws IOException, UIMAException {
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
         NodeList nodeList = mdbXml.getElementsByTagName("MDB");
-        System.out.println(nodeList.getLength());
         for(Node node : toIterable(nodeList) ){
             String id = getFirstNodeFromXML(node, "ID") != null ? getFirstNodeFromXML(node, "ID").getTextContent(): "";
             String party = getFirstNodeFromXML(node, "PARTEI_KURZ") != null ? getFirstNodeFromXML(node, "PARTEI_KURZ").getTextContent(): "";
@@ -80,7 +85,10 @@ public class DBCreator_File_Impl implements DBCreator {
         }
     }
 
-    public void insertSpeakerPictures() {
+    /**
+     * updates all speakers Pictures from the DB
+     */
+    public void insertSpeakersPictures() {
         try {
             MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
             List<org.bson.Document> speakers = handler.aggregateMongo("speakers", new ArrayList<Bson>());
@@ -97,7 +105,11 @@ public class DBCreator_File_Impl implements DBCreator {
     }
 
 
-
+    /**
+     * helper function to convert NodeList to Iterable of <Node>>
+     * @param nodeList
+     * @return
+     */
     public static Iterable<Node> toIterable(final NodeList nodeList) {
         return () -> new Iterator<Node>() {
             int index = 0;
@@ -113,6 +125,13 @@ public class DBCreator_File_Impl implements DBCreator {
             }
         };
     }
+
+    /**
+     * helper function to get the first Node that matches the passed nodeName in the xml
+     * @param node
+     * @param nodeName
+     * @return
+     */
     public static Node getFirstNodeFromXML(Node node, String nodeName){
 
         List<Node> rSet = new ArrayList<>();
@@ -134,6 +153,10 @@ public class DBCreator_File_Impl implements DBCreator {
 
     }
 
+    /**
+     * uploades CategoryEncodings of the passed path to the mongoDB
+     * @param path
+     */
     public static void uploadCategoryEncoding(String path) {
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
 

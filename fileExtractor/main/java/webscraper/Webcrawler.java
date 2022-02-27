@@ -46,12 +46,11 @@ public class Webcrawler {
      */
     public static String getImageLink(String vorname, String nachname) throws IOException {
         String prefix ="https://bilddatenbank.bundestag.de";
-        String urlToParse = "https://bilddatenbank.bundestag.de/search/picture-result?query="+vorname+ "+"+nachname+ "&filterQuery%5Bereignis%5D%5B%5D=Portr%C3%A4t%2FPortrait&sortVal=3";
+        String urlToParse = "https://bilddatenbank.bundestag.de/search/picture-result?query="+vorname+ "+"+nachname+ "&filterQuery%5Bereignis%5D%5B%5D=Portr%C3%A4t%2FPortrait&sortVal=2";
         Document currentDoc = Jsoup.connect(urlToParse).get();
         Elements images = currentDoc.select("img");
-        if(images.size() < 3){return "";}
+        if(currentDoc.getElementsContainingText("Es wurden keine Bilder gefunden.").size() > 0){return "";}
         String dlLink = prefix + images.get(2).attr("src");
-        System.out.println(dlLink);
         return dlLink;
     }
 

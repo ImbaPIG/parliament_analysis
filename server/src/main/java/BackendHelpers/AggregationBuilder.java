@@ -184,7 +184,7 @@ public class AggregationBuilder {
                                 .append("fraction", "$fraktion")
                                 .append("party", "$party")
                                 .append("picture", "$picture")
-                                .append("_id", 0)));
+                                .append("_id", 1)));
     }
 
     /**
@@ -241,7 +241,7 @@ public class AggregationBuilder {
                 new Document("$group",
                         new Document("_id", "$redner.party")
                                 .append("count",
-                                        new Document("$sum", 1L))),
+                                        new Document("$sum", 1))),
                 new Document("$sort",
                         new Document("count", -1L)));
     }
@@ -268,7 +268,7 @@ public class AggregationBuilder {
                 new Document("$group",
                         new Document("_id", "$redner.fraktion")
                                 .append("count",
-                                        new Document("$sum", 1L))),
+                                        new Document("$sum", 1))),
                 new Document("$sort",
                         new Document("count", -1L)));
     }
