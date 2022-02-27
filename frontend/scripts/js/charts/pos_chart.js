@@ -22,7 +22,8 @@ var ChartPOS;
     req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
 
     $.ajax({
-        url: "http://localhost:4567/api/pos"+req,
+        //url: "http://localhost:4567/api/pos"+req,
+        url: "http://localhost:4567/api/pos"+global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function(pos) {

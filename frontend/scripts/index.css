@@ -10,3 +10,18 @@ mark.red{
 mark.yellow{
     background-color: sandybrown;
 }
+
+
+.spacing{
+    display: flex;
+    justify-content: space-between;
+    max-width: 200px;
+    margin: 0 auto;
+    padding: 10px 0;
+
+
+}
+span{
+    height: 10px;
+    width: 20px;
+}

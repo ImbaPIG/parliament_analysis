@@ -22,11 +22,12 @@ let myChartToken;
  function addTokenChart(Token_canvasID, fromDateString, toDateString){
     req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
     $.ajax({
-        url: "http://localhost:4567/api/tokens"+"?=minimum=30000"+req,
+        //url: "http://localhost:4567/api/tokens"+"?=minimum=30000"+req,
+        //url: "http://localhost:4567/api/tokens"+"?minimum=30000"+global_party_filter,
+        url: "http://localhost:4567/api/tokens"+"?minimum=30000" +extra_toke_filter,
         type: "GET",
         dataType: "json",
         success: async function(token) {
-            console.log(token)
 
             let tokenresult = token.result
             let labels = []

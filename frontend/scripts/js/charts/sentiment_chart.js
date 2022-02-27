@@ -24,7 +24,8 @@ let ChartSentiment;
  function addSentiment(canvasID, fromDateString, toDateString){
     req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
         $.ajax({
-        url: "http://localhost:4567/api/sentiment" + req,
+        //url: "http://localhost:4567/api/sentiment" + req,
+        url: "http://localhost:4567/api/sentiment" + global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function (sentiments) {
@@ -56,7 +57,7 @@ let ChartSentiment;
                 data: {
                     labels: label,
                     datasets: [{
-                        label: '',
+                        label: 'log(Sentimentcount)',
                         data: data,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         fill: true,
