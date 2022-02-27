@@ -15,8 +15,8 @@ var ChartPOS;
  * 
  * @param {*} POScanvasID is the ID of the canvas
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Jannik
+ * This function was edited by Özlem
  */
  function addPOSchart(POScanvasID, fromDateString, toDateString){
     req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;

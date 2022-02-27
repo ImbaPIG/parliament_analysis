@@ -9,8 +9,8 @@
  * 
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Jannik
+ * This function was edited by Moritz
  */
 
 function addSpeakerChart(SpeakercanvasID){

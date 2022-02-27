@@ -8,8 +8,8 @@ let extra_toke_filter=""
  * 
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Jannik
+ * This function was edited by Moritz, Erik
  */
 function fill_select_party(){
     let list = document.getElementById("allOptions")
@@ -103,8 +103,8 @@ function fill_select_party(){
  * sets the global filter
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Erik
+ * This function was edited by Jannik
  */
 function set_global_party_filter(){
         

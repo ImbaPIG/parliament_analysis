@@ -21,6 +21,9 @@ var dashboardTitle = "Übersicht"
  * 
  * 
  * the daboard will be added at the end of the current dashboard
+ * 
+ *  This function is written by Moritz, Erik
+ *  This function is modifeid by Jannik
  */
 function dashboardHTML(){
 
@@ -126,6 +129,9 @@ function dashboardHTML(){
  * function that is used to fill the new dashbaord charts
  * @param {} fromDateString 
  * @param {*} toDateString 
+ * 
+ *  This function is written by Moritz, Erik
+ *  This function is modifeid by Jannik
  */
 const fillCharts = (fromDateString, toDateString) => {
     //now additional charts get created and added to the new dashboard
@@ -159,6 +165,14 @@ const fillCharts = (fromDateString, toDateString) => {
 
 
 //this functions creates a baseframe for a chart
+/**
+ * 
+ * @param {*} canvasID 
+ * @param {*} chartName 
+ * @returns 
+ * 
+ * This functions is written by Jannik
+ */
 function createchart(canvasID, chartName){
     let baseframe = `
     <div class="row">
@@ -187,6 +201,8 @@ function createchart(canvasID, chartName){
  * @param {*} canvasID 
  * @param {*} chartName 
  * @returns 
+ * 
+ * This function is written by Jannik
  */
 function create_bar_chart(canvasID, chartName){
         let baseframe = `
@@ -216,6 +232,8 @@ function create_bar_chart(canvasID, chartName){
  * @param {*} canvasID 
  * @param {*} chartName 
  * @returns 
+ * 
+ * This function is written by Moritz
  */
 function create_line_chart(canvasID, chartName){
     let baseframe = `
@@ -243,6 +261,7 @@ function create_line_chart(canvasID, chartName){
  * 
  * the dasboard gets removed by changing the inside of the new dashbaord div
  * 
+ * This function is written by Erik
  * 
  */
 function removeDashboard(){
@@ -254,6 +273,8 @@ function removeDashboard(){
  * This functions sets the title of a dashboard
  * 
  * @param {*} title 
+ * 
+ * This function is written by Erik
  */
 function set_dashboardTitle(title) {
 

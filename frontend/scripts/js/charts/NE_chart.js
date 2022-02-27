@@ -23,8 +23,8 @@ let ChartNE;
  * 
  * @param {*} NEcanvasID 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Jannik
+ * This function was edited by Özlem
  */
  function addNamedEntities(NEcanvasID, fromDateString, toDateString){
     req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;

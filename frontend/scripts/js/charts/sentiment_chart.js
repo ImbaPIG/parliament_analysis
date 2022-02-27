@@ -18,15 +18,14 @@ let ChartSentiment;
  * 
  * @param {*} canvasID is the canvas ID of said chart
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Özlem
+ * This function was edited by Jannik,Erik
  */
  function addSentiment(canvasID, fromDateString, toDateString){
     req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;
 
         $.ajax({
         url: "http://localhost:4567/api/sentiment" + req,
-        //url: "http://localhost:4567/api/sentiment" + global_party_filter,
         type: "GET",
         dataType: "json",
         success: async function (sentiments) {
