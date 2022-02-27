@@ -45,7 +45,7 @@ function addSpeakerChart(SpeakercanvasID){
             let ChartSpeaker = new Chart(ctxSpeaker, {
                 type: 'bar',
                 data: {
-                    labels: labels,//[labels[0],labels[1],labels[2],labels[3],labels[4],labels[5],labels[6],labels[7],labels[8],labels[9]],
+                    labels: label_speaker.slice(0,10),
                     datasets: [{
                         label: "Redner",
                         data: date_speaker,

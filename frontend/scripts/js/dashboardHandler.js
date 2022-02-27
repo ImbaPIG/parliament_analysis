@@ -112,10 +112,10 @@ function dashboardHTML(){
 
     const fromDate = new Date($('#datepicker1').val());
     const toDate = new Date($('#datepicker2').val());
-    let fromDateString = `${fromDate.getDate()}.${fromDate.getMonth()+1}.${fromDate.getFullYear()}`;
-    let toDateString = `${toDate.getDate()}.${toDate.getMonth()+1}.${toDate.getFullYear()}`;
-    fromDateString = (fromDateString === "NaN.NaN.NaN" ||fromDateString === undefined ) ? "1.1.2000" : fromDateString;
-    toDateString = (toDateString === "NaN.NaN.NaN" ||toDateString === undefined) ? "1.1.3000" : toDateString;
+    let fromDateString = `${fixDate(fromDate.getDate().toString())}.${fixDate(fromDate.getMonth()+1)}.${fromDate.getFullYear()}`;
+    let toDateString = `${fixDate(toDate.getDate().toString())}.${fixDate(toDate.getMonth()+1)}.${toDate.getFullYear()}`;
+    fromDateString = (fromDateString.includes("NaN") ||fromDateString === undefined ) ? "01.01.2000" : fromDateString;
+    toDateString = (toDateString.includes("NaN") ||toDateString === undefined) ? "01.01.3000" : toDateString;
 
 
     fillCharts(fromDateString, toDateString);
