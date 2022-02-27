@@ -19,7 +19,6 @@ import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
 public class DBCreator_File_Impl implements DBCreator {
 
     public void insertProtocolls(String protocolLink, String protocollID) throws IOException, ParseException, UIMAException, SAXException {
@@ -61,19 +60,23 @@ public class DBCreator_File_Impl implements DBCreator {
     }
 
     /**
+     * @author Moritz&Özlem
      * updates Speaker Meta Data of all Speakers that can be found in the passed XML
-     * @param mdbXml
+     * @param mdbXml mdb XML to be parsed
      * @throws IOException
      * @throws UIMAException
      */
     public void updateSpeakerMeta(Document mdbXml) throws IOException, UIMAException {
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
+
+        //searches for all MDB´s and gets their id and party
         NodeList nodeList = mdbXml.getElementsByTagName("MDB");
         for(Node node : toIterable(nodeList) ){
             String id = getFirstNodeFromXML(node, "ID") != null ? getFirstNodeFromXML(node, "ID").getTextContent(): "";
             String party = getFirstNodeFromXML(node, "PARTEI_KURZ") != null ? getFirstNodeFromXML(node, "PARTEI_KURZ").getTextContent(): "";
 
 
+            //checks if speaker is in database
             if(handler.existsDocument(id,"speakers")){
                 boolean result = false;
                 org.bson.Document speaker = handler.getDocument(id,"speakers");
@@ -87,12 +90,16 @@ public class DBCreator_File_Impl implements DBCreator {
     }
 
     /**
+     * @author Moritz&Özlem
      * updates all speakers Pictures from the DB
      */
     public void insertSpeakersPictures() {
         try {
+            //established DB connection and gets all speakers
             MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
             List<org.bson.Document> speakers = handler.aggregateMongo("speakers", new ArrayList<Bson>());
+
+            //iterates over speakers and sets the bson Document with the found picture
             for (org.bson.Document speaker : speakers) {
                 boolean result = false;
                 speaker.append("picture", Webcrawler.getImageLink(speaker.get("firstname").toString(), speaker.get("lastname").toString()));
@@ -107,17 +114,20 @@ public class DBCreator_File_Impl implements DBCreator {
 
 
     /**
+     * @author Moritz
      * helper function to convert NodeList to Iterable of <Node>>
-     * @param nodeList
-     * @return
+     * @param nodeList to be converted to Iterable
+     * @return Iterable of NodeList
      */
     public static Iterable<Node> toIterable(final NodeList nodeList) {
         return () -> new Iterator<Node>() {
             int index = 0;
+            //override hasNext to check if new Iterable has next
             @Override
             public boolean hasNext() {
                 return index < nodeList.getLength();
             }
+            //override next to get next Item of Iterable
             @Override
             public Node next() {
                 if (!hasNext())
@@ -129,53 +139,53 @@ public class DBCreator_File_Impl implements DBCreator {
 
     /**
      * helper function to get the first Node that matches the passed nodeName in the xml
-     * @param node
-     * @param nodeName
+     * @param node parentNode to be searched
+     * @param nodeName nodeName of Node to be searched
      * @return
      */
     public static Node getFirstNodeFromXML(Node node, String nodeName){
 
         List<Node> rSet = new ArrayList<>();
-
+        //checks if current node matches nodeName, adds them to set if true
         if(node.getNodeName().equals(nodeName)) {
             rSet.add(node);
         }
-        else{
-            if (node.hasChildNodes()) {
-                for(Node child : toIterable(node.getChildNodes())){
-                    rSet.add(getFirstNodeFromXML(child, nodeName));
-                }
-            } else if (node.getNodeName().equals(nodeName)){
-                rSet.add(node);
+        //checks if node has childs and recursivly look for nodeNames of child Nodes
+        else if (node.hasChildNodes()){
+            for(Node child : toIterable(node.getChildNodes())){
+                rSet.add(getFirstNodeFromXML(child, nodeName));
             }
         }
-
+        //return first Node in set or null
         return rSet.size() > 0 ? rSet.get(0) : null;
 
     }
 
     /**
+     * @author Moritz
      * uploades CategoryEncodings of the passed path to the mongoDB
-     * @param path
+     * @param path to CategoryEncodings
      */
     public static void uploadCategoryEncoding(String path) {
         MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
-
         LinkedList<org.bson.Document> docsToBeInserted = new LinkedList<>();
+        //until there is no new line in file to be read read in line by line
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
+                //add id and text of encoding to bson Document and push Document to list if not already in Database
                 org.bson.Document docToInsert = new org.bson.Document();
                 String[] values = line.split("\t");
+                //empty line check
                 if(values.length < 2){continue;}
                 docToInsert.put("_id", values[0]);
                 docToInsert.put("text",values[1]);
                 if(!handler.existsDocument(docToInsert.getString("_id"),"categoryEncodings" )){
-                    System.out.println("about to insert" + values[0]);
                     docsToBeInserted.push(docToInsert);
                     TimeUnit.MILLISECONDS.sleep(10);
                 }
             }
+            //insert list to collection
             handler.uploadDocs(docsToBeInserted, "categoryEncodings");
         } catch (Exception e){
             e.printStackTrace();

@@ -16,13 +16,16 @@ import spark.QueryParamsMap;
 import static com.mongodb.client.model.Filters.exists;
 import static com.mongodb.client.model.Filters.eq;
 
+/**
+ * @author Jannik & Moritz
+ */
 public class AggregationHelper {
 
     /**
      *helper methode to create match bson document
-     * @param fieldname
-     * @param matchValue
-     * @return
+     * @param fieldname to match
+     * @param matchValue value to match
+     * @return bson Document
      */
     public static Bson matchHelper(String fieldname, String matchValue){
         Bson matchDoc = new Document();
@@ -39,9 +42,9 @@ public class AggregationHelper {
 
     /**
      *helper methode to create match bson document for party
-     * @param fieldname
-     * @param queryParams
-     * @return
+     * @param fieldname to party
+     * @param queryParams params to extract party
+     * @return bson Document
      */
     public static Bson partyMatchHelper(String fieldname,QueryParamsMap queryParams){
         return queryParams.get("party").value() == null ? matchHelper("_id",null) : matchHelper(fieldname, queryParams.get("party").value());
@@ -49,8 +52,8 @@ public class AggregationHelper {
 
     /**
      *helper methode to create unwind bson document
-     * @param unwindPath
-     * @return
+     * @param unwindPath path to unwind
+     * @return bson Document
      */
     public static Document unwindHelper(String unwindPath){
         return new Document("$unwind",
@@ -61,11 +64,11 @@ public class AggregationHelper {
 
     /**
      *helper methode to create lookup bson document
-     * @param fromCollectionName
-     * @param localField
-     * @param foreignField
-     * @param newName
-     * @return
+     * @param fromCollectionName collectionName from to lookup
+     * @param localField localField of lookup
+     * @param foreignField foreignField of lookup
+     * @param newName newName of lookup
+     * @return bson Document
      */
     public static Document lookupHelper(String fromCollectionName, String localField, String foreignField, String newName){
         return new Document("$lookup",
@@ -77,8 +80,8 @@ public class AggregationHelper {
 
     /**
      *helper methode to create date bson document from string
-     * @param stringDate
-     * @return
+     * @param stringDate String to be converted to Date
+     * @return bson Document
      */
     public static Document stringToDate(String stringDate){
         return new Document("$dateFromString",
@@ -88,10 +91,10 @@ public class AggregationHelper {
 
     /**
      *helper methode to create a match that date is inbetween dates
-     * @param datePath
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param datePath path of document date
+     * @param startDate earliest date to be matched
+     * @param endDate latest date to be matched
+     * @return bson Document
      */
     public static Document createMatchByDate(String datePath,String startDate, String endDate){
         //null check on dates
@@ -111,8 +114,8 @@ public class AggregationHelper {
 
     /**
      *helper methode to turn string field into date field
-     * @param datePath
-     * @return
+     * @param datePath path to date in Document
+     * @return bson Document
      */
     public static Document replaceDateStringByDate(String datePath){
         return new Document("$addFields",
@@ -121,8 +124,8 @@ public class AggregationHelper {
 
     /**
      * helper function to determine if query params match the required values
-     * @param queryParams
-     * @return
+     * @param queryParams params to extract values from
+     * @return boolean false => wrong format
      */
     public static boolean checkAreQueryParamsCorrectFormat(QueryParamsMap queryParams){
         Pattern dateFormat = Pattern.compile("^\\d{2}.\\d{2}.\\d{4}");
@@ -147,7 +150,7 @@ public class AggregationHelper {
     /**
      *helper function to wrap list of bson documents to json and add sucess parameter
      * @param docs
-     * @return
+     * @return JSOnObject
      */
     public static JSONObject convertDocListToJsonList(List<Document> docs){
         List<JSONObject> list = new ArrayList<>();
@@ -169,7 +172,7 @@ public class AggregationHelper {
      *helper function to makes sure that value of queryParams is at least zero
      * @param queryParams
      * @param key
-     * @return
+     * @return int >= 0
      */
     public static int minimumOfZero(QueryParamsMap queryParams, String key){
         if(queryParams.get(key).integerValue() == null){

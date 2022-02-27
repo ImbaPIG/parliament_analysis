@@ -24,15 +24,19 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Moritz
+ */
 public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHandler {
-    public final MongoDatabase db;
+    private final MongoDatabase db;
     private final Creds_File_Impl cred;
 
 
+    /**
+     * constructor for MongoDBConnectionHandler_File_Impl
+     * establishes connection with Database
+     */
     public MongoDBConnectionHandler_File_Impl() {
-        /**
-         * establishes a connection with the mongodb
-         */
         this.cred = new Creds_File_Impl();
 
         // set up mongo db client
@@ -48,27 +52,47 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         this.db = client.getDatabase(cred.getDatabase());
     }
 
+    /**
+     * Methode to find out if a Document with given id in given collection exists
+     * @param identifier String of Document
+     * @param collection String of Document
+     * @return boolean whether found or not
+     */
     public boolean existsDocument(String identifier, String collection){
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.put("_id", identifier);
-
+        //checks if first Document found is null
         return this.db.getCollection(collection).find(whereQuery).first() != null;
     }
+
+    /**
+     * getter for bson Document
+     * @param identifier String of Document
+     * @param collection String of Collection
+     * @return bson Document that was found or empty Document
+     */
     public Document getDocument(String identifier, String collection){
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.put("_id", identifier);
         try {
+            //finds first
             Document document = this.db.getCollection(collection).find(whereQuery).first();
             return document;
         }
-        catch (Exception e){
+        catch (MongoException e){
             e.printStackTrace();
         }
         return new Document();
     }
 
 
-
+    /**
+     * Methode to update Document
+     * @param doc
+     * @param collection
+     * @return
+     * @throws UIMAException
+     */
     public boolean updateDocument(Document doc, String collection) throws UIMAException {
 
         // Create Where-Query
@@ -85,54 +109,56 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         return uResult != null;
 
     }
+
+    /**
+     * uploads a given bson string to a given collection
+     * @param bSon String of bson
+     * @param collection String of collection name
+     */
     public void uploadBson(String bSon, String collection){
-        /**
-         * uploads a given bson string to a given collection
-          */
-        // validate collection name
-        if(collection == "protocol"){
-            collection = this.cred.getProtocollCollection();
-        } else if(collection == "jcas"){
-            collection = this.cred.getJcasCollection();
-        } else {
-            System.out.println("ERROR - " + collection + " is not a valid collection");}
         // parse bson to mongo document
         Document dbDoc = null;
         try {
             dbDoc = Document.parse(bSon);
-        } catch (Exception e) {
-            System.out.println("The given Bson string is not parseable");
+        } catch (MongoException e) {
             e.printStackTrace();
         }
         // upload document
         assert dbDoc != null;
         this.db.getCollection(collection).insertOne(dbDoc);
     }
+
+    /**
+     * uploads a bson Document to a given collection
+     * @param dbDoc bson Document
+     * @param collection String of collection name
+     */
     public void uploadDoc(Document dbDoc, String collection){
-        /**
-         * uploads a given dbDoc to a given collection
-         */
-        // validate collection name
-        if(collection == "protocol"){
-            collection = this.cred.getProtocollCollection();
-        } else if(collection == "jcas"){
-            collection = this.cred.getJcasCollection();
-        } else {
-            //System.out.println("ERROR - " + collection + " is not a valid collection");
-        }
         // upload document
         assert dbDoc != null;
+        //check if a document already exists with same id in collection
         if(existsDocument(dbDoc.get("_id").toString(), collection)){return;}
         this.db.getCollection(collection).insertOne(dbDoc);
     }
+
+    /**
+     * uploads a list of bson Documents to a given collection
+     * @param dbDocs List of bson Documents to be inserted
+     * @param collection String of collection name
+     */
     public void uploadDocs(List<Document> dbDocs, String collection){
         assert dbDocs != null;
         this.db.getCollection(collection).insertMany(dbDocs);
     }
+
+    /**
+     * Helper to aggregate a mongo pipeline, returns all values from collection if aggregation is wrong
+     * @param collection String of collection name
+     * @param aggregation List of bson Documents (pipeline to aggregate)
+     * @return List of bson Documents from aggregation result
+     */
     public List<Document> aggregateMongo (String collection, List<Bson> aggregation){
         try {
-            //mongoTemplate.aggregate(new Aggregation().withOptions(AggregationOptions.Builder.allowDiskUse(true)), "match", Document.class);
-
             return this.db.getCollection(collection).aggregate(aggregation).allowDiskUse(true).into(new ArrayList<>());
         }catch (MongoException e){
             e.printStackTrace();
@@ -140,29 +166,40 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         }
     }
 
-
-
-    public String JCasToXML(JCas jcas) throws IOException {
+    /**
+     * converts JCas to XML String
+     * @param jcas Jcas to be converted
+     * @return XML String of Jcas
+     * @throws IOException
+     */
+    public String JCasToXML(JCas jcas) {
         /**
          * Serialize JCas Object to a xml String
          */
         String outString = "";
         CAS cas = jcas.getCas();
+        //created outputStream and serializes it with XCASSerializer
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             XCASSerializer.serialize(cas, out);
             outString = out.toString();
-        } catch (IOException | SAXException ignored) {
+            out.close();
+        } catch (IOException | SAXException e) {
+            e.printStackTrace();
         }
-        out.close();
+
         return outString;
     }
 
+    /**
+     * converts XML String to Jcas
+     * @param xml String to be converted into Jcas
+     * @return Jcas Object
+     * @throws UIMAException
+     */
     public JCas XMLToJcas(String xml) throws UIMAException {
-        /**
-         * Deserialize xml String to JCas object
-         */
         JCas emptyJcas = JCasFactory.createText("", "de");
+        //created inputStream and deserializes it with XCASDeserializer
         ByteArrayInputStream in = new ByteArrayInputStream(xml.getBytes());
         CAS cas = emptyJcas.getCas();
         try {
@@ -173,21 +210,25 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
     }
 
 
+    /**
+     * checks if jcas obj exists in database
+     * @param redeID id of Document that is inspected
+     * @return true if Document is found
+     */
     public boolean jCasExists(String redeID) {
-        /**
-         * checks if jcas obj exists in database
-         */
         Document doc = new Document("_id", redeID);
         Document d = db.getCollection(cred.getJcasCollection()).find(doc).first();
         return d != null;
     }
 
+    /**
+     * checks if protkoll obj exists in database
+     * @param sitzungsnr id of Protocoll
+     * @return true if Protocoll bson is found
+     */
     public boolean protokollExists(String sitzungsnr){
-        /**
-         * checks if protkoll obj exists in database
-         */
         try{
-
+            //create new bson Document with sitzungsnr as ID
             Document doc = new Document("_id", sitzungsnr);
             Document d = db.getCollection(cred.getProtocollCollection()).find(doc).first();
             return d != null;
@@ -197,20 +238,22 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         return true;
     }
 
+    /**
+     * creates a placeholder for a protkoll in the db so no other instance of the uploader trys to upload it (so no doubling)
+     * @param sitzungsnr id of protocoll
+     */
     public void createPlaceholder(String sitzungsnr){
-        /**
-         * creates a placeholder for a protkoll in the db so no other instance of the uploader trys to upload it (so no doubling)
-         */
         Document doc = new Document("_id", sitzungsnr);
         doc.append("placeholder", true);
         db.getCollection(cred.getProtocollCollection()).insertOne(doc);
         System.out.println("The Placeholder for protkoll " + sitzungsnr + " was created");
     }
 
+    /**
+     * removes previously created placeholder
+     * @param sitzungsnr id of protocoll
+     * */
     public void removePlaceholder(String sitzungsnr){
-        /**
-         * removes previously created placeholder
-         */
         Document doc = new Document("_id", sitzungsnr);
         doc.append("placeholder", true);
         Document filter = db.getCollection(cred.getProtocollCollection()).find(doc).first();
@@ -223,14 +266,17 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
     }
 
 
+    /**
+     * finds all document ids of placeholders
+     * @return List of document ids
+     */
     public List<String> getExistingPlaceholderIDs(){
-        /**
-         * checks if protkoll obj exists in database
-         */
         LinkedList<String> pIDs = new LinkedList<>();
         Document doc = new Document("placeholder", true);
+        //search for all Documents with placeholder:true
         FindIterable<Document> placeholders = this.db.getCollection(cred.getProtocollCollection()).find(doc);
 
+        //iterate over result and append each id to pIDs list
         for(Document placeholder : placeholders){
             pIDs.push(placeholder.getString("_id"));
         }
@@ -245,10 +291,13 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
     }
 
 
+    /**
+     * creates a JCasTuple (including the reden and comments) from the mongodb
+     * @param redeID
+     * @return Jcas Tuple with reden and comments
+     * @throws UIMAException
+     */
     public JCasTuple_FIle_Impl getRedeJcas(String redeID) throws UIMAException {
-        /**
-         * creates a JCasTuple (including the reden and comments) from the mongodb
-         */
         Document doc = new Document("_id", redeID);
         Document result = db.getCollection(cred.getJcasCollection()).find(doc).first();
         assert result != null;
@@ -256,6 +305,5 @@ public class MongoDBConnectionHandler_File_Impl implements MongoDBConnectionHand
         String commentXML = result.getString("commentXML");
         return new JCasTuple_FIle_Impl(XMLToJcas(contentXMl), XMLToJcas(commentXML));
     }
-
 
 }

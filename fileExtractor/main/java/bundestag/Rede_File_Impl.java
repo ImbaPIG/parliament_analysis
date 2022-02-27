@@ -93,25 +93,56 @@ public class Rede_File_Impl implements Rede {
     // dummy constructor for instanciating from mongodb
     public Rede_File_Impl() {}
 
+    /**
+     * getter Redner
+     * @return
+     * @author Erik
+     */
     public Redner_File_Impl getRedner() {
         return redner;
     }
+
+    /**
+     * getter RednerID
+     * @return
+     * @author Erik
+     */
     public String getRednerID(){
         return rednerID;
     }
 
+    /**
+     * getter Content
+     * @return
+     * @author Erik
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * getter Comments
+     * @return
+     * @author Erik
+     */
     public String getComments() {
         return comments;
     }
 
+    /**
+     * getter RedeID
+     * @return
+     * @author Erik
+     */
     public String getRedeID() {
         return redeID;
     }
 
+    /**
+     * creates bson Document for Rede
+     * @return
+     * @author Erik
+     */
     public Document getDocument(){
         org.bson.Document mongoDoc = new org.bson.Document();
         mongoDoc.put("content", this.getContent());

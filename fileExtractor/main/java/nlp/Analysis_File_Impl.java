@@ -27,11 +27,11 @@ import static com.mongodb.client.model.Filters.eq;
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
+/**
+ * @author Erik
+ */
 public class Analysis_File_Impl implements Analysis {
 
-    /**
-     *
-     */
     public Analysis_File_Impl() {
     }
 

@@ -4,6 +4,9 @@ import bundestag.Rede_File_Impl;
 
 import java.util.ArrayList;
 
+/**
+ * @author Erik
+ */
 public interface Tagesordnungspunkt {
     public ArrayList<Rede_File_Impl> getReden();
 

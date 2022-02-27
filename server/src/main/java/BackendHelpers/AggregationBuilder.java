@@ -34,16 +34,17 @@ import org.bson.Document;
 
 import javax.management.Query;
 
-
+/**
+ * @author Moritz & Jannik
+ */
 public class AggregationBuilder {
 
     /**
      *Methode to create mongo aggregation of token route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createTokenAggregation(QueryParamsMap queryParams){
-        //todo: check if input params are valid
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(
                 unwindHelper("$tagesordnungspunkte"),
@@ -75,7 +76,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of named entities route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createNamedEntitiesAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
@@ -145,7 +146,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of speech route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createSpeechAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
@@ -170,7 +171,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of speakers route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createSpeakersAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
@@ -190,7 +191,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of sentiment route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createSentimentAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
@@ -222,7 +223,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of parties route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createPartiesAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
@@ -249,7 +250,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of fractions route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createFractionsAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
@@ -276,7 +277,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of statistic route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createStatisticAggregation(QueryParamsMap queryParams){
         return Arrays.asList(
@@ -321,7 +322,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of pos route
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createPOSAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
@@ -351,7 +352,7 @@ public class AggregationBuilder {
     /**
      *Methode to create mongo aggregation of full text search route
      * @param queryParamsMap
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createFullTextSearchAggregation(QueryParamsMap queryParamsMap){
         return Arrays.asList(new Document("$match",
@@ -362,7 +363,7 @@ public class AggregationBuilder {
     /**
      * Methode to create mongo aggregation to group catrgorys by speakers
      * @param queryParams
-     * @return
+     * @return aggregation as bson list
      */
     public List<Bson> createSpeakersByCategoryAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
@@ -403,6 +404,11 @@ public class AggregationBuilder {
                                 new Document("$gte", minimumOfZero(queryParams,"minimum")))));
     }
 
+    /**
+     * Methode to create group speeches by category aggregation
+     * @param queryParams aggregation as bson list
+     * @return
+     */
     public List<Bson> createSpeechesByCategoryAggregation(QueryParamsMap queryParams){
         if(!checkAreQueryParamsCorrectFormat(queryParams)){return Arrays.asList();}
         return Arrays.asList(

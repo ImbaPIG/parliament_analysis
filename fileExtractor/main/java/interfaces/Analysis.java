@@ -12,6 +12,9 @@ import org.bson.Document;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Erik
+ */
 public interface Analysis {
 
     public Document createAnalysedDoc(JCasTuple_FIle_Impl jCasTuple, MongoDBConnectionHandler_File_Impl handler, Rede_File_Impl rede) throws UIMAException;

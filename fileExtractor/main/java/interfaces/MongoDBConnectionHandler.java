@@ -6,6 +6,9 @@ import org.apache.uima.jcas.JCas;
 
 import java.io.IOException;
 
+/**
+ * @author Moritz
+ */
 public interface MongoDBConnectionHandler {
     public void uploadBson(String bSon, String collection);
 

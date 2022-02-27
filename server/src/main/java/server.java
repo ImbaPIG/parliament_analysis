@@ -23,30 +23,31 @@ import static BackendHelpers.AggregationHelper.convertDocListToJsonList;
 import static spark.Spark.*;
 import static webscraper.Webcrawler.iterateOffset;
 
-
+/**
+ * @author Özlem & Moritz
+ */
 public class server {
 
     public static void main(String[] args) throws IOException {
-        //todo : list.add(new JSONObject(next.toJson()));
+        //init basic variables
         AggregationBuilder aggraBuilder = new AggregationBuilder();
         MongoDBConnectionHandler_File_Impl mongo = new MongoDBConnectionHandler_File_Impl();
 
-
-
         Hashtable<String, String> basicProtocollLinks = new Hashtable<String, String>();
-        //iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", basicProtocollLinks);
-        //iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", basicProtocollLinks);
+        iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", basicProtocollLinks);
+        iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", basicProtocollLinks);
 
         ProtocollHandler protoHandler = new ProtocollHandler();
 
         System.out.println("Server listening on Port 4567");
 
-
+        //setup headers
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "GET");
         });
 
+        //registration of routes
         get("/api/tokens",       (request, response) ->{
             List<Bson> sampleAggregation= aggraBuilder.createTokenAggregation(request.queryMap());
             List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
@@ -98,26 +99,30 @@ public class server {
             List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
             return convertDocListToJsonList(protocollContentContains(output, request.queryMap().get("contains").value()));
         });
-
         get("/api/fetchProtocolls",       (request, response) ->{
             Hashtable<String, String> protocollLinksToFetch = new Hashtable<String, String>();
-            try {
-                protoHandler.resetProgress();
-                if (request.queryMap().get("link").value() != null) {
-                    protocollLinksToFetch.clear();
-                    protocollLinksToFetch.put("new", request.queryMap().get("link").value());
-                } else {
-                    protocollLinksToFetch = basicProtocollLinks;
-                }
-                protoHandler.insertAndUpdateProtocolls(protocollLinksToFetch);
-            } finally {
-                protoHandler.insertAndUpdateProtocolls(protocollLinksToFetch);
+            protoHandler.resetProgress();
+            if (request.queryMap().get("link").value() != null) {
+                protocollLinksToFetch.clear();
+                protocollLinksToFetch.put("new", request.queryMap().get("link").value());
+            } else {
+                protocollLinksToFetch = basicProtocollLinks;
             }
+            protoHandler.insertAndUpdateProtocolls(protocollLinksToFetch);
             return "finished";
         });
-
         get("/api/fetchProtocollsProgress",       (request, response) ->{
                 return protoHandler.getProgress();
+        });
+        get("/api/speakerByCategory",       (request, response) ->{
+            List<Bson> sampleAggregation= aggraBuilder.createSpeakersByCategoryAggregation(request.queryMap());
+            List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
+            return convertDocListToJsonList(output);
+        });
+        get("/api/speechesByCategory",       (request, response) ->{
+            List<Bson> sampleAggregation= aggraBuilder.createSpeechesByCategoryAggregation(request.queryMap());
+            List<Document> output = mongo.aggregateMongo("speeches", sampleAggregation);
+            return convertDocListToJsonList(output);
         });
 
 
@@ -127,10 +132,11 @@ public class server {
     }
 
     /**
+     * @author Moritz
      * Methode to return List of Documents with speechText that contains substring
-     * @param protocolls
-     * @param toFind
-     * @return
+     * @param protocolls list of bson protocolls to be filtered
+     * @param toFind string to find in speech
+     * @return List of matched Documents
      * @throws IOException
      */
     public static List<Document> protocollContentContains(List<Document> protocolls, String toFind) throws IOException {
@@ -175,12 +181,4 @@ public class server {
 
         return matchedProtocolls.stream().map(mprotocoll -> Document.parse(mprotocoll.toString()) ).collect(Collectors.toList());
     }
-
-    public Double update(Double progress){
-        return progress;
-    }
-
-
-
-
 }

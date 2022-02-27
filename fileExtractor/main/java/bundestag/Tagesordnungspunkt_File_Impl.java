@@ -55,26 +55,48 @@ public class Tagesordnungspunkt_File_Impl implements Tagesordnungspunkt {
     // dummy constructor for instanciating from mongodb
     public Tagesordnungspunkt_File_Impl() {}
 
+    /**
+     * getter Reden
+     * @return
+     */
     public ArrayList<Rede_File_Impl> getReden() {
         return reden;
     }
 
+    /**
+     * setter Reden
+     * @param reden
+     */
     public void setReden(ArrayList<Rede_File_Impl> reden) {
         this.reden = reden;
     }
 
+    /**
+     * getter Text
+     * @return
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * getter TopID
+     * @return
+     */
     public String getTopID() {
         return topID;
     }
 
+    /**
+     * creates bson Document of Tagesordnungspunkt
+     * @return
+     */
     public org.bson.Document getDocument(){
         org.bson.Document mongoDoc = new org.bson.Document();
         mongoDoc.put("text",this.getText());
         mongoDoc.put("topID",this.getTopID());
+
+        //iterates over speeches of tagesordnungspunkt and adds bson Docs to List
         List<Document> speeches = new LinkedList<>();
         this.getReden().forEach(speech -> {
             speeches.add(speech.getDocument());

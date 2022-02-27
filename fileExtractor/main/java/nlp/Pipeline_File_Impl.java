@@ -16,12 +16,11 @@ import org.hucompute.textimager.uima.spacy.SpaCyMultiTagger3;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 
+/**
+ * @author Erik
+ */
 public class Pipeline_File_Impl implements Pipeline {
     private final AggregateBuilder pipeline;
-
-    /**
-     *
-     */
     public Pipeline_File_Impl() {
         this.pipeline = new AggregateBuilder();
     }

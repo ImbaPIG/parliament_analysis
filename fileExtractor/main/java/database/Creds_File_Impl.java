@@ -3,8 +3,11 @@ package database;
 import java.io.*;
 import java.util.Properties;
 
+/**
+ * @author Erik
+ */
 public class Creds_File_Impl {
-    Properties prop;
+    private Properties prop;
     public Creds_File_Impl() {
         /**
          * gets the mongodb login data and makes it easily available

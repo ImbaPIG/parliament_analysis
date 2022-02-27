@@ -39,16 +39,18 @@ public class Webcrawler {
 
     /**
      * Methode to parse Imagelink of Speaker
-     * @param vorname
-     * @param nachname
+     * @param vorname String to search
+     * @param nachname String to search
      * @return
      * @throws IOException
+     * @author Jannik
      */
     public static String getImageLink(String vorname, String nachname) throws IOException {
         String prefix ="https://bilddatenbank.bundestag.de";
         String urlToParse = "https://bilddatenbank.bundestag.de/search/picture-result?query="+vorname+ "+"+nachname+ "&filterQuery%5Bereignis%5D%5B%5D=Portr%C3%A4t%2FPortrait&sortVal=2";
         Document currentDoc = Jsoup.connect(urlToParse).get();
         Elements images = currentDoc.select("img");
+        //check if any Elements with Error Message of Site exist => no image is avaible
         if(currentDoc.getElementsContainingText("Es wurden keine Bilder gefunden.").size() > 0 || images.size() < 3){return "";}
         String dlLink = prefix + images.get(2).attr("src");
         return dlLink;
@@ -60,17 +62,21 @@ public class Webcrawler {
      * @param link
      * @param protocollLinks
      * @throws IOException
+     * @author Jannik
      */
     public static void iterateOffset(Integer plenarPeriode, String link, Hashtable<String,String> protocollLinks) throws IOException {
         Integer offset = 0;
         Document currentDoc = Jsoup.connect(link + offset.toString()).get();
+        //if html content contains Plenarprotokoll => this is possible Plenarprotokoll
         while(currentDoc.toString().contains("Plenarprotokoll ")){
             try {
                 List<Node> table = currentDoc.select("tbody").first().childNodes();
                 for (Node listNode : table) {
+                    //skip for non Element Nodes
                     if (!(listNode instanceof Element)) {
                         continue;
                     }
+                    //get Plenar link,id
                     Element itemElem = (Element) listNode;
                     String itemText = itemElem.getElementsContainingText("Plenarprotokoll").first().text();
                     String protoID = createProtocollID(plenarPeriode, itemText);
@@ -79,6 +85,7 @@ public class Webcrawler {
                     protocollLinks.put(protoID, prefix + dlLink);
                 }
                 TimeUnit.MILLISECONDS.sleep(50);
+                //increment Offset of link to look at next Listitem
                 offset++;
                 currentDoc = Jsoup.connect(link + offset.toString()).get();
             }catch (InterruptedException e){
@@ -89,9 +96,10 @@ public class Webcrawler {
 
     /**
      * Parses protocollID from text of list
-     * @param PlenarPeriode
-     * @param listText
-     * @return
+     * @param PlenarPeriode Integer Prefix
+     * @param listText String to be matched with regex
+     * @return String matching regex
+     * @author Moritz
      */
     public static String createProtocollID(Integer PlenarPeriode, String listText){
         Matcher m = Pattern.compile("[^0-9]*([0-9]+).*").matcher(listText);
@@ -107,9 +115,9 @@ public class Webcrawler {
      * @param documentLink
      * @return
      * @throws IOException
+     * @author Jannik
      */
     public static Document fetchDocument(String documentLink) throws IOException {
-
         Document doc = Jsoup.connect(documentLink).get();
         return doc;
     }
@@ -119,6 +127,7 @@ public class Webcrawler {
      * @param zipLink
      * @return
      * @throws IOException
+     * @author Moritz
      */
     public static org.w3c.dom.Document fetchDocFromZip(String zipLink) throws IOException{
 
@@ -129,13 +138,14 @@ public class Webcrawler {
         dbFactory.setIgnoringElementContentWhitespace(true);
         W3CDom w3cDom = new W3CDom();
 
-
+        //gets Inputstream from url and stream to temp file in order to extract mdb info from zip
         InputStream is = new URL(zipLink).openConnection().getInputStream();
         File file = stream2file(is);
         ZipFile zipFile = new ZipFile(file);
         ZipEntry entry = zipFile.getEntry("MDB_STAMMDATEN.XML");
         InputStream zipIn = zipFile.getInputStream(entry);
 
+        //stream zip file to xml String and parse as Document
         List<String> strings = IOUtils.readLines(zipIn);
         String xmlRawString = StringUtils.join(strings, ", ");
 
@@ -144,9 +154,10 @@ public class Webcrawler {
     }
 
     /**
+     * @author Moritz
      * convert InputStream to temporary File
-     * @param in
-     * @return
+     * @param in Stream to be streamed to File
+     * @return File of streamed temp file
      * @throws IOException
      */
     public static File stream2file (InputStream in) throws IOException {
@@ -154,6 +165,7 @@ public class Webcrawler {
         final String SUFFIX = ".xml";
         final File tempFile = File.createTempFile(PREFIX, SUFFIX);
         tempFile.deleteOnExit();
+        //stream output to tempfile
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }
@@ -165,6 +177,7 @@ public class Webcrawler {
      * @param link
      * @return
      * @throws IOException
+     * @author Özlem
      */
     public static org.w3c.dom.Document getDocFromLink(String link) throws IOException {
         W3CDom w3cDom = new W3CDom();

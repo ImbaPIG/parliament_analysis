@@ -2,6 +2,9 @@ package database;
 
 import org.bson.Document;
 
+/**
+ * @author Erik
+ */
 public class JcasDBObj {
     public String _id;
     public String contentXML;
@@ -16,6 +19,10 @@ public class JcasDBObj {
         this.commentXML = commentXML;
     }
 
+    /**
+     * creator for bson Document
+     * @return
+     */
     public Document getDocument(){
         org.bson.Document mongoDoc = new org.bson.Document();
         mongoDoc.put("_id", this._id);
