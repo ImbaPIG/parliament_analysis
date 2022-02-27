@@ -1,26 +1,27 @@
-
 import BackendHelpers.AggregationBuilder;
 import com.couchbase.client.deps.com.fasterxml.jackson.core.JsonFactory;
 import com.couchbase.client.deps.com.fasterxml.jackson.core.JsonParser;
 import com.couchbase.client.deps.com.fasterxml.jackson.databind.DeserializationFeature;
 import com.couchbase.client.deps.com.fasterxml.jackson.databind.JsonNode;
 import com.couchbase.client.deps.com.fasterxml.jackson.databind.ObjectMapper;
-import com.couchbase.client.deps.com.fasterxml.jackson.databind.node.ObjectNode;
 import com.couchbase.client.deps.com.fasterxml.jackson.databind.node.ArrayNode;
+import com.couchbase.client.deps.com.fasterxml.jackson.databind.node.ObjectNode;
 import database.MongoDBConnectionHandler_File_Impl;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import spark.Filter;
 
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static BackendHelpers.AggregationHelper.convertDocListToJsonList;
-import static spark.Spark.*;
+import static spark.Spark.after;
+import static spark.Spark.get;
 import static webscraper.Webcrawler.iterateOffset;
 
 /**

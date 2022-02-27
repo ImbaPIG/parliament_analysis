@@ -84,7 +84,7 @@ public class Webcrawler {
                     String prefix = "https://www.bundestag.de";
                     protocollLinks.put(protoID, prefix + dlLink);
                 }
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MILLISECONDS.sleep(100);
                 //increment Offset of link to look at next Listitem
                 offset++;
                 currentDoc = Jsoup.connect(link + offset.toString()).get();

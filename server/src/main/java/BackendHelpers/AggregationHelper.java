@@ -2,19 +2,14 @@ package BackendHelpers;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;
+import spark.QueryParamsMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.mongodb.client.model.Aggregates.*;
-import org.json.JSONObject;
-import spark.QueryParamsMap;
-
-import static com.mongodb.client.model.Filters.exists;
-import static com.mongodb.client.model.Filters.eq;
 
 /**
  * @author Jannik & Moritz

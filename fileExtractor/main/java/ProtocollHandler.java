@@ -1,12 +1,16 @@
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import database.DBCreator_File_Impl;
 import database.MongoDBConnectionHandler_File_Impl;
+import net.arnx.jsonic.JSON;
 import nlp.Analysis_File_Impl;
 import org.apache.uima.UIMAException;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import webscraper.*;
@@ -69,9 +73,18 @@ public class ProtocollHandler {
      * returns progress of current protocoll Parsing
      * @return
      */
-    public Double getProgress(){
+    public JSONObject getProgress(){
+        final DecimalFormat df = new DecimalFormat("0.00");
+        JSONObject answer = new JSONObject();
         //nan check
-        return Double.isNaN(this.currentProtocoll / this.totalProtocolls) ? 0 : this.currentProtocoll / this.totalProtocolls;
+        Double progress =  Double.isNaN(this.currentProtocoll / this.totalProtocolls) ? 0 : this.currentProtocoll / this.totalProtocolls;
+        try {
+            answer.put("result", df.format(progress));
+            answer.put("sucess", true);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return answer;
     }
 
     /**

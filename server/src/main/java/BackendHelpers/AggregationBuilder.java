@@ -1,38 +1,14 @@
 package BackendHelpers;
 
-import com.mongodb.AggregationOptions;
-import com.mongodb.client.model.Accumulators;
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.UnwindOptions;
 import org.bson.BsonNull;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import se.lth.cs.srl.languages.Language;
 import spark.QueryParamsMap;
 
-import static BackendHelpers.AggregationHelper.*;
-
-import static com.mongodb.client.model.Accumulators.sum;
-import static com.mongodb.client.model.Aggregates.*;
-
-import com.mongodb.AggregationOptions.Builder;
-
-import java.util.*;
-
-
 import java.util.Arrays;
-import org.bson.Document;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import org.bson.conversions.Bson;
-import java.util.concurrent.TimeUnit;
-import org.bson.Document;
+import java.util.List;
 
-import javax.management.Query;
+import static BackendHelpers.AggregationHelper.*;
 
 /**
  * @author Moritz & Jannik

@@ -141,6 +141,23 @@ $(document).ready(function () {
       dashboardHTML();
 
     });
+    // submitProtokoll
+    $('#submitProtokoll').click(function (e) {
+        let protokollProgress = 0.0;
+        e.preventDefault();
+        let protokollLink = $("#protokollinput").val();
+        let progressBar = $("#progressbarProtokoll");
+        fetchProtokolls(protokollLink);
+
+        setInterval( () => {
+            if(protokollProgress == 0.0){return;}
+            console.log(protokollProgress);
+            progressBar.text = protokollProgress;
+            progressBar.width(parseInt(protokollProgress) + "%");
+            updateProgress().then(progress => protokollProgress = progress);
+        }, 1000)
+
+    });
   });
 
 document.querySelector('#filterinput').addEventListener('keypress', function (e) {

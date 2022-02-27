@@ -1,4 +1,4 @@
-const baseURL = "http://api.prg2021.texttechnologylab.org/"
+const baseURL = "http://localhost:4567/api/"
 
 const getStatistics = async () => {
     try {
@@ -11,6 +11,48 @@ const getStatistics = async () => {
             }
         })
         return data.result
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function updateProgress(){
+    try {
+        data = await $.ajax({
+            url: `${baseURL}fetchProtocollsProgress`,
+            type: "GET",
+            dataType: "json",
+            accepts: {
+                text: "application/json"
+            }
+        })
+        return data.result
+    } catch (e) {
+        console.error(e);
+    }
+}
+async function fetchProtokolls(protocollLink){
+    try {
+        if(typeof protocollLink == "undefined"){
+            console.log("fetching default");
+            await $.ajax({
+                method: "GET",
+                dataType: "json",
+                accepts: {
+                    text: "application/json"
+                },
+                url: `${baseURL}fetchProtocolls`
+            })
+        } else {
+            await $.ajax({
+                method: "GET",
+                dataType: "json",
+                accepts: {
+                    text: "application/json"
+                },
+                url: `${baseURL}fetchProtocolls?link=${protocollLink}`
+            })
+        }
     } catch (e) {
         console.error(e);
     }
@@ -331,3 +373,5 @@ const getEntityBySpeaker = async (speakerID) => {
         console.error(e);
     }
 }
+
+
