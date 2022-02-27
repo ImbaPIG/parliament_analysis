@@ -41,6 +41,7 @@ public class DBCreator_File_Impl implements DBCreator {
         String sitzungsnr = protocollID;
 
 
+
         // add protokoll if not already added
         if(handler.protokollExists(protocollID)){
             System.out.println("the protkoll " + protocollID + " already exists, therefore it is skipped");
