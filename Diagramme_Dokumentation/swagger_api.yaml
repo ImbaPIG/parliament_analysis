@@ -1,0 +1,434 @@
+swagger: "2.0"
+info:
+  description: "This is the swagger.io doku of our group project"
+  version: "1.0.0"
+  title: "Parliament Radar API"
+host: "localhost:4567"
+basePath: "/api"
+schemes:
+- "http"
+paths:
+  /tokens:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "get token values"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "minimum"
+        description: "Minimum occurance of tokens"
+        type: "integer"
+      - in: "query"
+        name: "rednerID"
+        description: "ID of a speaker"
+        type: "string"
+      - in: "query"
+        name: "fraktion"
+        description: "Fraction of speakers"
+        type: "integer"
+      - in: "query"
+        name: "party"
+        description: "party of speakers"
+        type: "string"
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /speech:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return a speech"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "redeID"
+        description: "ID of a speech"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /namedEntities:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all NamedEntities"
+      operationId: "findPetsByTags"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "minimum"
+        description: "Minimum occurance of tokens"
+        type: "integer"
+      - in: "query"
+        name: "rednerID"
+        description: "ID of a speaker"
+        type: "string"
+      - in: "query"
+        name: "fraktion"
+        description: "Fraction of speakers"
+        type: "integer"
+      - in: "query"
+        name: "party"
+        description: "party of speakers"
+        type: "string"
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /speakers:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all speakers"
+      operationId: "getPetById"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "rednerID"
+        description: "ID of a speaker"
+        type: "string"
+      - in: "query"
+        name: "fraktion"
+        description: "Fraction of speakers"
+        type: "integer"
+      - in: "query"
+        name: "party"
+        description: "party of speakers"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+  /sentiment:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all sentiments"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "rednerID"
+        description: "ID of a speaker"
+        type: "string"
+      - in: "query"
+        name: "fraktion"
+        description: "Fraction of speakers"
+        type: "integer"
+      - in: "query"
+        name: "party"
+        description: "party of speakers"
+        type: "string"
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /parties:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all parties"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /fractions:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all fractions"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /statistic:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Corpus statistic"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+  /pos:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all POS"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "minimum"
+        description: "Minimum occurance of tokens"
+        type: "integer"
+      - in: "query"
+        name: "rednerID"
+        description: "ID of a speaker"
+        type: "string"
+      - in: "query"
+        name: "fraktion"
+        description: "Fraction of speakers"
+        type: "integer"
+      - in: "query"
+        name: "party"
+        description: "party of speakers"
+        type: "string"
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /fullTextSearch:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Return all speeches with matching string"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+  
+  /fetchProtocolls:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "fetches all Protocolls of periode 19&20"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "link"
+        description: "link of XML File Protocoll to fetch"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+  
+  /fetchProtocollsProgress:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "returns current protocoll fetching progress between 0 and 1"
+      produces:
+      - "application/json"
+      - "application/xml"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+  /speakersByCategory:
+    get:
+      tags:
+      - "PPR REST Doku"
+      summary: "Returns all Categories with all speakers that talked to the specific category"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "query"
+        name: "minimum"
+        description: "Minimum occurance of tokens"
+        type: "integer"
+      - in: "query"
+        name: "rednerID"
+        description: "ID of a speaker"
+        type: "string"
+      - in: "query"
+        name: "fraktion"
+        description: "Fraction of speakers"
+        type: "string"
+      - in: "query"
+        name: "party"
+        description: "party of speakers"
+        type: "string"
+      - in: "query"
+        name: "startDate"
+        description: "date gte filter"
+        type: "string"
+      - in: "query"
+        name: "endDate"
+        description: "date lte filter"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/JSON"
+        "400":
+          description: "Failure"
+          schema:
+            $ref: "#/definitions/JSON"
+
+
+definitions:
+  JSON:
+    type: "object"
+    properties:
+      empty:
+        type: "boolean"
+    xml:
+      name: "Tag"
