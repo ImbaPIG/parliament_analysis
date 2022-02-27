@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Hashtable;
+import java.util.concurrent.TimeUnit;
 
 import database.DBCreator_File_Impl;
 import database.MongoDBConnectionHandler_File_Impl;
@@ -38,6 +39,7 @@ public class ProtocollHandler {
             for(String protokollID : protocolLinks.keySet()) {
                 mongoConnection.insertProtocolls(protocolLinks.get(protokollID), protokollID);
                 this.currentProtocoll ++;
+                TimeUnit.MILLISECONDS.sleep(50);
             }
 
             MongoDBConnectionHandler_File_Impl handler = new MongoDBConnectionHandler_File_Impl();
@@ -62,7 +64,7 @@ public class ProtocollHandler {
         System.out.println("finished inserting");
     }
     public Double getProgress(){
-        return this.currentProtocoll / this.totalProtocolls;
+        return Double.isNaN(this.currentProtocoll / this.totalProtocolls) ? 1 : this.currentProtocoll / this.totalProtocolls;
     }
     public void resetProgress(){
 

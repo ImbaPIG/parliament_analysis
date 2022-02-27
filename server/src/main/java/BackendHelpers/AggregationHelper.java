@@ -160,7 +160,7 @@ public class AggregationHelper {
             response.put("result", list);
         }else {
             response.put("sucess", false);
-            response.put("result", "No data could be fetched with the provided query, check if QueryParams are set properly");
+            response.put("error", "No data could be fetched with the provided query, check if QueryParams are set properly");
         }
         return response;
     }

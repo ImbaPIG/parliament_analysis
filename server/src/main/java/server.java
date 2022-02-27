@@ -34,8 +34,8 @@ public class server {
 
 
         Hashtable<String, String> basicProtocollLinks = new Hashtable<String, String>();
-        iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", basicProtocollLinks);
-        iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", basicProtocollLinks);
+        //iterateOffset(20, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/866354-866354?offset=", basicProtocollLinks);
+        //iterateOffset(19, "https://www.bundestag.de/ajax/filterlist/de/services/opendata/543410-543410?offset=", basicProtocollLinks);
 
         ProtocollHandler protoHandler = new ProtocollHandler();
 
@@ -109,11 +109,11 @@ public class server {
                 } else {
                     protocollLinksToFetch = basicProtocollLinks;
                 }
-                System.out.println("fetchingProtocolls");
-                return protoHandler.getProgress();
+                protoHandler.insertAndUpdateProtocolls(protocollLinksToFetch);
             } finally {
                 protoHandler.insertAndUpdateProtocolls(protocollLinksToFetch);
             }
+            return "finished";
         });
 
         get("/api/fetchProtocollsProgress",       (request, response) ->{
