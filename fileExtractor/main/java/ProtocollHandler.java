@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Hashtable;
-import java.util.LinkedList;
 
 import database.DBCreator_File_Impl;
 import database.MongoDBConnectionHandler_File_Impl;
@@ -12,8 +11,6 @@ import org.xml.sax.SAXException;
 import webscraper.*;
 
 import javax.xml.parsers.ParserConfigurationException;
-
-import static webscraper.Webcrawler.iterateOffset;
 
 public class ProtocollHandler {
     /**
@@ -58,7 +55,7 @@ public class ProtocollHandler {
 
         Document PartyDoc = Webcrawler.fetchDocFromZip(zipLink);
         mongoConnection.updateSpeakerMeta(PartyDoc);
-        mongoConnection.insertSpeakerPictures();
+        mongoConnection.insertSpeakersPictures();
 
         DBCreator_File_Impl.uploadCategoryEncoding("./resources/ddc3-names-de.csv");
 
