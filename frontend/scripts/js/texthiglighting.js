@@ -9,8 +9,8 @@
  * and display the text
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Moritz
+ * This function was edited by Jannik
  */
 function highlight_text(paragraph,namedEntities,locations,organisations, sentences) {
     let marked_paragraph = ""
@@ -63,8 +63,8 @@ function highlight_text(paragraph,namedEntities,locations,organisations, sentenc
  * This functions is called to set the Speech and call the highlighting function above
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Erik
+ * This function was edited by Moritz
  */
 function setTextContent(){
 
@@ -95,8 +95,8 @@ function setTextContent(){
  * 
  * 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Jannik
+ * This function was edited by Moritz
  */
 function showSentiment(sentimentValue, sentenceCount){
     let IconID = 'IconID' + sentenceCount

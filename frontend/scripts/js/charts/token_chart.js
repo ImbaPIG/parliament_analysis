@@ -23,7 +23,7 @@ let myChartToken;
     req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;
 
     $.ajax({
-        url: "http://localhost:4567/api/tokens"+"?=minimum=30000"+req,
+        url: "http://localhost:4567/api/tokens"+req,
         //url: "http://localhost:4567/api/tokens"+"?minimum=30000"+global_party_filter,
         //url: "http://localhost:4567/api/tokens"+"?minimum=30000" +extra_toke_filter,
         type: "GET",

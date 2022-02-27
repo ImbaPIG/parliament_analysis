@@ -4,8 +4,8 @@
  * 
  * @param {image} imagelink 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Moritz
+ * This function was edited by Erik
  */
 
  function get_image_link_from_speaker(id){
@@ -31,8 +31,8 @@
  * 
  * @param {*} imagelink 
  * 
- * This function was written by <Name>
- * This function was edited by <Name>
+ * This function was written by Moritz
+ * This function was edited by Erik
  */
 function add_image_to_header(imagelink){
 
