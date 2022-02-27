@@ -27,7 +27,8 @@ let ChartNE;
  * This function was edited by <Name>
  */
  function addNamedEntities(NEcanvasID, fromDateString, toDateString){
-    req = `${global_party_filter}?startDate=${fromDateString}&endDate=${toDateString}`;
+    req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;
+
 
     $.ajax({
         //url: "http://localhost:4567/api/namedEntities" + req,
