@@ -16,8 +16,8 @@ let myChartToken;
  * @param {} Token_canvasID 
  * 
  * 
- * This function was written by Özlem
- * This function was edited by Jannik
+ * This function was written by
+ * This function was edited by
  */
  function addTokenChart(Token_canvasID, fromDateString, toDateString){
     req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;

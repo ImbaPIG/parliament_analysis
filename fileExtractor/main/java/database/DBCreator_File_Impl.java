@@ -60,7 +60,7 @@ public class DBCreator_File_Impl implements DBCreator {
     }
 
     /**
-     * @author Moritz&Özlem
+     *      
      * updates Speaker Meta Data of all Speakers that can be found in the passed XML
      * @param mdbXml mdb XML to be parsed
      * @throws IOException
@@ -90,7 +90,7 @@ public class DBCreator_File_Impl implements DBCreator {
     }
 
     /**
-     * @author Moritz&Özlem
+     *      
      * updates all speakers Pictures from the DB
      */
     public void insertSpeakersPictures() {

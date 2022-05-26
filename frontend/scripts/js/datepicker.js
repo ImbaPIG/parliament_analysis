@@ -1,5 +1,5 @@
 
-//Written by Erik
+//Written
 $(() => {
     $('#datepicker1').datepicker({
         format: 'DD.MM.YYYY'

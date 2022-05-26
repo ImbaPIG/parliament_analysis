@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Properties;
 
 /**
- * @author Erik
+ *   
  */
 public class Creds_File_Impl {
     private Properties prop;

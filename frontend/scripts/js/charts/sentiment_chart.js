@@ -18,8 +18,8 @@ let ChartSentiment;
  * 
  * @param {*} canvasID is the canvas ID of said chart
  * 
- * This function was written by Özlem
- * This function was edited by Jannik,Erik
+ * This function was written by
+ * This function was edited by  ,Erik
  */
  function addSentiment(canvasID, fromDateString, toDateString){
     req = `${global_party_filter}${global_party_filter ? "&": "?"}startDate=${fromDateString}&endDate=${toDateString}`;

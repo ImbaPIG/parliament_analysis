@@ -96,7 +96,7 @@ public class Rede_File_Impl implements Rede {
     /**
      * getter Redner
      * @return
-     * @author Erik
+     *   
      */
     public Redner_File_Impl getRedner() {
         return redner;
@@ -105,7 +105,7 @@ public class Rede_File_Impl implements Rede {
     /**
      * getter RednerID
      * @return
-     * @author Erik
+     *   
      */
     public String getRednerID(){
         return rednerID;
@@ -114,7 +114,7 @@ public class Rede_File_Impl implements Rede {
     /**
      * getter Content
      * @return
-     * @author Erik
+     *   
      */
     public String getContent() {
         return content;
@@ -123,7 +123,7 @@ public class Rede_File_Impl implements Rede {
     /**
      * getter Comments
      * @return
-     * @author Erik
+     *   
      */
     public String getComments() {
         return comments;
@@ -132,7 +132,7 @@ public class Rede_File_Impl implements Rede {
     /**
      * getter RedeID
      * @return
-     * @author Erik
+     *   
      */
     public String getRedeID() {
         return redeID;
@@ -141,7 +141,7 @@ public class Rede_File_Impl implements Rede {
     /**
      * creates bson Document for Rede
      * @return
-     * @author Erik
+     *   
      */
     public Document getDocument(){
         org.bson.Document mongoDoc = new org.bson.Document();

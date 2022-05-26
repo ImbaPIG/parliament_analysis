@@ -43,7 +43,7 @@ public class Webcrawler {
      * @param nachname String to search
      * @return
      * @throws IOException
-     * @author Jannik
+     *   
      */
     public static String getImageLink(String vorname, String nachname) throws IOException {
         String prefix ="https://bilddatenbank.bundestag.de";
@@ -62,7 +62,7 @@ public class Webcrawler {
      * @param link
      * @param protocollLinks
      * @throws IOException
-     * @author Jannik
+     *   
      */
     public static void iterateOffset(Integer plenarPeriode, String link, Hashtable<String,String> protocollLinks) throws IOException {
         Integer offset = 0;
@@ -115,7 +115,7 @@ public class Webcrawler {
      * @param documentLink
      * @return
      * @throws IOException
-     * @author Jannik
+     *   
      */
     public static Document fetchDocument(String documentLink) throws IOException {
         Document doc = Jsoup.connect(documentLink).get();
@@ -177,7 +177,7 @@ public class Webcrawler {
      * @param link
      * @return
      * @throws IOException
-     * @author Özlem
+     *   
      */
     public static org.w3c.dom.Document getDocFromLink(String link) throws IOException {
         W3CDom w3cDom = new W3CDom();

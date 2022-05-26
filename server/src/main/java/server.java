@@ -25,7 +25,7 @@ import static spark.Spark.get;
 import static webscraper.Webcrawler.iterateOffset;
 
 /**
- * @author Özlem & Moritz
+ *    & Moritz
  */
 public class server {
 

@@ -17,7 +17,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 
 
 /**
- * @author Erik
+ *   
  */
 public class Pipeline_File_Impl implements Pipeline {
     private final AggregateBuilder pipeline;

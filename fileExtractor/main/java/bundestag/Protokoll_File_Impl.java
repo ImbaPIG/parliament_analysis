@@ -36,7 +36,7 @@ public class Protokoll_File_Impl implements Protokoll {
      * @throws SAXException
      * @throws ParseException
      * @throws UIMAException
-     * @author Erik
+     *   
      */
     public Protokoll_File_Impl(Document doc, DocumentBuilder builder, MongoDBConnectionHandler_File_Impl handler) throws IOException, SAXException, ParseException, UIMAException {
         //
@@ -74,7 +74,7 @@ public class Protokoll_File_Impl implements Protokoll {
     /**
      * getter for Tagesordnungspunkte
      * @return List of Tagesordnungspunkten
-     * @author Erik
+     *   
      */
     public ArrayList<Tagesordnungspunkt_File_Impl> getTagesordnungspunkte() {
         return Tagesordnungspunkte;
@@ -87,7 +87,7 @@ public class Protokoll_File_Impl implements Protokoll {
     /**
      * getter for id
      * @return String id
-     * @author Erik
+     *   
      */
     public String get_id() {
         return _id;
@@ -96,14 +96,14 @@ public class Protokoll_File_Impl implements Protokoll {
     /**
      * setter for id
      * @param newID String
-     * @author Erik
+     *   
      */
     public void setID(String newID){ this._id = newID;}
 
     /**
      * getter for date String
      * @return date String
-     * @author Erik
+     *   
      */
     public String getDate() {
         return date;
@@ -112,7 +112,7 @@ public class Protokoll_File_Impl implements Protokoll {
     /**
      * getter for periode
      * @return periode as String
-     * @author Erik
+     *   
      */
     public String getPeriode() {
         return periode;
@@ -121,7 +121,7 @@ public class Protokoll_File_Impl implements Protokoll {
     /**
      * getter for title
      * @return title String
-     * @author Erik
+     *   
      */
     public String getTitle() {
         return title;
@@ -130,14 +130,14 @@ public class Protokoll_File_Impl implements Protokoll {
     /**
      * getter for protocollNr
      * @return protocollNr String
-     * @author Erik
+     *   
      */
     public String getProtocollNr(){ return protocollNr;}
 
     /**
      * getter for sitzungsleiter
      * @return sitzungsleiter String
-     * @author Erik
+     *   
      */
     public ArrayList<String> getSitzungsleiter() {
         return Sitzungsleiter;

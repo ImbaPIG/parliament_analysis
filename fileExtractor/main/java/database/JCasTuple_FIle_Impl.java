@@ -4,7 +4,7 @@ import interfaces.JCasTuple;
 import org.apache.uima.jcas.JCas;
 
 /**
- * @author Erik
+ *   
  */
 public class JCasTuple_FIle_Impl implements JCasTuple {
 

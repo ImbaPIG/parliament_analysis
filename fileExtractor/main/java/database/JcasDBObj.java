@@ -3,7 +3,7 @@ package database;
 import org.bson.Document;
 
 /**
- * @author Erik
+ *   
  */
 public class JcasDBObj {
     public String _id;

@@ -13,7 +13,7 @@ public class Redner_File_Impl {
     public Redner_File_Impl(Element e) {
         /**
          * creates a redner object
-         * @author Erik
+         *   
          */
         // get firstname
         NodeList firstnameList = e.getElementsByTagName("vorname");
@@ -44,7 +44,7 @@ public class Redner_File_Impl {
     /**
      * getter firstname
      * @return
-     * @author Erik
+     *   
      */
     public String getFirstname() {
         return firstname;
@@ -53,7 +53,7 @@ public class Redner_File_Impl {
     /**
      * getter lastname
      * @return
-     * @author Erik
+     *   
      */
     public String getLastname() {
         return lastname;
@@ -62,7 +62,7 @@ public class Redner_File_Impl {
     /**
      * getter Fraktion
      * @return
-     * @author Erik
+     *   
      */
     public String getFraktion() {
         return fraktion;
@@ -71,7 +71,7 @@ public class Redner_File_Impl {
     /**
      * getter RednerID
      * @return
-     * @author Erik
+     *   
      */
     public String getRednerID() {
         return rednerID;
@@ -80,7 +80,7 @@ public class Redner_File_Impl {
     /**
      * creates bson Document for Redner
      * @return
-     * @author Erik
+     *   
      */
     public Document getDocument(){
         org.bson.Document mongoDoc = new org.bson.Document();

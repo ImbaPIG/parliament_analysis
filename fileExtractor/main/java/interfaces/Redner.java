@@ -1,7 +1,7 @@
 package interfaces;
 
 /**
- * @author Erik
+ *   
  */
 public interface Redner {
     public String getFirstname();

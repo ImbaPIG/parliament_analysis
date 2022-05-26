@@ -88,7 +88,7 @@ public class ProtocollHandler {
     }
 
     /**
-     * @author Özlem
+     *   
      * reset progress of current protocoll parsing
      */
     public void resetProgress(){

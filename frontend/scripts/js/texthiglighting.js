@@ -10,7 +10,7 @@
  * 
  * 
  * This function was written by Moritz
- * This function was edited by Jannik
+ * This function was edited by
  */
 function highlight_text(paragraph,namedEntities,locations,organisations, sentences) {
     let marked_paragraph = ""
@@ -63,7 +63,7 @@ function highlight_text(paragraph,namedEntities,locations,organisations, sentenc
  * This functions is called to set the Speech and call the highlighting function above
  * 
  * 
- * This function was written by Erik
+ * This function was written
  * This function was edited by Moritz
  */
 function setTextContent(){
@@ -95,7 +95,7 @@ function setTextContent(){
  * 
  * 
  * 
- * This function was written by Jannik
+ * This function was written by
  * This function was edited by Moritz
  */
 function showSentiment(sentimentValue, sentenceCount){

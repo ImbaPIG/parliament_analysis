@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Jannik & Moritz
+ *    & Moritz
  */
 public class AggregationHelper {
 

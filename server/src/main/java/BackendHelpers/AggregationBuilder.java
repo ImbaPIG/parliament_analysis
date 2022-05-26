@@ -11,7 +11,7 @@ import java.util.List;
 import static BackendHelpers.AggregationHelper.*;
 
 /**
- * @author Moritz & Jannik
+ * @author Moritz &  
  */
 public class AggregationBuilder {
 

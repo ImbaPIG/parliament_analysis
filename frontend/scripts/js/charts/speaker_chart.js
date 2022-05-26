@@ -9,7 +9,7 @@
  * 
  * 
  * 
- * This function was written by Jannik
+ * This function was written by
  * This function was edited by Moritz
  */
 

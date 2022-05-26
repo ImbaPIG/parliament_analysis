@@ -8,7 +8,7 @@ let extra_toke_filter=""
  * 
  * 
  * 
- * This function was written by Jannik
+ * This function was written by
  * This function was edited by Moritz, Erik
  */
 function fill_select_party(){
@@ -103,8 +103,8 @@ function fill_select_party(){
  * sets the global filter
  * 
  * 
- * This function was written by Erik
- * This function was edited by Jannik
+ * This function was written
+ * This function was edited by
  */
 function set_global_party_filter(){
         

@@ -5,7 +5,7 @@
  * @param {image} imagelink 
  * 
  * This function was written by Moritz
- * This function was edited by Erik
+ * This function was edited
  */
 
  function get_image_link_from_speaker(id){
@@ -32,7 +32,7 @@
  * @param {*} imagelink 
  * 
  * This function was written by Moritz
- * This function was edited by Erik
+ * This function was edited
  */
 function add_image_to_header(imagelink){
 
@@ -53,8 +53,8 @@ function add_image_to_header(imagelink){
  * 
  * @param {*} speaker 
  * 
- * This function was written by Jannik
- * This function was edited by Erik
+ * This function was written by
+ * This function was edited
  */
 function display_speaker_information(speaker){
     var div = document.getElementById("speaker_image");
